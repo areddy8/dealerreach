@@ -15,6 +15,15 @@ export default function DashboardPage() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
 
+  const fetchRequests = () => {
+    setError("");
+    setLoading(true);
+    listQuoteRequests()
+      .then(setRequests)
+      .catch((err) => setError(err.message))
+      .finally(() => setLoading(false));
+  };
+
   useEffect(() => {
     if (authLoading) return;
     if (!user) {
@@ -22,10 +31,8 @@ export default function DashboardPage() {
       return;
     }
 
-    listQuoteRequests()
-      .then(setRequests)
-      .catch((err) => setError(err.message))
-      .finally(() => setLoading(false));
+    fetchRequests();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user, authLoading, router]);
 
   if (authLoading || (!user && !error)) {
@@ -54,8 +61,14 @@ export default function DashboardPage() {
       </div>
 
       {error && (
-        <div className="mt-6 rounded-lg border border-red-800 bg-red-900/30 px-4 py-3 text-sm text-red-400">
-          {error}
+        <div className="mt-6 flex items-center justify-between rounded-lg border border-red-800 bg-red-900/30 px-4 py-3 text-sm text-red-400">
+          <span>{error}</span>
+          <button
+            onClick={fetchRequests}
+            className="ml-4 flex-shrink-0 rounded-md bg-red-900/50 px-3 py-1.5 text-xs font-medium text-red-300 transition-colors hover:bg-red-900/80 hover:text-red-200"
+          >
+            Retry
+          </button>
         </div>
       )}
 

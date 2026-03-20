@@ -8,6 +8,8 @@ from typing import List
 from urllib.parse import urlparse
 
 from fastapi import APIRouter, Depends, HTTPException, status
+
+from app.api.rate_limit import RateLimit
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.orm import selectinload
@@ -70,7 +72,12 @@ async def _get_user_quote_request(
     return qr
 
 
-@router.post("", response_model=QuoteRequestResponse, status_code=status.HTTP_201_CREATED)
+@router.post(
+    "",
+    response_model=QuoteRequestResponse,
+    status_code=status.HTTP_201_CREATED,
+    dependencies=[Depends(RateLimit(max_requests=10, window_seconds=3600))],
+)
 async def create_quote_request(
     body: CreateQuoteRequest,
     current_user: User = Depends(get_current_user),
@@ -134,7 +141,11 @@ async def create_quote_request(
     )
 
 
-@router.get("", response_model=List[QuoteRequestResponse])
+@router.get(
+    "",
+    response_model=List[QuoteRequestResponse],
+    dependencies=[Depends(RateLimit(max_requests=30, window_seconds=60))],
+)
 async def list_quote_requests(
     current_user: User = Depends(get_current_user),
     session: AsyncSession = Depends(get_session),

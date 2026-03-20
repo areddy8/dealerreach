@@ -143,6 +143,45 @@ export default function LandingPage() {
         </div>
       </section>
 
+      {/* FAQ */}
+      <section className="border-t border-slate-800 px-4 py-20 sm:px-6">
+        <div className="mx-auto max-w-3xl">
+          <h2 className="text-center text-3xl font-bold text-white sm:text-4xl">
+            Frequently Asked Questions
+          </h2>
+          <div className="mt-12 space-y-6">
+            {[
+              {
+                q: "What types of products does this work for?",
+                a: "DealerReach works great for fireplaces, hot tubs, grills, outdoor kitchens, appliances, and any other products sold primarily through dealer networks without public pricing.",
+              },
+              {
+                q: "How long does it take to get quotes?",
+                a: "Most users start receiving dealer quotes within 1-3 business days, depending on the product and how quickly dealers respond.",
+              },
+              {
+                q: "Is my information shared with dealers?",
+                a: "Only your product inquiry is shared with dealers. Your personal contact information is never disclosed -- dealers reply through our system.",
+              },
+              {
+                q: "Is DealerReach free?",
+                a: "Yes! DealerReach is completely free to use during our beta period.",
+              },
+            ].map((faq) => (
+              <div
+                key={faq.q}
+                className="rounded-xl border border-slate-800 bg-slate-900 p-6"
+              >
+                <h3 className="font-semibold text-white">{faq.q}</h3>
+                <p className="mt-2 text-sm leading-relaxed text-slate-400">
+                  {faq.a}
+                </p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* Bottom CTA */}
       <section className="border-t border-slate-800 px-4 py-20 sm:px-6">
         <div className="mx-auto max-w-2xl text-center">
@@ -163,8 +202,21 @@ export default function LandingPage() {
 
       {/* Footer */}
       <footer className="border-t border-slate-800 px-4 py-8 sm:px-6">
-        <div className="mx-auto max-w-6xl text-center text-sm text-slate-500">
-          &copy; {new Date().getFullYear()} DealerReach.io. All rights reserved.
+        <div className="mx-auto max-w-6xl flex flex-col items-center gap-4 sm:flex-row sm:justify-between">
+          <p className="text-sm text-slate-500">
+            &copy; {new Date().getFullYear()} DealerReach.io. All rights reserved.
+          </p>
+          <nav className="flex gap-6 text-sm text-slate-500">
+            <a href="#" className="transition-colors hover:text-slate-300">
+              Privacy Policy
+            </a>
+            <a href="#" className="transition-colors hover:text-slate-300">
+              Terms of Service
+            </a>
+            <a href="#" className="transition-colors hover:text-slate-300">
+              Contact
+            </a>
+          </nav>
         </div>
       </footer>
     </div>

@@ -142,3 +142,5 @@ class WorkerSettings:
     redis_settings = _parse_redis_url(settings.REDIS_URL)
     max_jobs = 5
     job_timeout = 600  # 10 minutes
+    max_tries = 3  # Retry crashed tasks up to 3 times
+    retry_delay = 30  # Wait 30 seconds between retries

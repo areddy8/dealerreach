@@ -4,6 +4,7 @@ import logging
 from typing import Dict
 
 from app.pipeline.utils.claude_client import ask_claude
+from app.templates.emails import render_outreach_email
 
 logger = logging.getLogger(__name__)
 
@@ -71,4 +72,13 @@ async def personalize_email(
             from_name=from_name,
         )
 
-    return {"subject": subject, "body": body}
+    html_body = render_outreach_email(
+        dealer_name=dealer_name,
+        product_name=product_name,
+        brand=brand,
+        specs=specs,
+        reference_code=reference_code,
+        body_text=body,
+    )
+
+    return {"subject": subject, "body": body, "html_body": html_body}

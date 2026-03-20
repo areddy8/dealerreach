@@ -19,6 +19,29 @@ const PIPELINE_STAGES = [
   { key: "completed", label: "Complete" },
 ] as const;
 
+function getStageDescription(
+  status: string,
+  zipCode?: string,
+  dealerCount?: number,
+): string {
+  switch (status) {
+    case "searching":
+      return `Searching for dealers${zipCode ? ` near ${zipCode}` : ""}...`;
+    case "enriching":
+      return `Gathering contact info for${dealerCount ? ` ${dealerCount}` : ""} dealers...`;
+    case "sending":
+      return `Sending outreach emails to${dealerCount ? ` ${dealerCount}` : ""} dealers...`;
+    case "monitoring":
+      return "Monitoring for dealer replies...";
+    case "completed":
+      return "All done! Check your quotes below.";
+    case "failed":
+      return "Something went wrong during processing.";
+    default:
+      return "";
+  }
+}
+
 function PipelineProgress({ status }: { status: string }) {
   const stageIndex = PIPELINE_STAGES.findIndex((s) => s.key === status);
 
@@ -110,8 +133,18 @@ export default function QuoteRequestDetailPage() {
   if (error || !qr) {
     return (
       <div className="mx-auto max-w-5xl px-4 py-10 sm:px-6">
-        <div className="rounded-lg border border-red-800 bg-red-900/30 px-4 py-3 text-sm text-red-400">
-          {error || "Quote request not found."}
+        <div className="flex items-center justify-between rounded-lg border border-red-800 bg-red-900/30 px-4 py-3 text-sm text-red-400">
+          <span>{error || "Quote request not found."}</span>
+          <button
+            onClick={() => {
+              setError("");
+              setLoading(true);
+              fetchAll();
+            }}
+            className="ml-4 flex-shrink-0 rounded-md bg-red-900/50 px-3 py-1.5 text-xs font-medium text-red-300 transition-colors hover:bg-red-900/80 hover:text-red-200"
+          >
+            Retry
+          </button>
         </div>
         <Link href="/dashboard" className="mt-4 inline-block text-sm text-blue-400 hover:text-blue-300">
           Back to Dashboard
@@ -174,6 +207,11 @@ export default function QuoteRequestDetailPage() {
         {/* Pipeline progress */}
         <div className="mt-6">
           <PipelineProgress status={qr.status} />
+          {qr.status !== "completed" && (
+            <p className="mt-2 text-center text-xs text-slate-500">
+              {getStageDescription(qr.status, qr.zip_code, dealerCount)}
+            </p>
+          )}
         </div>
       </div>
 

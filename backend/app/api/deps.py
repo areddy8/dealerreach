@@ -20,7 +20,7 @@ async def get_current_user(
 ) -> User:
     """Extract and validate JWT, return the authenticated User."""
     token = credentials.credentials
-    user_id: uuid.UUID | None = decode_access_token(token)
+    user_id = decode_access_token(token)
 
     if user_id is None:
         raise HTTPException(

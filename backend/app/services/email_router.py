@@ -263,6 +263,7 @@ async def _notify_user_of_reply(
     """Send a notification email to the user when a dealer replies."""
     from sqlalchemy import select
     from app.models.user import User
+    from app.templates.emails import render_reply_notification, strip_html
 
     result = await session.execute(
         select(User).where(User.id == qr.user_id)
@@ -271,36 +272,34 @@ async def _notify_user_of_reply(
     if user is None:
         return
 
-    price_line = ""
-    if parsed.get("price"):
-        price_line = f"\n  Price: ${parsed['price']:,.2f}"
-    if parsed.get("lead_time"):
-        price_line += f"\n  Lead Time: {parsed['lead_time']}"
-    if parsed.get("availability"):
-        price_line += f"\n  Availability: {parsed['availability']}"
+    dashboard_url = "https://www.dealerreach.io/dashboard/{}".format(qr.id)
 
-    subject = f"[DealerReach] {dealer.name} replied to your inquiry [{qr.reference_code}]"
-    body = (
-        f"Hi {user.name},\n\n"
-        f"Great news! {dealer.name} has responded to your inquiry about "
-        f"{qr.product_name}.\n"
-        f"{price_line}\n\n"
+    subject = "[DealerReach] {} replied to your inquiry [{}]".format(
+        dealer.name, qr.reference_code,
     )
-    if parsed.get("summary"):
-        body += f"Summary: {parsed['summary']}\n\n"
-    body += (
-        f"Log in to your DealerReach dashboard to see the full reply:\n"
-        f"https://www.dealerreach.io/dashboard/{qr.id}\n\n"
-        f"— DealerReach.io"
+
+    html_body = render_reply_notification(
+        user_name=user.name,
+        dealer_name=dealer.name,
+        product_name=qr.product_name,
+        reference_code=qr.reference_code,
+        price=parsed.get("price"),
+        lead_time=parsed.get("lead_time"),
+        availability=parsed.get("availability"),
+        summary=parsed.get("summary"),
+        dashboard_url=dashboard_url,
     )
+
+    plain_body = strip_html(html_body)
 
     try:
         from app.pipeline.outreach.sender import send_email
         await send_email(
             to_email=user.email,
             subject=subject,
-            body=body,
+            body=plain_body,
             reply_to=settings.SENDGRID_FROM_EMAIL,
+            html_body=html_body,
         )
         logger.info("Notification email sent to %s for QR %s", user.email, qr.id)
     except Exception:

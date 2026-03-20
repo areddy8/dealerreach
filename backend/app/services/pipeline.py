@@ -108,10 +108,7 @@ def _merge_dealers(all_results: List[List[Dict[str, Any]]]) -> List[Dict[str, An
     """Merge and deduplicate dealer results from multiple scrapers."""
     try:
         from app.pipeline.scrapers.merger import merge_dealers
-        flat = []
-        for result_set in all_results:
-            flat.extend(result_set)
-        return merge_dealers(flat)
+        return merge_dealers(all_results)
     except ImportError:
         pass
 

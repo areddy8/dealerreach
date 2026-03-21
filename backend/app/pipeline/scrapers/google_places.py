@@ -47,6 +47,23 @@ async def search_google_places(
                 await page.goto(maps_url, wait_until="networkidle", timeout=45000)
                 await page.wait_for_timeout(3000)
 
+                # Handle Google consent/cookie banners
+                for selector in [
+                    'button:has-text("Accept all")',
+                    'button:has-text("Accept")',
+                    'button:has-text("I agree")',
+                    'button:has-text("Reject all")',
+                    'form[action*="consent"] button',
+                ]:
+                    try:
+                        btn = page.locator(selector).first
+                        if await btn.is_visible(timeout=2000):
+                            await btn.click()
+                            await page.wait_for_timeout(2000)
+                            break
+                    except Exception:
+                        pass
+
                 # Scroll the results feed to load more
                 feed = page.locator('div[role="feed"]')
                 if await feed.count() > 0:
@@ -89,14 +106,15 @@ async def search_google_places(
         logger.warning("Google Maps returned minimal content for '%s'", query)
         return []
 
-    logger.info("Google Maps scraped %d chars for '%s'", len(text), query)
-    logger.info("Google Maps content preview: %s", text[:500])
+    logger.warning("GMAPS_SCRAPED: %d chars for '%s'. Preview: %s", len(text), query, text[:300])
 
     # Use Claude to parse the scraped text
     prompt = (
         f"Extract business/dealer listings from these Google Maps search results. "
         f"The search was for '{query}'. Extract name, full address, city, state, "
-        f"zip code, phone number, and website for each business listed.\n\n"
+        f"zip code, phone number, and website for each business listed. "
+        f"If the page content is a consent page, error page, or doesn't contain "
+        f"business listings, return an empty JSON array: []\n\n"
         f"{text[:12000]}"
     )
 
@@ -105,7 +123,7 @@ async def search_google_places(
         logger.warning("Claude parsing returned empty for Google Maps '%s'", query)
         return []
 
-    logger.info("Claude raw response preview: %s", raw[:300])
+    logger.warning("CLAUDE_RAW: %s", raw[:500])
     parsed = extract_json(raw)
     if not isinstance(parsed, list):
         logger.warning("Could not extract dealer list from Claude response for Google Maps '%s'", query)

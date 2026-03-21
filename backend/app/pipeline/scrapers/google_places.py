@@ -90,6 +90,7 @@ async def search_google_places(
         return []
 
     logger.info("Google Maps scraped %d chars for '%s'", len(text), query)
+    logger.info("Google Maps content preview: %s", text[:500])
 
     # Use Claude to parse the scraped text
     prompt = (
@@ -104,6 +105,7 @@ async def search_google_places(
         logger.warning("Claude parsing returned empty for Google Maps '%s'", query)
         return []
 
+    logger.info("Claude raw response preview: %s", raw[:300])
     parsed = extract_json(raw)
     if not isinstance(parsed, list):
         logger.warning("Could not extract dealer list from Claude response for Google Maps '%s'", query)

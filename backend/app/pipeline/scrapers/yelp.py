@@ -1,10 +1,10 @@
 from __future__ import annotations
 
-import json
 import logging
 from typing import Dict, List
 
 from app.pipeline.utils.claude_client import ask_claude
+from app.pipeline.utils.json_parser import extract_json
 
 logger = logging.getLogger(__name__)
 
@@ -87,21 +87,9 @@ async def search_yelp(
         logger.warning("Claude parsing returned empty for Yelp '%s'", query)
         return []
 
-    # Parse JSON response
-    try:
-        cleaned = raw.strip()
-        if cleaned.startswith("```"):
-            cleaned = cleaned.split("\n", 1)[1] if "\n" in cleaned else cleaned[3:]
-            if cleaned.endswith("```"):
-                cleaned = cleaned[:-3]
-            cleaned = cleaned.strip()
-
-        parsed = json.loads(cleaned)
-        if not isinstance(parsed, list):
-            logger.warning("Claude returned non-list for Yelp '%s'", query)
-            return []
-    except (json.JSONDecodeError, ValueError):
-        logger.exception("Failed to parse Claude response for Yelp '%s'", query)
+    parsed = extract_json(raw)
+    if not isinstance(parsed, list):
+        logger.warning("Could not extract dealer list from Claude response for Yelp '%s'", query)
         return []
 
     dealers: List[Dict[str, str]] = []

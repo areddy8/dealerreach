@@ -1,11 +1,11 @@
 from __future__ import annotations
 
 import asyncio
-import json
 import logging
 from typing import Dict, List
 
 from app.pipeline.utils.claude_client import ask_claude
+from app.pipeline.utils.json_parser import extract_json
 
 logger = logging.getLogger(__name__)
 
@@ -79,21 +79,9 @@ async def scrape_dealer_locator(
         logger.warning("Claude parsing returned empty result for %s", url)
         return []
 
-    # Parse the JSON response
-    try:
-        cleaned = raw.strip()
-        if cleaned.startswith("```"):
-            cleaned = cleaned.split("\n", 1)[1] if "\n" in cleaned else cleaned[3:]
-            if cleaned.endswith("```"):
-                cleaned = cleaned[:-3]
-            cleaned = cleaned.strip()
-
-        parsed = json.loads(cleaned)
-        if not isinstance(parsed, list):
-            logger.warning("Claude returned non-list JSON for %s", url)
-            return []
-    except (json.JSONDecodeError, ValueError):
-        logger.exception("Failed to parse Claude response as JSON for %s", url)
+    parsed = extract_json(raw)
+    if not isinstance(parsed, list):
+        logger.warning("Could not extract dealer list from Claude response for %s", url)
         return []
 
     dealers: List[Dict[str, str]] = []

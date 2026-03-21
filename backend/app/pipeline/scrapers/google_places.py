@@ -1,11 +1,10 @@
 from __future__ import annotations
 
-import json
 import logging
-import re
 from typing import Dict, List
 
 from app.pipeline.utils.claude_client import ask_claude
+from app.pipeline.utils.json_parser import extract_json
 
 logger = logging.getLogger(__name__)
 
@@ -23,11 +22,7 @@ async def search_google_places(
     zip_code: str,
     radius_miles: int,
 ) -> List[Dict[str, str]]:
-    """Search Google Maps for dealers using Playwright (no API key needed).
-
-    Returns a list of dicts with keys:
-        name, address, city, state, zip_code, phone, website, source
-    """
+    """Search Google Maps for dealers using Playwright (no API key needed)."""
     from playwright.async_api import async_playwright
 
     query = f"{brand} dealer near {zip_code}" if brand else f"{product} store near {zip_code}"
@@ -49,36 +44,38 @@ async def search_google_places(
                     locale="en-US",
                 )
                 page = await context.new_page()
-                await page.goto(maps_url, wait_until="networkidle", timeout=30000)
-
-                # Wait for results to load
+                await page.goto(maps_url, wait_until="networkidle", timeout=45000)
                 await page.wait_for_timeout(3000)
 
-                # Scroll the results panel to load more listings
-                results_panel = page.locator('div[role="feed"]')
-                if await results_panel.count() > 0:
+                # Scroll the results feed to load more
+                feed = page.locator('div[role="feed"]')
+                if await feed.count() > 0:
                     for _ in range(3):
-                        await results_panel.evaluate(
-                            "el => el.scrollTo(0, el.scrollHeight)"
-                        )
+                        await feed.evaluate("el => el.scrollTo(0, el.scrollHeight)")
                         await page.wait_for_timeout(1500)
 
-                # Extract all visible business info via aria labels and text
-                text = await page.evaluate("""() => {
+                # Try to extract structured data from aria-labels first
+                listings = await page.evaluate("""() => {
                     const results = [];
-                    // Each result is an <a> with class 'hfpxzc' or a div with role='article'
-                    const items = document.querySelectorAll('div[role="feed"] > div');
-                    for (const item of items) {
-                        const text = item.innerText;
-                        if (text && text.trim().length > 10) {
-                            results.push(text.trim());
+                    const links = document.querySelectorAll('a[href*="/maps/place/"]');
+                    for (const link of links) {
+                        const label = link.getAttribute('aria-label');
+                        if (label && label.length > 3) {
+                            results.push(label);
                         }
                     }
-                    return results.join('\\n---SEPARATOR---\\n');
+                    return results;
                 }""")
 
-                if not text or len(text.strip()) < 20:
-                    # Fallback: just grab all visible text
+                if listings and len(listings) > 0:
+                    text = "Business listings found:\n" + "\n".join(
+                        f"- {name}" for name in listings
+                    )
+                    # Also grab the full page text for addresses/phones
+                    page_text = await page.evaluate("() => document.body.innerText")
+                    text += "\n\nFull page text:\n" + (page_text or "")
+                else:
+                    # Fallback: full page text
                     text = await page.evaluate("() => document.body.innerText")
 
             finally:
@@ -92,12 +89,14 @@ async def search_google_places(
         logger.warning("Google Maps returned minimal content for '%s'", query)
         return []
 
-    # Use Claude to parse the scraped text into structured dealer data
+    logger.info("Google Maps scraped %d chars for '%s'", len(text), query)
+
+    # Use Claude to parse the scraped text
     prompt = (
         f"Extract business/dealer listings from these Google Maps search results. "
         f"The search was for '{query}'. Extract name, full address, city, state, "
         f"zip code, phone number, and website for each business listed.\n\n"
-        f"{text[:10000]}"
+        f"{text[:12000]}"
     )
 
     raw = await ask_claude(prompt, system=_EXTRACT_SYSTEM, max_tokens=4096)
@@ -105,21 +104,9 @@ async def search_google_places(
         logger.warning("Claude parsing returned empty for Google Maps '%s'", query)
         return []
 
-    # Parse JSON response
-    try:
-        cleaned = raw.strip()
-        if cleaned.startswith("```"):
-            cleaned = cleaned.split("\n", 1)[1] if "\n" in cleaned else cleaned[3:]
-            if cleaned.endswith("```"):
-                cleaned = cleaned[:-3]
-            cleaned = cleaned.strip()
-
-        parsed = json.loads(cleaned)
-        if not isinstance(parsed, list):
-            logger.warning("Claude returned non-list for Google Maps '%s'", query)
-            return []
-    except (json.JSONDecodeError, ValueError):
-        logger.exception("Failed to parse Claude response for Google Maps '%s'", query)
+    parsed = extract_json(raw)
+    if not isinstance(parsed, list):
+        logger.warning("Could not extract dealer list from Claude response for Google Maps '%s'", query)
         return []
 
     dealers: List[Dict[str, str]] = []

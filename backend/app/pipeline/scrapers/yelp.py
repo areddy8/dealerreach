@@ -1,16 +1,19 @@
 from __future__ import annotations
 
+import json
 import logging
-from typing import Dict, List, Optional
+from typing import Dict, List
 
-import httpx
-
-from app.config import settings
+from app.pipeline.utils.claude_client import ask_claude
 
 logger = logging.getLogger(__name__)
 
-_YELP_SEARCH_URL = "https://api.yelp.com/v3/businesses/search"
-_MAX_RADIUS_METERS = 40000
+_EXTRACT_SYSTEM = (
+    "You are a data extraction assistant. Extract business listings from Yelp "
+    "search results. Return ONLY a JSON array of objects with these keys: "
+    "name, address, city, state, zip_code, phone, website. "
+    "Use empty strings for missing fields. No explanation, just the JSON array."
+)
 
 
 async def search_yelp(
@@ -19,50 +22,105 @@ async def search_yelp(
     zip_code: str,
     radius_miles: int,
 ) -> List[Dict[str, str]]:
-    """Search Yelp Fusion API for dealers near a zip code.
+    """Search Yelp for dealers using Playwright (no API key needed).
 
     Returns a list of dicts with keys:
         name, address, city, state, zip_code, phone, website, source
     """
-    api_key: Optional[str] = settings.YELP_API_KEY or None
-    if not api_key:
-        logger.warning("YELP_API_KEY not configured; skipping Yelp search")
+    from playwright.async_api import async_playwright
+
+    query = f"{brand} dealer" if brand else f"{product} store"
+    yelp_url = (
+        f"https://www.yelp.com/search?"
+        f"find_desc={query.replace(' ', '+')}"
+        f"&find_loc={zip_code}"
+    )
+
+    logger.info("Scraping Yelp for '%s' near %s", query, zip_code)
+
+    try:
+        async with async_playwright() as p:
+            browser = await p.chromium.launch(headless=True)
+            try:
+                context = await browser.new_context(
+                    user_agent=(
+                        "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) "
+                        "AppleWebKit/537.36 (KHTML, like Gecko) "
+                        "Chrome/120.0.0.0 Safari/537.36"
+                    ),
+                    viewport={"width": 1280, "height": 900},
+                    locale="en-US",
+                )
+                page = await context.new_page()
+                await page.goto(yelp_url, wait_until="networkidle", timeout=30000)
+                await page.wait_for_timeout(2000)
+
+                # Scroll to load more results
+                for _ in range(2):
+                    await page.evaluate("window.scrollTo(0, document.body.scrollHeight)")
+                    await page.wait_for_timeout(1000)
+
+                # Extract visible text from the results
+                text = await page.evaluate("() => document.body.innerText")
+
+            finally:
+                await browser.close()
+
+    except Exception:
+        logger.exception("Playwright Yelp scrape failed for '%s'", query)
         return []
 
-    radius_meters = min(int(radius_miles * 1609.34), _MAX_RADIUS_METERS)
-    term = f'"{brand}" OR "{product}"'
+    if not text or len(text.strip()) < 50:
+        logger.warning("Yelp returned minimal content for '%s'", query)
+        return []
 
-    headers = {"Authorization": f"Bearer {api_key}"}
-    params = {
-        "term": term,
-        "location": zip_code,
-        "radius": str(radius_meters),
-        "limit": 50,
-    }
+    # Use Claude to parse the scraped text into structured dealer data
+    prompt = (
+        f"Extract business/dealer listings from these Yelp search results. "
+        f"The search was for '{query}' near zip code {zip_code}. "
+        f"Extract name, address, city, state, zip code, phone, and website "
+        f"for each business listed.\n\n{text[:10000]}"
+    )
+
+    raw = await ask_claude(prompt, system=_EXTRACT_SYSTEM, max_tokens=4096)
+    if not raw:
+        logger.warning("Claude parsing returned empty for Yelp '%s'", query)
+        return []
+
+    # Parse JSON response
+    try:
+        cleaned = raw.strip()
+        if cleaned.startswith("```"):
+            cleaned = cleaned.split("\n", 1)[1] if "\n" in cleaned else cleaned[3:]
+            if cleaned.endswith("```"):
+                cleaned = cleaned[:-3]
+            cleaned = cleaned.strip()
+
+        parsed = json.loads(cleaned)
+        if not isinstance(parsed, list):
+            logger.warning("Claude returned non-list for Yelp '%s'", query)
+            return []
+    except (json.JSONDecodeError, ValueError):
+        logger.exception("Failed to parse Claude response for Yelp '%s'", query)
+        return []
 
     dealers: List[Dict[str, str]] = []
-    try:
-        async with httpx.AsyncClient(timeout=20) as client:
-            resp = await client.get(_YELP_SEARCH_URL, headers=headers, params=params)
-            resp.raise_for_status()
-            data = resp.json()
-    except Exception:
-        logger.exception("Yelp API call failed")
-        return []
-
-    for biz in data.get("businesses", []):
-        loc = biz.get("location", {})
-        dealer: Dict[str, str] = {
-            "name": biz.get("name", ""),
-            "address": loc.get("address1", ""),
-            "city": loc.get("city", ""),
-            "state": loc.get("state", ""),
-            "zip_code": loc.get("zip_code", ""),
-            "phone": biz.get("display_phone", ""),
-            "website": biz.get("url", ""),
+    for entry in parsed:
+        if not isinstance(entry, dict):
+            continue
+        name = str(entry.get("name", "")).strip()
+        if not name:
+            continue
+        dealers.append({
+            "name": name,
+            "address": str(entry.get("address", "")),
+            "city": str(entry.get("city", "")),
+            "state": str(entry.get("state", "")),
+            "zip_code": str(entry.get("zip_code", "")),
+            "phone": str(entry.get("phone", "")),
+            "website": str(entry.get("website", "")),
             "source": "yelp",
-        }
-        dealers.append(dealer)
+        })
 
-    logger.info("Yelp returned %d dealers for '%s' near %s", len(dealers), term, zip_code)
+    logger.info("Yelp scrape returned %d dealers for '%s'", len(dealers), query)
     return dealers

@@ -22,8 +22,6 @@ class Settings(BaseSettings):
     JWT_ALGORITHM: str = "HS256"
 
     # External API keys (pipeline)
-    GOOGLE_PLACES_API_KEY: str = ""
-    YELP_API_KEY: str = ""
     ANTHROPIC_API_KEY: str = ""
 
     # SendGrid

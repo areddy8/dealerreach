@@ -25,8 +25,8 @@ async def search_google_places(
     """Search Google Maps for dealers using Playwright (no API key needed)."""
     from playwright.async_api import async_playwright
 
-    query = f"{brand} dealer near {zip_code}" if brand else f"{product} store near {zip_code}"
-    maps_url = f"https://www.google.com/maps/search/{query.replace(' ', '+')}"
+    query = f"{brand} dealer near {zip_code} USA" if brand else f"{product} store near {zip_code} USA"
+    maps_url = f"https://www.google.com/maps/search/{query.replace(' ', '+')}?hl=en&gl=us"
 
     logger.info("Scraping Google Maps for '%s'", query)
 
@@ -106,7 +106,7 @@ async def search_google_places(
         logger.warning("Google Maps returned minimal content for '%s'", query)
         return []
 
-    logger.warning("GMAPS_SCRAPED: %d chars for '%s'. Preview: %s", len(text), query, text[:300])
+    logger.info("Google Maps scraped %d chars for '%s'", len(text), query)
 
     # Use Claude to parse the scraped text
     prompt = (
@@ -123,7 +123,6 @@ async def search_google_places(
         logger.warning("Claude parsing returned empty for Google Maps '%s'", query)
         return []
 
-    logger.warning("CLAUDE_RAW_FULL: %s", raw)
     parsed = extract_json(raw)
     if not isinstance(parsed, list):
         logger.warning("Could not extract dealer list from Claude response for Google Maps '%s'", query)

@@ -72,11 +72,14 @@ async def _search_google_places(
 ) -> List[Dict[str, Any]]:
     try:
         from app.pipeline.scrapers.google_places import search_google_places
-        return await search_google_places(
+        logger.info("Starting Google Maps scraper for '%s' near %s", product_name, zip_code)
+        result = await search_google_places(
             product=product_name, brand=brand or "", zip_code=zip_code, radius_miles=radius_miles
         )
-    except Exception:
-        logger.exception("google_places scraper failed")
+        logger.info("Google Maps scraper returned %d dealers", len(result))
+        return result
+    except Exception as e:
+        logger.error("google_places scraper failed: %s", str(e), exc_info=True)
         return []
 
 
@@ -85,11 +88,14 @@ async def _search_yelp(
 ) -> List[Dict[str, Any]]:
     try:
         from app.pipeline.scrapers.yelp import search_yelp
-        return await search_yelp(
+        logger.info("Starting Yelp scraper for '%s' near %s", product_name, zip_code)
+        result = await search_yelp(
             product=product_name, brand=brand or "", zip_code=zip_code, radius_miles=radius_miles
         )
-    except Exception:
-        logger.exception("yelp scraper failed")
+        logger.info("Yelp scraper returned %d dealers", len(result))
+        return result
+    except Exception as e:
+        logger.error("yelp scraper failed: %s", str(e), exc_info=True)
         return []
 
 

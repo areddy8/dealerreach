@@ -19,7 +19,7 @@ async def ask_claude(
 
     Returns an empty string if the API key is missing or the call fails.
     """
-    api_key: Optional[str] = settings.ANTHROPIC_API_KEY or None
+    api_key = settings.ANTHROPIC_API_KEY or None
     if not api_key:
         logger.warning("ANTHROPIC_API_KEY not configured; skipping Claude call")
         return ""
@@ -35,7 +35,16 @@ async def ask_claude(
             kwargs["system"] = system
 
         message = await client.messages.create(**kwargs)
-        return message.content[0].text
+        text = message.content[0].text if message.content else ""
+        logger.warning(
+            "Claude response: model=%s stop=%s tokens_in=%d tokens_out=%d text_len=%d",
+            message.model,
+            message.stop_reason,
+            message.usage.input_tokens,
+            message.usage.output_tokens,
+            len(text),
+        )
+        return text
     except Exception:
         logger.exception("Claude API call failed")
         return ""

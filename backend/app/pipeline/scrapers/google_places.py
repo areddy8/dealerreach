@@ -123,7 +123,7 @@ async def search_google_places(
         logger.warning("Claude parsing returned empty for Google Maps '%s'", query)
         return []
 
-    logger.warning("CLAUDE_RAW: %s", raw[:500])
+    logger.warning("CLAUDE_RAW_FULL: %s", raw)
     parsed = extract_json(raw)
     if not isinstance(parsed, list):
         logger.warning("Could not extract dealer list from Claude response for Google Maps '%s'", query)

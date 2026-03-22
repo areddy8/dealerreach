@@ -40,7 +40,12 @@ async def _scrape_dealer_locator_page(url: str, zip_code: str) -> str:
                 locale="en-US",
             )
             page = await context.new_page()
-            await page.goto(url, wait_until="networkidle", timeout=45000)
+            await page.goto(url, wait_until="domcontentloaded", timeout=45000)
+            # Wait extra for JS to render
+            try:
+                await page.wait_for_load_state("networkidle", timeout=15000)
+            except Exception:
+                pass  # Some heavy pages never reach networkidle
             await page.wait_for_timeout(2000)
 
             # Try to find and fill zip/location input fields

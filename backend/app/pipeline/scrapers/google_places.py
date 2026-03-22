@@ -80,7 +80,11 @@ async def _scrape_google_maps_query(
                     locale="en-US",
                 )
                 page = await context.new_page()
-                await page.goto(maps_url, wait_until="networkidle", timeout=45000)
+                await page.goto(maps_url, wait_until="domcontentloaded", timeout=45000)
+                try:
+                    await page.wait_for_load_state("networkidle", timeout=15000)
+                except Exception:
+                    pass
                 await page.wait_for_timeout(3000)
 
                 # Handle Google consent/cookie banners

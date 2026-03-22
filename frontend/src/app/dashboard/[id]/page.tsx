@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState, useCallback } from "react";
+import { useEffect, useState, useCallback, useRef } from "react";
 import { useRouter, useParams } from "next/navigation";
 import Link from "next/link";
 import { useAuth } from "@/context/AuthContext";
@@ -25,6 +25,8 @@ function getStageDescription(
   dealerCount?: number,
 ): string {
   switch (status) {
+    case "pending":
+      return "Queued — starting pipeline...";
     case "searching":
       return `Searching for dealers${zipCode ? ` near ${zipCode}` : ""}...`;
     case "enriching":
@@ -41,6 +43,8 @@ function getStageDescription(
       return "";
   }
 }
+
+const ACTIVE_STATUSES = new Set(["pending", "searching", "enriching", "sending"]);
 
 function PipelineProgress({ status }: { status: string }) {
   const stageIndex = PIPELINE_STAGES.findIndex((s) => s.key === status);
@@ -91,6 +95,7 @@ export default function QuoteRequestDetailPage() {
   const [replies, setReplies] = useState<Reply[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
+  const prevStatus = useRef<string>("");
 
   const fetchAll = useCallback(async () => {
     try {
@@ -103,11 +108,14 @@ export default function QuoteRequestDetailPage() {
       setDealers(dealerData);
       setReplies(replyData);
     } catch (err) {
-      setError(err instanceof Error ? err.message : "Failed to load data.");
+      // Don't overwrite data with error on polling failures
+      if (!qr) {
+        setError(err instanceof Error ? err.message : "Failed to load data.");
+      }
     } finally {
       setLoading(false);
     }
-  }, [id]);
+  }, [id, qr]);
 
   useEffect(() => {
     if (authLoading) return;
@@ -121,6 +129,8 @@ export default function QuoteRequestDetailPage() {
   const handleSSEEvent = useCallback(() => {
     fetchAll();
   }, [fetchAll]);
+
+  const isActive = qr ? ACTIVE_STATUSES.has(qr.status) : false;
 
   if (authLoading || loading) {
     return (
@@ -153,12 +163,12 @@ export default function QuoteRequestDetailPage() {
     );
   }
 
-  const dealerCount = dealers.length || qr.dealers.length;
-  const replyCount = replies.length || qr.replies.length;
+  const dealerCount = dealers.length;
+  const replyCount = replies.length;
 
   return (
     <div className="mx-auto max-w-5xl px-4 py-10 sm:px-6">
-      {/* Back + Live */}
+      {/* Back */}
       <div className="flex items-center justify-between mb-6">
         <Link
           href="/dashboard"
@@ -169,7 +179,6 @@ export default function QuoteRequestDetailPage() {
           </svg>
           Dashboard
         </Link>
-        <LiveUpdater quoteRequestId={id} onEvent={handleSSEEvent} />
       </div>
 
       {/* Header */}
@@ -207,11 +216,18 @@ export default function QuoteRequestDetailPage() {
         {/* Pipeline progress */}
         <div className="mt-6">
           <PipelineProgress status={qr.status} />
-          {qr.status !== "completed" && (
-            <p className="mt-2 text-center text-xs text-slate-500">
-              {getStageDescription(qr.status, qr.zip_code, dealerCount)}
-            </p>
-          )}
+          <p className="mt-2 text-center text-xs text-slate-500">
+            {getStageDescription(qr.status, qr.zip_code, dealerCount)}
+          </p>
+        </div>
+
+        {/* Live updater with activity log */}
+        <div className="mt-4 border-t border-slate-800 pt-4">
+          <LiveUpdater
+            quoteRequestId={id}
+            onEvent={handleSSEEvent}
+            isActive={isActive}
+          />
         </div>
       </div>
 

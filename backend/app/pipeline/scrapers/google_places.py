@@ -22,12 +22,48 @@ async def search_google_places(
     zip_code: str,
     radius_miles: int,
 ) -> List[Dict[str, str]]:
-    """Search Google Maps for dealers using Playwright (no API key needed)."""
+    """Search Google Maps for dealers using Playwright (no API key needed).
+
+    Runs multiple search queries to maximize dealer coverage.
+    """
+    from playwright.async_api import async_playwright
+    import asyncio
+
+    # Build multiple search queries to improve coverage
+    queries = []
+    if brand:
+        queries.append(f"{brand} dealer near {zip_code}")
+        queries.append(f"{brand} authorized dealer near {zip_code}")
+    queries.append(f"{product} dealer near {zip_code}")
+    # Generic fallback based on product category
+    product_lower = product.lower()
+    if any(w in product_lower for w in ["grill", "bbq", "smoker", "outdoor kitchen"]):
+        queries.append(f"BBQ grill store near {zip_code}")
+    elif any(w in product_lower for w in ["fireplace", "stove", "hearth", "insert"]):
+        queries.append(f"fireplace dealer near {zip_code}")
+    elif any(w in product_lower for w in ["hot tub", "spa", "jacuzzi"]):
+        queries.append(f"hot tub dealer near {zip_code}")
+    elif any(w in product_lower for w in ["refrigerator", "range", "oven", "dishwasher", "appliance", "rangetop"]):
+        queries.append(f"luxury appliance dealer near {zip_code}")
+
+    all_dealers: List[Dict[str, str]] = []
+    for query in queries[:3]:  # Cap at 3 queries to avoid being too slow
+        result = await _scrape_google_maps_query(query, zip_code, radius_miles)
+        all_dealers.extend(result)
+
+    logger.info("Google Maps total: %d dealers from %d queries", len(all_dealers), min(len(queries), 3))
+    return all_dealers
+
+
+async def _scrape_google_maps_query(
+    query: str,
+    zip_code: str,
+    radius_miles: int,
+) -> List[Dict[str, str]]:
+    """Scrape a single Google Maps query."""
     from playwright.async_api import async_playwright
 
-    query = f"{brand} dealer near {zip_code} USA" if brand else f"{product} store near {zip_code} USA"
     maps_url = f"https://www.google.com/maps/search/{query.replace(' ', '+')}?hl=en&gl=us"
-
     logger.info("Scraping Google Maps for '%s'", query)
 
     try:

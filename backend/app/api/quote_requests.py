@@ -17,7 +17,7 @@ from sqlalchemy.orm import selectinload
 from app.database import get_session
 from app.models.dealer import Dealer
 from app.models.pipeline_job import PipelineJob, PipelineJobStatus
-from app.models.quote_request import QuoteRequest
+from app.models.quote_request import QuoteRequest, QuoteRequestStatus
 from app.models.reply import Reply
 from app.models.user import User
 from app.schemas.quote_request import (
@@ -147,15 +147,19 @@ async def create_quote_request(
     dependencies=[Depends(RateLimit(max_requests=30, window_seconds=60))],
 )
 async def list_quote_requests(
+    include_archived: bool = False,
     current_user: User = Depends(get_current_user),
     session: AsyncSession = Depends(get_session),
 ):
-    result = await session.execute(
+    query = (
         select(QuoteRequest)
         .where(QuoteRequest.user_id == current_user.id)
         .options(selectinload(QuoteRequest.dealers), selectinload(QuoteRequest.replies))
         .order_by(QuoteRequest.created_at.desc())
     )
+    if not include_archived:
+        query = query.where(QuoteRequest.status != QuoteRequestStatus.archived)
+    result = await session.execute(query)
     requests = result.scalars().all()
 
     return [
@@ -210,3 +214,49 @@ async def get_quote_request(
         dealers=qr.dealers,
         replies=qr.replies,
     )
+
+
+@router.patch("/{quote_request_id}/archive", response_model=QuoteRequestResponse)
+async def archive_quote_request(
+    quote_request_id: uuid.UUID,
+    current_user: User = Depends(get_current_user),
+    session: AsyncSession = Depends(get_session),
+):
+    qr = await _get_user_quote_request(quote_request_id, current_user, session)
+    qr.status = QuoteRequestStatus.archived
+    await session.flush()
+
+    # Reload with relationships for counts
+    result = await session.execute(
+        select(QuoteRequest)
+        .where(QuoteRequest.id == qr.id)
+        .options(selectinload(QuoteRequest.dealers), selectinload(QuoteRequest.replies))
+    )
+    qr = result.scalar_one()
+
+    return QuoteRequestResponse(
+        id=qr.id,
+        product_name=qr.product_name,
+        brand=qr.brand,
+        specs=qr.specs,
+        zip_code=qr.zip_code,
+        radius_miles=qr.radius_miles,
+        dealer_locator_url=qr.dealer_locator_url,
+        reference_code=qr.reference_code,
+        status=qr.status.value,
+        created_at=qr.created_at,
+        updated_at=qr.updated_at,
+        dealer_count=len(qr.dealers),
+        reply_count=len(qr.replies),
+    )
+
+
+@router.delete("/{quote_request_id}", status_code=status.HTTP_204_NO_CONTENT)
+async def delete_quote_request(
+    quote_request_id: uuid.UUID,
+    current_user: User = Depends(get_current_user),
+    session: AsyncSession = Depends(get_session),
+):
+    qr = await _get_user_quote_request(quote_request_id, current_user, session)
+    await session.delete(qr)
+    await session.flush()

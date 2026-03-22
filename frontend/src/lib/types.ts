@@ -14,7 +14,8 @@ export type QuoteRequestStatus =
   | "sending"
   | "monitoring"
   | "completed"
-  | "failed";
+  | "failed"
+  | "archived";
 
 export interface QuoteRequest {
   id: string;

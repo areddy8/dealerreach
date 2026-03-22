@@ -11,6 +11,7 @@ const config: Record<string, { bg: string; text: string; pulse?: boolean }> = {
   sending: { bg: "bg-blue-900/60", text: "text-blue-400", pulse: true },
   monitoring: { bg: "bg-amber-900/60", text: "text-amber-400" },
   completed: { bg: "bg-emerald-900/60", text: "text-emerald-400" },
+  archived: { bg: "bg-slate-700", text: "text-slate-400" },
   failed: { bg: "bg-red-900/60", text: "text-red-400" },
   sent: { bg: "bg-blue-900/60", text: "text-blue-400" },
   replied: { bg: "bg-emerald-900/60", text: "text-emerald-400" },

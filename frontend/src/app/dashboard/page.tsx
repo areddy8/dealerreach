@@ -1,10 +1,10 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { useAuth } from "@/context/AuthContext";
-import { listQuoteRequests } from "@/lib/api";
+import { listQuoteRequests, archiveQuoteRequest, deleteQuoteRequest } from "@/lib/api";
 import type { QuoteRequest } from "@/lib/types";
 import StatusBadge from "@/components/StatusBadge";
 
@@ -14,6 +14,8 @@ export default function DashboardPage() {
   const [requests, setRequests] = useState<QuoteRequest[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
+  const [openMenuId, setOpenMenuId] = useState<string | null>(null);
+  const menuRef = useRef<HTMLDivElement>(null);
 
   const fetchRequests = () => {
     setError("");
@@ -34,6 +36,37 @@ export default function DashboardPage() {
     fetchRequests();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user, authLoading, router]);
+
+  useEffect(() => {
+    function handleClickOutside(e: MouseEvent) {
+      if (menuRef.current && !menuRef.current.contains(e.target as Node)) {
+        setOpenMenuId(null);
+      }
+    }
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
+
+  const handleArchive = async (id: string) => {
+    setOpenMenuId(null);
+    try {
+      await archiveQuoteRequest(id);
+      setRequests((prev) => prev.filter((r) => r.id !== id));
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Failed to archive request");
+    }
+  };
+
+  const handleDelete = async (id: string) => {
+    setOpenMenuId(null);
+    if (!window.confirm("Are you sure? This cannot be undone.")) return;
+    try {
+      await deleteQuoteRequest(id);
+      setRequests((prev) => prev.filter((r) => r.id !== id));
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Failed to delete request");
+    }
+  };
 
   if (authLoading || (!user && !error)) {
     return (
@@ -109,49 +142,91 @@ export default function DashboardPage() {
       ) : (
         <div className="mt-6 space-y-3">
           {requests.map((qr) => (
-            <Link
+            <div
               key={qr.id}
-              href={`/dashboard/${qr.id}`}
-              className="block rounded-xl border border-slate-800 bg-slate-900 p-5 transition-colors hover:border-slate-700 hover:bg-slate-800/60"
+              className="relative rounded-xl border border-slate-800 bg-slate-900 p-5 transition-colors hover:border-slate-700 hover:bg-slate-800/60"
             >
-              <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-                <div className="min-w-0 flex-1">
-                  <div className="flex items-center gap-3">
-                    <h3 className="truncate font-semibold text-white">
-                      {qr.product_name}
-                    </h3>
-                    <StatusBadge status={qr.status} />
+              <Link
+                href={`/dashboard/${qr.id}`}
+                className="block"
+              >
+                <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+                  <div className="min-w-0 flex-1">
+                    <div className="flex items-center gap-3">
+                      <h3 className="truncate font-semibold text-white">
+                        {qr.product_name}
+                      </h3>
+                      <StatusBadge status={qr.status} />
+                    </div>
+                    <div className="mt-1 flex flex-wrap items-center gap-x-4 gap-y-1 text-sm text-slate-400">
+                      {qr.brand && <span>{qr.brand}</span>}
+                      <span className="font-mono text-xs text-slate-500">
+                        #{qr.reference_code}
+                      </span>
+                    </div>
                   </div>
-                  <div className="mt-1 flex flex-wrap items-center gap-x-4 gap-y-1 text-sm text-slate-400">
-                    {qr.brand && <span>{qr.brand}</span>}
-                    <span className="font-mono text-xs text-slate-500">
-                      #{qr.reference_code}
-                    </span>
+                  <div className="flex items-center gap-6 pr-8 text-sm text-slate-400">
+                    <div className="text-center">
+                      <p className="text-lg font-semibold text-white">
+                        {qr.dealer_count}
+                      </p>
+                      <p className="text-xs text-slate-500">Dealers</p>
+                    </div>
+                    <div className="text-center">
+                      <p className="text-lg font-semibold text-emerald-400">
+                        {qr.reply_count}
+                      </p>
+                      <p className="text-xs text-slate-500">Replies</p>
+                    </div>
+                    <div className="hidden text-right text-xs text-slate-500 sm:block">
+                      {new Date(qr.created_at).toLocaleDateString("en-US", {
+                        month: "short",
+                        day: "numeric",
+                        year: "numeric",
+                      })}
+                    </div>
                   </div>
                 </div>
-                <div className="flex items-center gap-6 text-sm text-slate-400">
-                  <div className="text-center">
-                    <p className="text-lg font-semibold text-white">
-                      {qr.dealer_count}
-                    </p>
-                    <p className="text-xs text-slate-500">Dealers</p>
+              </Link>
+              <div className="absolute right-4 top-4" ref={openMenuId === qr.id ? menuRef : undefined}>
+                <button
+                  onClick={(e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    setOpenMenuId(openMenuId === qr.id ? null : qr.id);
+                  }}
+                  className="rounded-md p-1 text-slate-500 transition-colors hover:bg-slate-700 hover:text-slate-300"
+                >
+                  <svg className="h-5 w-5" fill="currentColor" viewBox="0 0 20 20">
+                    <path d="M10 6a2 2 0 110-4 2 2 0 010 4zM10 12a2 2 0 110-4 2 2 0 010 4zM10 18a2 2 0 110-4 2 2 0 010 4z" />
+                  </svg>
+                </button>
+                {openMenuId === qr.id && (
+                  <div className="absolute right-0 z-10 mt-1 w-36 rounded-lg border border-slate-700 bg-slate-800 py-1 shadow-lg">
+                    <button
+                      onClick={(e) => {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        handleArchive(qr.id);
+                      }}
+                      className="flex w-full items-center px-3 py-2 text-sm text-slate-300 transition-colors hover:bg-slate-700"
+                    >
+                      Archive
+                    </button>
+                    <button
+                      onClick={(e) => {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        handleDelete(qr.id);
+                      }}
+                      className="flex w-full items-center px-3 py-2 text-sm text-red-400 transition-colors hover:bg-slate-700"
+                    >
+                      Delete
+                    </button>
                   </div>
-                  <div className="text-center">
-                    <p className="text-lg font-semibold text-emerald-400">
-                      {qr.reply_count}
-                    </p>
-                    <p className="text-xs text-slate-500">Replies</p>
-                  </div>
-                  <div className="hidden text-right text-xs text-slate-500 sm:block">
-                    {new Date(qr.created_at).toLocaleDateString("en-US", {
-                      month: "short",
-                      day: "numeric",
-                      year: "numeric",
-                    })}
-                  </div>
-                </div>
+                )}
               </div>
-            </Link>
+            </div>
           ))}
         </div>
       )}

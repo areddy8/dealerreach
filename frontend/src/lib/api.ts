@@ -111,6 +111,14 @@ export async function getQuoteRequest(id: string): Promise<QuoteRequestDetail> {
   return fetchApi<QuoteRequestDetail>(`/quote-requests/${id}`);
 }
 
+export async function archiveQuoteRequest(id: string): Promise<QuoteRequest> {
+  return fetchApi<QuoteRequest>(`/quote-requests/${id}/archive`, { method: "PATCH" });
+}
+
+export async function deleteQuoteRequest(id: string): Promise<void> {
+  return fetchApi<void>(`/quote-requests/${id}`, { method: "DELETE" });
+}
+
 // ── Dealers ──
 
 export async function getDealers(quoteRequestId: string): Promise<Dealer[]> {

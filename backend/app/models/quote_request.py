@@ -16,6 +16,7 @@ class QuoteRequestStatus(str, enum.Enum):
     sending = "sending"
     monitoring = "monitoring"
     completed = "completed"
+    archived = "archived"
 
 
 class QuoteRequest(Base, UUIDPrimaryKey, TimestampMixin):

@@ -10,6 +10,9 @@ import StatusBadge from "@/components/StatusBadge";
 import DealerTable from "@/components/DealerTable";
 import ReplyCard from "@/components/ReplyCard";
 import LiveUpdater from "@/components/LiveUpdater";
+import dynamic from "next/dynamic";
+
+const DealerMap = dynamic(() => import("@/components/DealerMap"), { ssr: false });
 
 const PIPELINE_STAGES = [
   { key: "searching", label: "Searching" },
@@ -245,6 +248,11 @@ export default function QuoteRequestDetailPage() {
             ))}
           </div>
         </section>
+      )}
+
+      {/* Dealer map */}
+      {dealers.length > 0 && (
+        <DealerMap dealers={dealers} zipCode={qr.zip_code} />
       )}
 
       {/* Dealers table */}

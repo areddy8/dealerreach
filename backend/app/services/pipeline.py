@@ -272,14 +272,26 @@ async def run_pipeline(
         "errors": [],
     })
 
+    # Auto-discover dealer locator URL if not provided
+    dealer_locator_url = qr.dealer_locator_url
+    if not dealer_locator_url and qr.brand:
+        try:
+            from app.pipeline.scrapers.dealer_locator import discover_dealer_locator_url
+            discovered = await discover_dealer_locator_url(qr.brand)
+            if discovered:
+                dealer_locator_url = discovered
+                logger.info("Auto-discovered dealer locator: %s", discovered)
+        except Exception:
+            logger.warning("Dealer locator auto-discovery failed", exc_info=True)
+
     # Run scrapers in parallel
     tasks = [
         _search_google_places(qr.product_name, qr.brand, qr.zip_code, qr.radius_miles),
         _search_yelp(qr.product_name, qr.brand, qr.zip_code, qr.radius_miles),
     ]
-    if qr.dealer_locator_url:
+    if dealer_locator_url:
         tasks.append(
-            _search_dealer_locator(qr.dealer_locator_url, qr.zip_code, qr.radius_miles)
+            _search_dealer_locator(dealer_locator_url, qr.zip_code, qr.radius_miles)
         )
 
     scraper_results = await asyncio.gather(*tasks, return_exceptions=True)

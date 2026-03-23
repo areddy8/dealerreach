@@ -47,65 +47,56 @@ export default function DealerMap({ dealers, zipCode }: DealerMapProps) {
     mapRef.current = map;
     geocoderRef.current = new google.maps.Geocoder();
 
-    // Geocode the zip code for center
+    // Geocode the zip code for center FIRST, then geocode dealers
     geocoderRef.current.geocode({ address: `${zipCode}, USA` }, (results, status) => {
+      const zipCenter = { lat: 39.8, lng: -98.5 };
       if (status === "OK" && results && results[0]) {
         const loc = results[0].geometry.location;
-        setCenter({ lat: loc.lat(), lng: loc.lng() });
-        map.setCenter(loc);
-        map.setZoom(10);
+        zipCenter.lat = loc.lat();
+        zipCenter.lng = loc.lng();
       }
-    });
+      setCenter(zipCenter);
+      map.setCenter(zipCenter);
+      map.setZoom(10);
 
-    // Geocode all dealers
-    const dealerCoords: DealerCoord[] = [];
-    let completed = 0;
+      // Now geocode all dealers
+      const dealerCoords: DealerCoord[] = [];
+      let completed = 0;
 
-    dealers.forEach((dealer, i) => {
-      const address = [dealer.address, dealer.city, dealer.state, dealer.zip_code]
-        .filter(Boolean)
-        .join(", ");
-      if (!address || address.length < 5) {
-        completed++;
-        if (completed === dealers.length) {
-          setCoords(dealerCoords);
-          setLoading(false);
-          fitBounds(map, dealerCoords);
-        }
-        return;
-      }
+      dealers.forEach((dealer, i) => {
+        // Build the best address string possible
+        const parts = [dealer.address, dealer.city, dealer.state, dealer.zip_code].filter(Boolean);
+        // If we only have the dealer name, try geocoding with name + zip area
+        const address = parts.length >= 2
+          ? parts.join(", ")
+          : `${dealer.name}, ${zipCode}, USA`;
 
-      // Stagger requests slightly to avoid rate limiting
-      setTimeout(() => {
-        geocoderRef.current?.geocode({ address }, (results, status) => {
-          if (status === "OK" && results && results[0]) {
-            const loc = results[0].geometry.location;
-            dealerCoords.push({
-              dealer,
-              lat: loc.lat(),
-              lng: loc.lng(),
-            });
-          }
-          completed++;
-          // Update markers progressively
-          setCoords([...dealerCoords]);
-          if (completed === dealers.length) {
-            setLoading(false);
-            fitBounds(map, dealerCoords);
-          }
-        });
-      }, i * 200); // 200ms between requests
+        setTimeout(() => {
+          geocoderRef.current?.geocode({ address }, (results, status) => {
+            if (status === "OK" && results && results[0]) {
+              const loc = results[0].geometry.location;
+              dealerCoords.push({
+                dealer,
+                lat: loc.lat(),
+                lng: loc.lng(),
+              });
+            }
+            completed++;
+            setCoords([...dealerCoords]);
+            if (completed === dealers.length) {
+              setLoading(false);
+              if (dealerCoords.length > 0) {
+                const bounds = new google.maps.LatLngBounds();
+                bounds.extend(zipCenter);
+                dealerCoords.forEach((dc) => bounds.extend({ lat: dc.lat, lng: dc.lng }));
+                map.fitBounds(bounds, { top: 40, right: 40, bottom: 40, left: 40 });
+              }
+            }
+          });
+        }, i * 150);
+      });
     });
   }, [dealers, zipCode]);
-
-  function fitBounds(map: google.maps.Map, dealerCoords: DealerCoord[]) {
-    if (dealerCoords.length === 0) return;
-    const bounds = new google.maps.LatLngBounds();
-    dealerCoords.forEach((dc) => bounds.extend({ lat: dc.lat, lng: dc.lng }));
-    // Also include the center (user location)
-    bounds.extend(center);
-    map.fitBounds(bounds, { top: 40, right: 40, bottom: 40, left: 40 });
-  }
 
   if (dealers.length === 0) return null;
 

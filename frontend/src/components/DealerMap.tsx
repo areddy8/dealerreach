@@ -147,7 +147,7 @@ export default function DealerMap({ dealers, zipCode }: DealerMapProps) {
           <Marker
             position={center}
             icon={{
-              path: google.maps.SymbolPath.CIRCLE,
+              path: 0, // google.maps.SymbolPath.CIRCLE
               scale: 10,
               fillColor: "#10B981",
               fillOpacity: 0.9,
@@ -164,7 +164,7 @@ export default function DealerMap({ dealers, zipCode }: DealerMapProps) {
               position={{ lat: dc.lat, lng: dc.lng }}
               onClick={() => setSelectedDealer(dc)}
               icon={{
-                path: google.maps.SymbolPath.CIRCLE,
+                path: 0, // google.maps.SymbolPath.CIRCLE
                 scale: 9,
                 fillColor: "#3B82F6",
                 fillOpacity: 0.9,

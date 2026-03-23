@@ -13,16 +13,17 @@ RUN apt-get update && \
     rm -rf /var/lib/apt/lists/*
 
 # Install Python dependencies
-COPY backend/requirements.txt .
-RUN pip install --no-cache-dir -r requirements.txt
+COPY backend/requirements.txt /tmp/requirements.txt
+RUN pip install --no-cache-dir -r /tmp/requirements.txt && rm /tmp/requirements.txt
 
 # Install Playwright Chromium binary
 RUN playwright install chromium
 
-# Bust cache on code changes
-ARG CACHE_BUST=1
-# Copy backend code
-COPY backend/ .
+# Copy backend code — no cache
+COPY backend/ /app/
+
+# Verify filter code is present
+RUN grep -q "_exclude" /app/app/services/pipeline.py && echo "FILTER CODE PRESENT" || echo "FILTER CODE MISSING"
 
 # Run ARQ worker
 CMD ["arq", "app.workers.tasks.WorkerSettings"]

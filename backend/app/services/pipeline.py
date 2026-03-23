@@ -306,7 +306,23 @@ async def run_pipeline(
             valid_results.append(res)
 
     merged = _merge_dealers(valid_results)
-    logger.info("Found %d unique dealers for QR %s", len(merged), quote_request_id)
+
+    # Filter out repair/service companies — only keep dealers and retail stores
+    _exclude = [
+        "repair", "support", "fix", "maintenance", "parts",
+        "technician", "tech", "plumber", "plumbing", "hvac",
+        "handyman", "restoration", "hauling", "cleaning",
+    ]
+    filtered = []
+    for d in merged:
+        name_lower = d.get("name", "").lower()
+        if any(kw in name_lower for kw in _exclude):
+            logger.warning("Filtered out non-dealer: %s", d.get("name"))
+            continue
+        filtered.append(d)
+    logger.warning("Dealers: %d found, %d after filtering for QR %s",
+                    len(merged), len(filtered), quote_request_id)
+    merged = filtered
 
     # Save Dealer records to DB
     dealer_records: List[Dealer] = []

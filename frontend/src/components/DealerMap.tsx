@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useRef, useState } from "react";
 import {
   GoogleMap,
   LoadScript,
@@ -10,6 +10,7 @@ import {
 import type { Dealer } from "@/lib/types";
 
 const GOOGLE_MAPS_KEY = process.env.NEXT_PUBLIC_GOOGLE_MAPS_KEY || "";
+const LIBRARIES: ("places")[] = ["places"];
 
 const MAP_STYLES = [
   { elementType: "geometry", stylers: [{ color: "#1d2c4d" }] },
@@ -22,7 +23,7 @@ const MAP_STYLES = [
   { featureType: "transit", elementType: "geometry", stylers: [{ color: "#2f3948" }] },
 ];
 
-const containerStyle = { width: "100%", height: "400px" };
+const containerStyle = { width: "100%", height: "420px" };
 
 interface DealerCoord {
   dealer: Dealer;
@@ -37,79 +38,82 @@ interface DealerMapProps {
 
 export default function DealerMap({ dealers, zipCode }: DealerMapProps) {
   const [coords, setCoords] = useState<DealerCoord[]>([]);
-  const [center, setCenter] = useState<{ lat: number; lng: number }>({ lat: 39.8, lng: -98.5 });
+  const [center, setCenter] = useState<{ lat: number; lng: number } | null>(null);
   const [selectedDealer, setSelectedDealer] = useState<DealerCoord | null>(null);
   const [loading, setLoading] = useState(true);
-  const geocoderRef = useRef<google.maps.Geocoder | null>(null);
+  const [plotted, setPlotted] = useState(0);
   const mapRef = useRef<google.maps.Map | null>(null);
 
   const onMapLoad = useCallback((map: google.maps.Map) => {
     mapRef.current = map;
-    geocoderRef.current = new google.maps.Geocoder();
+    const geocoder = new google.maps.Geocoder();
+    const placesService = new google.maps.places.PlacesService(map);
 
-    // Geocode zip code using component restrictions for accuracy
-    geocoderRef.current.geocode(
-      { address: zipCode, componentRestrictions: { country: "US" } },
-      (results, status) => {
-        const zipCenter = { lat: 37.3, lng: -121.9 }; // fallback: San Jose
-        if (status === "OK" && results && results[0]) {
-          const loc = results[0].geometry.location;
-          zipCenter.lat = loc.lat();
-          zipCenter.lng = loc.lng();
-        }
-        setCenter(zipCenter);
-        map.setCenter(zipCenter);
-        map.setZoom(10);
+    // Step 1: Geocode the zip code
+    geocoder.geocode({ address: zipCode, region: "us" }, (results, status) => {
+      let zipLat = 37.3382;
+      let zipLng = -121.8863;
+      if (status === "OK" && results && results[0]) {
+        zipLat = results[0].geometry.location.lat();
+        zipLng = results[0].geometry.location.lng();
+      }
+      setCenter({ lat: zipLat, lng: zipLng });
+      map.setCenter({ lat: zipLat, lng: zipLng });
+      map.setZoom(10);
 
-        // Now geocode all dealers
-        const dealerCoords: DealerCoord[] = [];
-        let completed = 0;
+      // Step 2: Find each dealer using Places API text search
+      const dealerCoords: DealerCoord[] = [];
+      let completed = 0;
+      const total = dealers.length;
 
-        if (dealers.length === 0) {
-          setLoading(false);
-          return;
-        }
+      if (total === 0) {
+        setLoading(false);
+        return;
+      }
 
-        dealers.forEach((dealer, i) => {
-          // Build the best geocoding query
-          const parts = [dealer.address, dealer.city, dealer.state, dealer.zip_code].filter(Boolean);
-          let address: string;
-          if (parts.length >= 2) {
-            address = parts.join(", ") + ", USA";
-          } else if (dealer.phone) {
-            // Use dealer name + phone area for geocoding
-            address = `${dealer.name} near ${zipCode}`;
-          } else {
-            address = `${dealer.name}, ${zipCode}`;
-          }
+      dealers.forEach((dealer, i) => {
+        setTimeout(() => {
+          const query = dealer.address && dealer.city
+            ? `${dealer.name}, ${dealer.city}, ${dealer.state || ""}`
+            : `${dealer.name} near ${zipCode}`;
 
-          setTimeout(() => {
-            geocoderRef.current?.geocode(
-              { address, componentRestrictions: { country: "US" } },
-              (results, geoStatus) => {
-                if (geoStatus === "OK" && results && results[0]) {
-                  const loc = results[0].geometry.location;
-                  dealerCoords.push({
-                    dealer,
-                    lat: loc.lat(),
-                    lng: loc.lng(),
-                  });
-                }
-                completed++;
-                setCoords([...dealerCoords]);
-                if (completed === dealers.length) {
-                  setLoading(false);
-                  if (dealerCoords.length > 0) {
-                    const bounds = new google.maps.LatLngBounds();
-                    bounds.extend(zipCenter);
-                    dealerCoords.forEach((dc) => bounds.extend({ lat: dc.lat, lng: dc.lng }));
-                    map.fitBounds(bounds, { top: 40, right: 40, bottom: 40, left: 40 });
-                  }
-                }
-              },
-            );
-          }, i * 200);
-        });
+          const request = {
+            query,
+            location: new google.maps.LatLng(zipLat, zipLng),
+            radius: 80000, // 50 miles in meters
+          };
+
+          placesService.textSearch(request, (placeResults, placeStatus) => {
+            if (
+              placeStatus === google.maps.places.PlacesServiceStatus.OK &&
+              placeResults &&
+              placeResults[0] &&
+              placeResults[0].geometry?.location
+            ) {
+              const loc = placeResults[0].geometry.location;
+              dealerCoords.push({
+                dealer,
+                lat: loc.lat(),
+                lng: loc.lng(),
+              });
+            }
+
+            completed++;
+            setPlotted(completed);
+            setCoords([...dealerCoords]);
+
+            if (completed === total) {
+              setLoading(false);
+              if (dealerCoords.length > 0) {
+                const bounds = new google.maps.LatLngBounds();
+                bounds.extend({ lat: zipLat, lng: zipLng });
+                dealerCoords.forEach((dc) => bounds.extend({ lat: dc.lat, lng: dc.lng }));
+                map.fitBounds(bounds, { top: 50, right: 50, bottom: 50, left: 50 });
+              }
+            }
+          });
+        }, i * 300); // 300ms between to avoid rate limits
+      });
     });
   }, [dealers, zipCode]);
 
@@ -130,14 +134,19 @@ export default function DealerMap({ dealers, zipCode }: DealerMapProps) {
         {loading && (
           <span className="text-xs text-slate-500 flex items-center gap-2">
             <span className="h-3 w-3 animate-spin rounded-full border border-slate-600 border-t-blue-500" />
-            Plotting {coords.length}/{dealers.length} dealers...
+            Plotting {plotted}/{dealers.length} dealers...
+          </span>
+        )}
+        {!loading && coords.length > 0 && (
+          <span className="text-xs text-slate-500">
+            {coords.length} of {dealers.length} plotted
           </span>
         )}
       </div>
-      <LoadScript googleMapsApiKey={GOOGLE_MAPS_KEY}>
+      <LoadScript googleMapsApiKey={GOOGLE_MAPS_KEY} libraries={LIBRARIES}>
         <GoogleMap
           mapContainerStyle={containerStyle}
-          center={center}
+          center={center || { lat: 37.3, lng: -121.9 }}
           zoom={10}
           onLoad={onMapLoad}
           options={{
@@ -149,28 +158,30 @@ export default function DealerMap({ dealers, zipCode }: DealerMapProps) {
             fullscreenControl: true,
           }}
         >
-          {/* User location marker */}
-          <Marker
-            position={center}
-            icon={{
-              path: 0, // google.maps.SymbolPath.CIRCLE
-              scale: 10,
-              fillColor: "#10B981",
-              fillOpacity: 0.9,
-              strokeColor: "#059669",
-              strokeWeight: 2,
-            }}
-            title="Your location"
-          />
+          {/* User location marker (green) */}
+          {center && (
+            <Marker
+              position={center}
+              icon={{
+                path: 0,
+                scale: 10,
+                fillColor: "#10B981",
+                fillOpacity: 0.9,
+                strokeColor: "#059669",
+                strokeWeight: 2,
+              }}
+              title={`Your location (${zipCode})`}
+            />
+          )}
 
-          {/* Dealer markers */}
+          {/* Dealer markers (blue) */}
           {coords.map((dc) => (
             <Marker
               key={dc.dealer.id}
               position={{ lat: dc.lat, lng: dc.lng }}
               onClick={() => setSelectedDealer(dc)}
               icon={{
-                path: 0, // google.maps.SymbolPath.CIRCLE
+                path: 0,
                 scale: 9,
                 fillColor: "#3B82F6",
                 fillOpacity: 0.9,
@@ -194,11 +205,13 @@ export default function DealerMap({ dealers, zipCode }: DealerMapProps) {
                 {selectedDealer.dealer.address && (
                   <div>{selectedDealer.dealer.address}</div>
                 )}
-                <div>
-                  {selectedDealer.dealer.city}
-                  {selectedDealer.dealer.state ? `, ${selectedDealer.dealer.state}` : ""}
-                  {selectedDealer.dealer.zip_code ? ` ${selectedDealer.dealer.zip_code}` : ""}
-                </div>
+                {(selectedDealer.dealer.city || selectedDealer.dealer.state) && (
+                  <div>
+                    {selectedDealer.dealer.city}
+                    {selectedDealer.dealer.state ? `, ${selectedDealer.dealer.state}` : ""}
+                    {selectedDealer.dealer.zip_code ? ` ${selectedDealer.dealer.zip_code}` : ""}
+                  </div>
+                )}
                 {selectedDealer.dealer.phone && (
                   <div style={{ marginTop: 4 }}>
                     <a href={`tel:${selectedDealer.dealer.phone}`} style={{ color: "#3B82F6" }}>

@@ -9,11 +9,32 @@ from app.pipeline.utils.json_parser import extract_json
 logger = logging.getLogger(__name__)
 
 _EXTRACT_SYSTEM = (
-    "You are a data extraction assistant. Extract business listings from Google Maps "
-    "search results. Return ONLY a JSON array of objects with these keys: "
+    "You are a data extraction assistant. Extract ONLY authorized dealers, showrooms, "
+    "and retail stores from Google Maps search results. "
+    "EXCLUDE: repair services, support companies, installation services, parts suppliers, "
+    "maintenance companies, and any business with words like 'repair', 'support', 'service', "
+    "'fix', 'maintenance', 'parts', 'technician' in the name. "
+    "Return ONLY a JSON array of objects with these keys: "
     "name, address, city, state, zip_code, phone, website. "
     "Use empty strings for missing fields. No explanation, just the JSON array."
 )
+
+# Words that indicate a business is a repair/service company, not a dealer
+_EXCLUDE_KEYWORDS = [
+    "repair", "support", "service", "fix", "maintenance", "parts",
+    "technician", "tech", "installation", "installer", "plumber",
+    "plumbing", "hvac", "handyman", "restoration", "salvage",
+    "junk", "removal", "hauling", "moving", "cleaning",
+]
+
+
+def _is_dealer(name: str) -> bool:
+    """Return True if the business name looks like a dealer/retailer, not a repair shop."""
+    name_lower = name.lower()
+    for keyword in _EXCLUDE_KEYWORDS:
+        if keyword in name_lower:
+            return False
+    return True
 
 
 async def search_google_places(
@@ -169,11 +190,16 @@ async def _scrape_google_maps_query(
         return []
 
     dealers: List[Dict[str, str]] = []
+    filtered = 0
     for entry in parsed:
         if not isinstance(entry, dict):
             continue
         name = str(entry.get("name", "")).strip()
         if not name:
+            continue
+        if not _is_dealer(name):
+            filtered += 1
+            logger.info("Filtered out non-dealer: %s", name)
             continue
         dealers.append({
             "name": name,
@@ -186,5 +212,5 @@ async def _scrape_google_maps_query(
             "source": "google_maps",
         })
 
-    logger.info("Google Maps scrape returned %d dealers for '%s'", len(dealers), query)
+    logger.info("Google Maps: %d dealers for '%s' (%d filtered out)", len(dealers), query, filtered)
     return dealers

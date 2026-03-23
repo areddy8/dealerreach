@@ -9,11 +9,29 @@ from app.pipeline.utils.json_parser import extract_json
 logger = logging.getLogger(__name__)
 
 _EXTRACT_SYSTEM = (
-    "You are a data extraction assistant. Extract business listings from Yelp "
-    "search results. Return ONLY a JSON array of objects with these keys: "
+    "You are a data extraction assistant. Extract ONLY authorized dealers, showrooms, "
+    "and retail stores from Yelp search results. "
+    "EXCLUDE: repair services, support companies, installation services, parts suppliers, "
+    "maintenance companies, and any business with words like 'repair', 'support', 'service', "
+    "'fix', 'maintenance', 'parts', 'technician' in the name. "
+    "Return ONLY a JSON array of objects with these keys: "
     "name, address, city, state, zip_code, phone, website. "
     "Use empty strings for missing fields. No explanation, just the JSON array."
 )
+
+_EXCLUDE_KEYWORDS = [
+    "repair", "support", "service", "fix", "maintenance", "parts",
+    "technician", "tech", "installation", "installer", "plumber",
+    "plumbing", "hvac", "handyman", "restoration", "salvage",
+]
+
+
+def _is_dealer(name: str) -> bool:
+    name_lower = name.lower()
+    for keyword in _EXCLUDE_KEYWORDS:
+        if keyword in name_lower:
+            return False
+    return True
 
 
 async def search_yelp(
@@ -97,7 +115,7 @@ async def search_yelp(
         if not isinstance(entry, dict):
             continue
         name = str(entry.get("name", "")).strip()
-        if not name:
+        if not name or not _is_dealer(name):
             continue
         dealers.append({
             "name": name,

@@ -121,7 +121,7 @@ def _merge_dealers(all_results: List[List[Dict[str, Any]]]) -> List[Dict[str, An
     seen: Dict[str, Dict[str, Any]] = {}
     for result_set in all_results:
         for dealer in result_set:
-            key = (dealer.get("name", "").lower().strip(), dealer.get("zip_code", ""))
+            key = f"{dealer.get('name', '').lower().strip()}|{dealer.get('zip_code', '')}"
             if key not in seen:
                 seen[key] = dealer
             else:

@@ -22,7 +22,30 @@ jobs:
       - name: Lint with ruff
         run: cd backend && ruff check .
       - name: Type check
-        run: cd backend && mypy app --ignore-missing-imports
+        run: |
+          cd backend
+          mypy app --ignore-missing-imports 2>&1 | tee /tmp/mypy-output.txt
+      - name: Post mypy errors to PR
+        if: failure()
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require('fs');
+            let output = '';
+            try {
+              output = fs.readFileSync('/tmp/mypy-output.txt', 'utf8');
+            } catch (e) {
+              output = 'Could not read mypy output';
+            }
+            const body = `### mypy errors\n\`\`\`\n${output.slice(0, 60000)}\n\`\`\``;
+            if (context.payload.pull_request) {
+              await github.rest.issues.createComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: context.payload.pull_request.number,
+                body: body,
+              });
+            }
 
   backend-test:
     runs-on: ubuntu-latest
@@ -65,7 +88,30 @@ jobs:
           REDIS_URL: redis://localhost:6379/0
           SECRET_KEY: test-secret-key
           ENVIRONMENT: test
-        run: cd backend && python -m pytest tests/ -v --tb=long
+        run: |
+          cd backend
+          python -m pytest tests/ -v --tb=long 2>&1 | tee /tmp/pytest-output.txt
+      - name: Post test errors to PR
+        if: failure()
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require('fs');
+            let output = '';
+            try {
+              output = fs.readFileSync('/tmp/pytest-output.txt', 'utf8');
+            } catch (e) {
+              output = 'Could not read pytest output';
+            }
+            const body = `### pytest errors\n\`\`\`\n${output.slice(-60000)}\n\`\`\``;
+            if (context.payload.pull_request) {
+              await github.rest.issues.createComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: context.payload.pull_request.number,
+                body: body,
+              });
+            }
 
   frontend-lint:
     runs-on: ubuntu-latest

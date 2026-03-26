@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif:wght@400;700&amp;family=Inter:wght@300;400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "error-container": "#ffdad6",
+              "surface-container-low": "#f5f3ee",
+              "secondary-fixed-dim": "#bec6e0",
+              "secondary-container": "#dae2fd",
+              "surface-container": "#f0eee9",
+              "on-secondary-fixed-variant": "#3f465c",
+              "tertiary-fixed-dim": "#b9c7e0",
+              "secondary-fixed": "#dae2fd",
+              "on-primary": "#ffffff",
+              "surface-container-lowest": "#ffffff",
+              "surface": "#fbf9f4",
+              "surface-dim": "#dbdad5",
+              "on-error-container": "#93000a",
+              "surface-container-highest": "#e4e2dd",
+              "on-error": "#ffffff",
+              "on-secondary": "#ffffff",
+              "primary-fixed-dim": "#e9c176",
+              "on-tertiary": "#ffffff",
+              "on-primary-container": "#4e3700",
+              "on-tertiary-fixed": "#0d1c2f",
+              "on-primary-fixed-variant": "#5d4201",
+              "background": "#fbf9f4",
+              "surface-variant": "#e4e2dd",
+              "primary": "#775a19",
+              "on-secondary-fixed": "#131b2e",
+              "error": "#ba1a1a",
+              "surface-bright": "#fbf9f4",
+              "outline": "#7f7667",
+              "on-background": "#1b1c19",
+              "on-tertiary-fixed-variant": "#3a485c",
+              "primary-container": "#c5a059",
+              "on-surface-variant": "#4e4639",
+              "primary-fixed": "#ffdea5",
+              "tertiary-container": "#98a6be",
+              "on-surface": "#1b1c19",
+              "secondary": "#565e74",
+              "outline-variant": "#d1c5b4",
+              "inverse-surface": "#30312e",
+              "inverse-primary": "#e9c176",
+              "surface-container-high": "#eae8e3",
+              "tertiary-fixed": "#d5e3fd",
+              "tertiary": "#515f74",
+              "on-secondary-container": "#5c647a",
+              "surface-tint": "#775a19",
+              "inverse-on-surface": "#f2f1ec",
+              "on-primary-fixed": "#261900",
+              "on-tertiary-container": "#2e3c50"
+            },
+            fontFamily: {
+              "headline": ["Noto Serif"],
+              "body": ["Inter"],
+              "label": ["Inter"]
+            },
+            borderRadius: {"DEFAULT": "0.125rem", "lg": "0.25rem", "xl": "0.5rem", "full": "0.75rem"},
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 300, 'GRAD' 0, 'opsz' 24;
+        }
+        .glass-nav {
+            background: rgba(251, 249, 244, 0.8);
+            backdrop-filter: blur(20px);
+        }
+    </style>
+</head>
+<body class="bg-surface text-on-surface font-body selection:bg-primary-container selection:text-on-primary-container">
+<!-- TopNavBar -->
+<nav class="fixed top-0 w-full z-50 glass-nav">
+<div class="flex justify-between items-center px-6 md:px-12 py-6 w-full max-w-[1920px] mx-auto">
+<div class="text-2xl font-headline tracking-tight text-on-background">The Editorial Atelier</div>
+<div class="hidden md:flex items-center space-x-8">
+<a class="text-on-surface-variant hover:text-primary transition-colors duration-300 font-label text-sm uppercase tracking-widest" href="#">Showrooms</a>
+<a class="text-on-surface-variant hover:text-primary transition-colors duration-300 font-label text-sm uppercase tracking-widest" href="#">Kitchen</a>
+<a class="text-on-surface-variant hover:text-primary transition-colors duration-300 font-label text-sm uppercase tracking-widest" href="#">Fireplaces</a>
+<a class="text-primary border-b border-primary pb-1 font-label text-sm uppercase tracking-widest" href="#">Materials</a>
+<a class="text-on-surface-variant hover:text-primary transition-colors duration-300 font-label text-sm uppercase tracking-widest" href="#">Journal</a>
+</div>
+<div class="flex items-center space-x-6 text-primary">
+<button class="material-symbols-outlined transition-transform active:scale-95" data-icon="calendar_today">calendar_today</button>
+<button class="md:hidden material-symbols-outlined" data-icon="menu">menu</button>
+</div>
+</div>
+</nav>
+<main class="pt-32 pb-20">
+<!-- Hero Section -->
+<header class="px-6 md:px-12 max-w-7xl mx-auto mb-24">
+<div class="grid md:grid-cols-2 gap-12 items-end">
+<div>
+<h1 class="font-headline text-5xl md:text-7xl text-on-background leading-tight mb-8">
+                        The Surface <br/><span class="italic text-primary">Language</span>
+</h1>
+<p class="text-secondary text-lg max-w-md leading-relaxed">
+                        A curated selection of the world's most evocative materials, sourced for their tactile integrity and timeless architectural presence.
+                    </p>
+</div>
+<div class="flex justify-end">
+<button class="group relative flex items-center space-x-4 bg-primary text-on-primary px-8 py-4 rounded-lg overflow-hidden transition-all duration-300 hover:shadow-[0_20px_40px_-15px_rgba(119,90,25,0.2)]">
+<span class="relative z-10 font-medium">Order Material Samples</span>
+<span class="material-symbols-outlined relative z-10 group-hover:translate-x-1 transition-transform" data-icon="arrow_forward">arrow_forward</span>
+<div class="absolute inset-0 bg-gradient-to-tr from-primary to-primary-container opacity-0 group-hover:opacity-100 transition-opacity"></div>
+</button>
+</div>
+</div>
+</header>
+<!-- Materials Bento Grid -->
+<section class="px-6 md:px-12 max-w-[1440px] mx-auto grid grid-cols-1 md:grid-cols-12 gap-8">
+<!-- Carrara Marble (Large Featured) -->
+<div class="md:col-span-8 group relative overflow-hidden bg-surface-container-low rounded-lg aspect-[16/9] md:aspect-auto md:h-[600px]">
+<img class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" data-alt="Close-up of luxury white Carrara marble with elegant grey veining and smooth polished finish in a bright gallery setting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCfTsU1WaHDmBxIg6BscgKIi3zbJClyLgrh-CFaUmVqC5rch3_KiUhF0PprVpRCXO_hrupSUIXlR2kKwFbt7ZRqof-x7G6P089zcdD75hxLi6k57eCtWeXwOfuRMosVhpgpDbMHTLRHRISkG1Kr4PoAmisnWMFzMcgwQe8fObiCeD6YqsGw50gyP8qvbs62LYRKhZvCsQD1uZKRW8WvWNbqcEboHYbrOSHCjwi35ivJdRn_TbajpvCvFV6WZTpTOYd5G6aHQYFNy6Y"/>
+<div class="absolute inset-0 bg-gradient-to-t from-on-background/40 to-transparent"></div>
+<div class="absolute bottom-12 left-12 right-12 md:right-auto md:w-2/3 p-8 bg-surface-container-lowest/95 backdrop-blur-sm shadow-2xl">
+<span class="text-primary font-label text-xs tracking-[0.2em] uppercase mb-4 block">Natural Stone</span>
+<h3 class="font-headline text-3xl mb-4 text-on-background">Carrara Marble</h3>
+<p class="text-secondary text-sm leading-relaxed mb-6">
+                        Excavated from the Apuan Alps, this iconic stone features a luminescent white ground with delicate, feathered charcoal veining. Its historical significance in sculpture translates to a surface of unmatched prestige.
+                    </p>
+<div class="flex items-center space-x-2 text-primary font-medium text-sm">
+<span>Origin: Tuscany, Italy</span>
+</div>
+</div>
+</div>
+<!-- Brushed Brass -->
+<div class="md:col-span-4 group relative overflow-hidden bg-surface-container-low rounded-lg h-[400px] md:h-[600px]">
+<img class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" data-alt="Macro photography of brushed brass texture showing soft golden metallic sheen with linear grain and warm ambient reflections" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBVhWbz0apy7O48rX_2RvhNwYV06OdjrcW4LSEp-0jIUKg4rbmREHgBpx35oMY29e-x5CqkF4sTxs4fwRtwNnAqx9UUcBVRWdKWIC_hrVRbGksrNQT2FCA0PTaHvxNt1QBVM_LXbI5rM6EHf2YQk5QNBiI5BWfOnSilVP5FD6ENrOZrBVojHpsLVsGaumY727TBTIUD8-G36JtvKqjIT3DQkBLu222YaxiMK2gZ5vazU1zrgbKDF2HY3M1nI5OLlYh86EPhQWqnXaI"/>
+<div class="absolute top-8 right-8">
+<div class="w-12 h-12 rounded-full border border-on-surface/10 flex items-center justify-center bg-surface-container-lowest/50 backdrop-blur-sm">
+<span class="material-symbols-outlined text-primary" data-icon="auto_awesome">auto_awesome</span>
+</div>
+</div>
+<div class="absolute bottom-0 left-0 right-0 p-8 bg-surface-container-lowest/90 backdrop-blur-md">
+<h3 class="font-headline text-xl mb-2 text-on-background">Brushed Brass</h3>
+<p class="text-secondary text-xs leading-relaxed">
+                        A living finish that develops a rich patina over time. The mechanical brushing creates a soft, diffused glow that anchors luxury kitchen accents.
+                    </p>
+</div>
+</div>
+<!-- Honed Basalt -->
+<div class="md:col-span-4 group relative overflow-hidden bg-surface-container-low rounded-lg h-[500px]">
+<img class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" data-alt="Matte dark grey honed basalt stone texture with subtle volcanic grain and organic earthy feel in low light" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAuKLnWEuNzXO8xH0nXBxnd_bJ7M06UK4HopcnO5yKpSI5aV-2dZWC5wPE0EXdGvTnNHNirOhx4NDm-lCT4w-BOM648D2lu994l30fRqHklZLnVVIxUYSoqZGCkIoO8Xu1Yj6B3n8CD3_johC_2Wir5hPeVNcZhbQiSAcmalYeKsCvyznqXE6XvWaYI1PUR6GPxIYRPg8DAUkd4Ku1tg-0hqNOg9Xdp-ywOY3o6LU0xwwsd3AwvJ3VLL32O1k484OJPfrQq9uY8v0c"/>
+<div class="absolute inset-0 bg-on-background/10 group-hover:bg-transparent transition-colors duration-500"></div>
+<div class="absolute bottom-8 left-8 right-8 p-6 bg-surface-container-lowest shadow-xl">
+<h3 class="font-headline text-xl mb-2 text-on-background">Honed Basalt</h3>
+<p class="text-secondary text-xs leading-relaxed mb-4">
+                        Dense volcanic rock with a matte, velvet-like finish. Its deep charcoal hue provides a grounding element for minimalist designs.
+                    </p>
+<span class="text-[10px] uppercase tracking-tighter text-on-surface-variant">Character: Stoic &amp; Architectural</span>
+</div>
+</div>
+<!-- Hand-Finished Oak -->
+<div class="md:col-span-4 group relative overflow-hidden bg-surface-container-low rounded-lg h-[500px]">
+<img class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" data-alt="Natural hand-finished oak wood grain with soft knots and organic texture in warm daylight, showing artisanal woodworking" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDyAPvuVxAvhX_T07JiqzE6NA6Kq75V_vVhqYjgU6hZJWckuGPQzph_9P5LcwgvWnReJkRobFsd400CDzItp_P8YHpfprN7t-5i6IjlkQ3hqMKCuA4OzFWaUebG1BOasOg_4uRZk5i5aTaSvDS9ejh6shksn8ZHXZc5cfBDUfHgmrJKIEnON_lKAXQcSiRtoBJ-3DvuOHjbOPS0F3m_lO-6Ebcu8bonwFkGwLl-M9ako_KLSr2zbCRQpOoordyT3SoN-M0APAIBkvI"/>
+<div class="absolute bottom-8 left-8 right-8 p-6 bg-surface-container-lowest shadow-xl">
+<h3 class="font-headline text-xl mb-2 text-on-background">Hand-Finished Oak</h3>
+<p class="text-secondary text-xs leading-relaxed mb-4">
+                        Quarter-sawn and manually treated with organic oils. This timber celebrates the warmth and inherent variation of forest-sourced materials.
+                    </p>
+<span class="text-[10px] uppercase tracking-tighter text-on-surface-variant">Origin: Sustainable European Forests</span>
+</div>
+</div>
+<!-- Smoked Iron -->
+<div class="md:col-span-4 group relative overflow-hidden bg-surface-container-low rounded-lg h-[500px]">
+<img class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" data-alt="Industrial smoked iron surface with dark moody metallic texture and subtle iridescent oxidation marks" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBNF4FLQdVI7UNoHlgIm-N3UDy8EWVEB3ilbAXk79CWPa0Xsq-BnZHVCoWMi-Ei83NznP9Zh1NGgVbfoQg7awqdU5cLmUcagx2Rfa1Zgwvsj6TUUhiqdE_yg8USWRPjtRPAljwpdVA73dwR_3lxE2JeA1kEuI4v5g3PNwVIkfnkPmtUBmhk5mc-UQza4gKXM-SdsBTFOypOoeR3EVVv3EufblM60uu-ZEhPjeflUlcNMshsz4Lgn00z8MFZSlx8UGLCW5AYAjxbB2I"/>
+<div class="absolute inset-0 border-[24px] border-transparent group-hover:border-surface-container-lowest/10 transition-all duration-500"></div>
+<div class="absolute bottom-8 left-8 right-8 p-6 bg-surface-container-lowest shadow-xl">
+<h3 class="font-headline text-xl mb-2 text-on-background">Smoked Iron</h3>
+<p class="text-secondary text-xs leading-relaxed mb-4">
+                        Forged and acid-etched to create a dark, moody depth. It offers a rugged industrial counterpoint to our softer natural stones.
+                    </p>
+<span class="text-[10px] uppercase tracking-tighter text-on-surface-variant">Finish: Hand-Applied Patina</span>
+</div>
+</div>
+</section>
+<!-- Final CTA Section -->
+<section class="mt-40 px-6 md:px-12 max-w-5xl mx-auto text-center">
+<div class="bg-surface-container-low py-20 px-12 rounded-lg relative overflow-hidden">
+<div class="absolute top-0 right-0 w-64 h-64 bg-primary/5 rounded-full -mr-32 -mt-32"></div>
+<div class="absolute bottom-0 left-0 w-64 h-64 bg-secondary/5 rounded-full -ml-32 -mb-32"></div>
+<h2 class="font-headline text-4xl mb-6 relative z-10">Touch the <span class="italic">Difference</span></h2>
+<p class="text-secondary text-lg mb-12 max-w-2xl mx-auto relative z-10">
+                    While digital can inspire, the true nature of these materials must be felt. Request a curated sample box delivered to your studio or residence.
+                </p>
+<div class="flex flex-col md:flex-row justify-center items-center space-y-4 md:space-y-0 md:space-x-6 relative z-10">
+<button class="w-full md:w-auto px-10 py-4 bg-primary text-on-primary font-medium rounded hover:bg-on-primary-fixed-variant transition-colors">
+                        Order Material Samples
+                    </button>
+<button class="w-full md:w-auto px-10 py-4 border border-outline-variant text-on-surface font-medium rounded hover:bg-surface-container-highest transition-colors">
+                        Speak with a Consultant
+                    </button>
+</div>
+</div>
+</section>
+</main>
+<!-- Footer -->
+<footer class="bg-surface w-full py-20 px-6 md:px-12 border-t border-on-background/5">
+<div class="flex flex-col md:flex-row justify-between items-start max-w-7xl mx-auto space-y-12 md:space-y-0">
+<div class="space-y-6">
+<div class="font-headline text-xl text-on-background">The Editorial Atelier</div>
+<p class="text-secondary text-sm max-w-xs leading-relaxed">
+                    Crafting extraordinary interior narratives through curated materials and bespoke architectural elements.
+                </p>
+</div>
+<div class="grid grid-cols-2 gap-12 md:gap-24">
+<div class="flex flex-col space-y-4">
+<h4 class="font-semibold text-xs uppercase tracking-widest text-on-surface">Experience</h4>
+<a class="text-secondary text-sm hover:text-on-background transition-colors" href="#">Showrooms</a>
+<a class="text-secondary text-sm hover:text-on-background transition-colors" href="#">Sustainability</a>
+<a class="text-secondary text-sm hover:text-on-background transition-colors" href="#">Press</a>
+<a class="text-secondary text-sm hover:text-on-background transition-colors" href="#">Careers</a>
+</div>
+<div class="flex flex-col space-y-4">
+<h4 class="font-semibold text-xs uppercase tracking-widest text-on-surface">Legal</h4>
+<a class="text-secondary text-sm hover:text-on-background transition-colors" href="#">Privacy Policy</a>
+<a class="text-secondary text-sm hover:text-on-background transition-colors" href="#">Terms of Service</a>
+</div>
+</div>
+</div>
+<div class="max-w-7xl mx-auto mt-20 pt-8 border-t border-on-background/5 flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0 text-secondary text-[10px] uppercase tracking-[0.2em]">
+<span>© 2024 The Editorial Atelier. All Rights Reserved.</span>
+<div class="flex space-x-8">
+<span>London</span>
+<span>Milan</span>
+<span>New York</span>
+</div>
+</div>
+</footer>
+</body></html>

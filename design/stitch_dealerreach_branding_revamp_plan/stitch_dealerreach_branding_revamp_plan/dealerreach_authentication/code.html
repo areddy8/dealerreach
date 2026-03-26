@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>DealerReach | Sign In</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,400;0,700;1,400&amp;family=Inter:wght@300;400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "secondary-container": "#dae2fd",
+              "background": "#fbf9f4",
+              "surface": "#fbf9f4",
+              "outline-variant": "#d1c5b4",
+              "on-error": "#ffffff",
+              "tertiary-fixed": "#d5e3fd",
+              "surface-container-lowest": "#ffffff",
+              "primary-fixed": "#ffdea5",
+              "on-tertiary-fixed": "#0d1c2f",
+              "tertiary": "#515f74",
+              "inverse-primary": "#e9c176",
+              "on-primary-container": "#4e3700",
+              "on-tertiary": "#ffffff",
+              "tertiary-fixed-dim": "#b9c7e0",
+              "outline": "#7f7667",
+              "primary-container": "#c5a059",
+              "on-secondary-container": "#5c647a",
+              "inverse-surface": "#30312e",
+              "surface-container-low": "#f5f3ee",
+              "on-primary": "#ffffff",
+              "secondary-fixed-dim": "#bec6e0",
+              "error-container": "#ffdad6",
+              "surface-container-high": "#eae8e3",
+              "primary-fixed-dim": "#e9c176",
+              "on-secondary-fixed-variant": "#3f465c",
+              "on-surface-variant": "#4e4639",
+              "surface-tint": "#775a19",
+              "on-background": "#1b1c19",
+              "surface-bright": "#fbf9f4",
+              "on-secondary": "#ffffff",
+              "primary": "#775a19",
+              "surface-variant": "#e4e2dd",
+              "on-error-container": "#93000a",
+              "on-surface": "#1b1c19",
+              "on-secondary-fixed": "#131b2e",
+              "inverse-on-surface": "#f2f1ec",
+              "on-tertiary-fixed-variant": "#3a485c",
+              "secondary": "#565e74",
+              "on-primary-fixed": "#261900",
+              "surface-dim": "#dbdad5",
+              "surface-container": "#f0eee9",
+              "on-primary-fixed-variant": "#5d4201",
+              "secondary-fixed": "#dae2fd",
+              "surface-container-highest": "#e4e2dd",
+              "on-tertiary-container": "#2e3c50",
+              "error": "#ba1a1a",
+              "tertiary-container": "#98a6be"
+            },
+            fontFamily: {
+              "headline": ["Noto Serif"],
+              "body": ["Inter"],
+              "label": ["Inter"]
+            },
+            borderRadius: {"DEFAULT": "0.125rem", "lg": "0.25rem", "xl": "0.5rem", "full": "0.75rem"},
+          },
+        },
+      }
+    </script>
+<style>
+      .material-symbols-outlined {
+        font-variation-settings: 'FILL' 0, 'wght' 300, 'GRAD' 0, 'opsz' 24;
+      }
+      body {
+        background-color: #fbf9f4;
+        color: #1b1c19;
+        font-family: 'Inter', sans-serif;
+      }
+      .serif-display {
+        font-family: 'Noto Serif', serif;
+      }
+      .glass-panel {
+        background: rgba(255, 255, 255, 0.05);
+        backdrop-filter: blur(20px);
+      }
+    </style>
+</head>
+<body class="min-h-screen flex items-stretch">
+<!-- Auth Layout Suppression: No TopAppBar or SideNav as per Task & Shell Rules -->
+<!-- Left Side: Hero Image Component -->
+<section class="hidden lg:flex lg:w-1/2 relative overflow-hidden">
+<img alt="Luxury Showroom Interior" class="absolute inset-0 w-full h-full object-cover" data-alt="Luxurious high-end kitchen with dark marble countertops, gold faucets, and warm ambient lighting reflecting off polished surfaces." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAXGeyT7nvzV4pg8W3eoYtZhYdx3rjsIPECT5OpzbvvLUu4IVsx1h6AP2sDUC8vgVrTZY3mXla_JYErnqE6D53w8vZz6kKis8mnvVxEFrb6Fx8SEsMURt-HtwKvcY5uuXk82zmXQq-bpR_Re0E6sIPRgyPor4T-ZsI1mSWPhgUvP-ETzBjid6GqsK4t5OORX5cT6AFHdvJmmX5rXrTJqbMJedoId_aiopKQmZbsN76OqirYlGHaCtPdd314N2IJFWlRTCvls1kTO0Q"/>
+<!-- Subtle Overlay Texture -->
+<div class="absolute inset-0 bg-on-surface/10 mix-blend-multiply"></div>
+<!-- Branding Overlap -->
+<div class="relative z-10 flex flex-col justify-between p-16 w-full h-full bg-gradient-to-t from-on-surface/40 to-transparent">
+<div>
+<span class="serif-display italic text-3xl tracking-tight text-white/90">DealerReach</span>
+</div>
+<div class="max-w-md">
+<h1 class="serif-display text-5xl leading-tight text-white mb-6">Elevating the Art of Client Interaction.</h1>
+<p class="font-body text-white/80 text-lg leading-relaxed font-light tracking-wide">
+                    Step into the digital atelier. Manage your showroom flow with the precision and grace of a master craftsman.
+                </p>
+</div>
+</div>
+</section>
+<!-- Right Side: Login Form Canvas -->
+<main class="w-full lg:w-1/2 flex flex-col items-center justify-center bg-surface px-8 md:px-24 py-20">
+<!-- Mobile Branding (Hidden on Desktop) -->
+<div class="lg:hidden mb-12">
+<span class="serif-display italic text-2xl text-primary">DealerReach</span>
+</div>
+<div class="w-full max-w-[420px]">
+<!-- Header Section -->
+<header class="mb-12">
+<h2 class="serif-display text-4xl text-on-surface mb-3">Welcome Back</h2>
+<p class="font-body text-on-surface-variant font-light">Access your executive dashboard and showrooms.</p>
+</header>
+<!-- Login Form -->
+<form class="space-y-8">
+<!-- Email Field -->
+<div class="group relative">
+<label class="block text-[10px] uppercase tracking-[0.2em] text-on-surface-variant/70 mb-1" for="email">Professional Email</label>
+<input class="w-full bg-transparent border-0 border-b border-outline-variant/30 py-3 px-0 focus:ring-0 focus:border-primary transition-colors duration-300 font-body text-on-surface placeholder-on-surface-variant/40" id="email" name="email" placeholder="manager@atelier.com" type="email"/>
+</div>
+<!-- Password Field -->
+<div class="group relative">
+<div class="flex justify-between items-end mb-1">
+<label class="block text-[10px] uppercase tracking-[0.2em] text-on-surface-variant/70" for="password">Security Key</label>
+<a class="text-[10px] uppercase tracking-[0.1em] text-primary hover:text-on-primary-container transition-colors" href="#">Forgot?</a>
+</div>
+<input class="w-full bg-transparent border-0 border-b border-outline-variant/30 py-3 px-0 focus:ring-0 focus:border-primary transition-colors duration-300 font-body text-on-surface placeholder-on-surface-variant/40" id="password" name="password" placeholder="••••••••" type="password"/>
+</div>
+<!-- Remember Me -->
+<div class="flex items-center space-x-3">
+<input class="w-4 h-4 rounded-none border-outline-variant text-primary focus:ring-primary/20 transition-all" id="remember" name="remember" type="checkbox"/>
+<label class="text-xs text-on-surface-variant font-light tracking-wide" for="remember">Remember this station for 30 days</label>
+</div>
+<!-- Primary Action -->
+<div class="pt-4">
+<button class="w-full bg-gradient-to-br from-primary to-primary-container text-white py-4 px-6 rounded-md shadow-[0_10px_40px_rgba(119,90,25,0.06)] hover:shadow-[0_15px_50px_rgba(119,90,25,0.12)] active:scale-[0.98] transition-all duration-300 font-body font-medium tracking-wide" type="submit">
+                        Sign In to Atelier
+                    </button>
+</div>
+</form>
+<!-- Social/Secondary Sign In (Optional/Decorative for Premium Feel) -->
+<div class="mt-12 pt-12 border-t border-outline-variant/10 flex flex-col items-center">
+<p class="text-[10px] uppercase tracking-[0.3em] text-on-surface-variant/50 mb-8">Internal Verification Only</p>
+<div class="flex items-center space-x-8">
+<button class="flex items-center space-x-2 text-on-surface-variant hover:text-primary transition-colors duration-300">
+<span class="material-symbols-outlined text-xl">fingerprint</span>
+<span class="text-xs font-light">Biometric</span>
+</button>
+<button class="flex items-center space-x-2 text-on-surface-variant hover:text-primary transition-colors duration-300">
+<span class="material-symbols-outlined text-xl">key</span>
+<span class="text-xs font-light">SSO Access</span>
+</button>
+</div>
+</div>
+<!-- Footer Link -->
+<footer class="mt-16 text-center">
+<p class="text-sm font-light text-on-surface-variant">
+                    New to the editorial suite? 
+                    <a class="text-primary font-medium ml-1 border-b border-primary/20 hover:border-primary transition-all pb-0.5" href="#">Create an account</a>
+</p>
+</footer>
+</div>
+<!-- Global Branding Footer for Auth (Subtle) -->
+<div class="absolute bottom-8 text-[10px] uppercase tracking-[0.2em] text-on-surface-variant/40">
+            © 2024 DealerReach Editorial Atelier. All Rights Reserved.
+        </div>
+</main>
+</body></html>

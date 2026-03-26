@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,400;0,700;1,400&amp;family=Inter:wght@300;400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "secondary-container": "#dae2fd",
+              "background": "#1b1c19",
+              "surface": "#1b1c19",
+              "outline-variant": "#d1c5b4",
+              "on-error": "#ffffff",
+              "tertiary-fixed": "#d5e3fd",
+              "surface-container-lowest": "#000000",
+              "primary-fixed": "#ffdea5",
+              "on-tertiary-fixed": "#0d1c2f",
+              "tertiary": "#515f74",
+              "inverse-primary": "#e9c176",
+              "on-primary-container": "#4e3700",
+              "on-tertiary": "#ffffff",
+              "tertiary-fixed-dim": "#b9c7e0",
+              "outline": "#7f7667",
+              "primary-container": "#c5a059",
+              "on-secondary-container": "#5c647a",
+              "inverse-surface": "#f2f1ec",
+              "surface-container-low": "#252622",
+              "on-primary": "#ffffff",
+              "secondary-fixed-dim": "#bec6e0",
+              "error-container": "#ffdad6",
+              "surface-container-high": "#363733",
+              "primary-fixed-dim": "#e9c176",
+              "on-secondary-fixed-variant": "#3f465c",
+              "on-surface-variant": "#d1c5b4",
+              "surface-tint": "#775a19",
+              "on-background": "#fbf9f4",
+              "surface-bright": "#363733",
+              "on-secondary": "#ffffff",
+              "primary": "#775a19",
+              "surface-variant": "#4e4639",
+              "on-error-container": "#93000a",
+              "on-surface": "#fbf9f4",
+              "on-secondary-fixed": "#131b2e",
+              "inverse-on-surface": "#1b1c19",
+              "on-tertiary-fixed-variant": "#3a485c",
+              "secondary": "#565e74",
+              "on-primary-fixed": "#261900",
+              "surface-dim": "#1b1c19",
+              "surface-container": "#2c2d29",
+              "on-primary-fixed-variant": "#5d4201",
+              "secondary-fixed": "#dae2fd",
+              "surface-container-highest": "#4e4639",
+              "on-tertiary-container": "#2e3c50",
+              "error": "#ba1a1a",
+              "tertiary-container": "#98a6be"
+            },
+            fontFamily: {
+              "headline": ["Noto Serif"],
+              "body": ["Inter"],
+              "label": ["Inter"]
+            },
+            borderRadius: {"DEFAULT": "0.125rem", "lg": "0.25rem", "xl": "0.5rem", "full": "0.75rem"},
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 300, 'GRAD' 0, 'opsz' 24;
+        }
+        .glass-header {
+            background: rgba(27, 28, 25, 0.8);
+            backdrop-filter: blur(20px);
+        }
+    </style>
+</head>
+<body class="bg-background text-on-surface font-body selection:bg-primary-container selection:text-on-primary-container">
+<div class="flex min-h-screen">
+<!-- SideNavBar -->
+<aside class="hidden lg:flex flex-col h-screen sticky top-0 w-72 bg-[#1b1c19] border-r border-[#1b1c19]/5">
+<div class="p-8">
+<div class="flex items-center gap-3 mb-12">
+<div class="w-10 h-10 bg-primary-container flex items-center justify-center rounded-lg">
+<span class="material-symbols-outlined text-on-primary-container" style="font-variation-settings: 'FILL' 1;">architecture</span>
+</div>
+<div>
+<h1 class="font-serif text-xl text-[#fbf9f4]">The Atelier</h1>
+<p class="font-sans text-[10px] uppercase tracking-[0.2em] text-gray-500">Luxury Operations</p>
+</div>
+</div>
+<nav class="space-y-2">
+<!-- Overview Active -->
+<a class="flex items-center gap-4 px-4 py-3 bg-[#775a19]/10 text-[#775a19] font-medium border-r-4 border-[#775a19] transition-transform duration-300 hover:translate-x-1" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">dashboard</span>
+<span class="font-sans text-sm font-light tracking-wide">Overview</span>
+</a>
+<a class="flex items-center gap-4 px-4 py-3 text-[#565e74] hover:bg-[#fbf9f4]/5 transition-transform duration-300 hover:translate-x-1" href="#">
+<span class="material-symbols-outlined">storefront</span>
+<span class="font-sans text-sm font-light tracking-wide">Showroom Flow</span>
+</a>
+<a class="flex items-center gap-4 px-4 py-3 text-[#565e74] hover:bg-[#fbf9f4]/5 transition-transform duration-300 hover:translate-x-1" href="#">
+<span class="material-symbols-outlined">texture</span>
+<span class="font-sans text-sm font-light tracking-wide">Material Library</span>
+</a>
+<a class="flex items-center gap-4 px-4 py-3 text-[#565e74] hover:bg-[#fbf9f4]/5 transition-transform duration-300 hover:translate-x-1" href="#">
+<span class="material-symbols-outlined">person_search</span>
+<span class="font-sans text-sm font-light tracking-wide">Client Leads</span>
+</a>
+<a class="flex items-center gap-4 px-4 py-3 text-[#565e74] hover:bg-[#fbf9f4]/5 transition-transform duration-300 hover:translate-x-1" href="#">
+<span class="material-symbols-outlined">calendar_today</span>
+<span class="font-sans text-sm font-light tracking-wide">Staff Schedule</span>
+</a>
+</nav>
+<div class="mt-12">
+<button class="w-full bg-primary text-on-primary py-4 px-6 rounded-md flex items-center justify-center gap-2 hover:opacity-90 transition-all duration-300 shadow-[0_40px_40px_rgba(27,28,25,0.06)]">
+<span class="material-symbols-outlined text-sm">add</span>
+<span class="font-sans text-xs uppercase tracking-widest font-semibold">New Consultation</span>
+</button>
+</div>
+</div>
+<div class="mt-auto p-8 space-y-4 border-t border-outline-variant/10">
+<a class="flex items-center gap-4 px-4 py-2 text-gray-500 hover:text-white transition-colors duration-300" href="#">
+<span class="material-symbols-outlined text-lg">help_center</span>
+<span class="font-sans text-[10px] uppercase tracking-[0.2em]">Support</span>
+</a>
+<a class="flex items-center gap-4 px-4 py-2 text-gray-500 hover:text-white transition-colors duration-300" href="#">
+<span class="material-symbols-outlined text-lg">inventory_2</span>
+<span class="font-sans text-[10px] uppercase tracking-[0.2em]">Archive</span>
+</a>
+</div>
+</aside>
+<!-- Main Content -->
+<main class="flex-1 min-w-0 bg-background">
+<!-- TopAppBar -->
+<header class="fixed top-0 right-0 left-0 lg:left-72 z-50 glass-header border-b border-transparent">
+<div class="flex justify-between items-center px-8 h-20 w-full max-w-screen-2xl mx-auto">
+<div class="flex items-center gap-8">
+<span class="text-2xl font-serif italic text-[#C5A059]">DealerReach</span>
+<nav class="hidden md:flex gap-6 items-center">
+<a class="text-[#C5A059] border-b-2 border-[#C5A059] pb-1 font-sans uppercase tracking-widest text-xs" href="#">Showrooms</a>
+<a class="text-gray-400 font-sans uppercase tracking-widest text-xs hover:text-[#C5A059] transition-colors duration-300" href="#">Inventory</a>
+<a class="text-gray-400 font-sans uppercase tracking-widest text-xs hover:text-[#C5A059] transition-colors duration-300" href="#">Analytics</a>
+<a class="text-gray-400 font-sans uppercase tracking-widest text-xs hover:text-[#C5A059] transition-colors duration-300" href="#">Consultations</a>
+</nav>
+</div>
+<div class="flex items-center gap-6">
+<button class="text-on-surface-variant hover:text-primary transition-colors duration-300">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+<button class="text-on-surface-variant hover:text-primary transition-colors duration-300">
+<span class="material-symbols-outlined">settings</span>
+</button>
+<div class="flex items-center gap-3 pl-4 border-l border-outline-variant/20">
+<img alt="Manager Profile" class="w-10 h-10 rounded-full object-cover grayscale hover:grayscale-0 transition-all duration-500" data-alt="professional headshot of a luxury real estate manager in a dark charcoal suit with soft studio lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBI_pziy7BwWZy-RuDfROwyw46q6zGjrFBBywvjcb3Ywe5PChEhREJkyNvilHfJ1ycxik1jJ6GsD2pPwpSb3pd7RJ3u2DnmFC1aXPleheAvhht_iQ-AL9jMFP_ko4sEHLBaltjXTehzzo-RH2W79D4zKehPNwHBHQsyMaEV7yggS2Hb9QQrmuRFSYfpIwr1kkt3Nv1pn8QlJ6hye_kxTTp7RdxRbrUIsrZe94Zig4Nun5VGVLvom_x2JUEw2iWLP0g-5xmm1MD-DwY"/>
+<div class="hidden sm:block">
+<p class="text-xs font-semibold text-on-surface">Julian Thorne</p>
+<p class="text-[10px] text-on-surface-variant uppercase tracking-wider">Atelier Manager</p>
+</div>
+</div>
+</div>
+</div>
+</header>
+<div class="pt-32 px-8 pb-20 max-w-screen-2xl mx-auto space-y-20">
+<!-- Hero Dashboard Section -->
+<section class="grid grid-cols-1 md:grid-cols-12 gap-8 items-end">
+<div class="md:col-span-8 space-y-4">
+<h2 class="font-serif text-5xl md:text-6xl tracking-tight text-on-surface">Curated <span class="italic text-primary">Progress</span></h2>
+<p class="font-body text-on-surface-variant max-w-xl text-lg font-light leading-relaxed">Your gallery is currently hosting 14 active kitchen design consultations. Efficiency is up 12% from the previous quarter.</p>
+</div>
+<div class="md:col-span-4 flex justify-end gap-12">
+<div class="text-right">
+<p class="text-[10px] uppercase tracking-[0.2em] text-primary mb-1">Active Projects</p>
+<p class="font-serif text-4xl">14</p>
+</div>
+<div class="text-right">
+<p class="text-[10px] uppercase tracking-[0.2em] text-primary mb-1">Revenue Flow</p>
+<p class="font-serif text-4xl">$2.4M</p>
+</div>
+</div>
+</section>
+<!-- Metric Bento Grid -->
+<section class="grid grid-cols-1 md:grid-cols-4 gap-6">
+<div class="md:col-span-2 bg-surface-container-low p-8 rounded-lg space-y-6 group">
+<div class="flex justify-between items-start">
+<span class="material-symbols-outlined text-primary text-3xl">analytics</span>
+<span class="text-[10px] bg-primary/10 text-primary px-3 py-1 rounded-full uppercase tracking-widest">+18%</span>
+</div>
+<div>
+<h3 class="font-serif text-2xl mb-2">Showroom Engagement</h3>
+<p class="text-on-surface-variant text-sm font-light">Average dwell time per kitchen display has increased to 42 minutes.</p>
+</div>
+<div class="h-1 bg-surface-container-high w-full rounded-full overflow-hidden">
+<div class="h-full bg-primary w-[75%] transition-all duration-1000"></div>
+</div>
+</div>
+<div class="bg-surface-container-low p-8 rounded-lg flex flex-col justify-between">
+<span class="material-symbols-outlined text-on-surface-variant">timer</span>
+<div class="mt-8">
+<h4 class="text-on-surface-variant text-[10px] uppercase tracking-widest mb-1">Conversion Rate</h4>
+<p class="font-serif text-3xl">32.4%</p>
+</div>
+</div>
+<div class="bg-primary p-8 rounded-lg flex flex-col justify-between text-on-primary">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">stars</span>
+<div class="mt-8">
+<h4 class="opacity-70 text-[10px] uppercase tracking-widest mb-1">Premier Status</h4>
+<p class="font-serif text-3xl">Platinum</p>
+</div>
+</div>
+</section>
+<!-- Consultation & Leads Split Layout -->
+<section class="grid grid-cols-1 xl:grid-cols-3 gap-12">
+<!-- Recent Leads Table -->
+<div class="xl:col-span-2 space-y-8">
+<div class="flex items-center justify-between">
+<h3 class="font-serif text-3xl">Recent Leads</h3>
+<button class="text-[10px] uppercase tracking-widest text-primary border-b border-primary/30 hover:border-primary transition-all">View All Ledger</button>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full text-left">
+<thead class="border-b border-outline-variant/20">
+<tr>
+<th class="pb-4 font-sans text-[10px] uppercase tracking-[0.2em] text-on-surface-variant">Client</th>
+<th class="pb-4 font-sans text-[10px] uppercase tracking-[0.2em] text-on-surface-variant">Interest</th>
+<th class="pb-4 font-sans text-[10px] uppercase tracking-[0.2em] text-on-surface-variant">Status</th>
+<th class="pb-4 font-sans text-[10px] uppercase tracking-[0.2em] text-on-surface-variant text-right">Potential</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-outline-variant/10">
+<tr class="group hover:bg-surface-container-lowest transition-colors duration-300">
+<td class="py-6 flex items-center gap-4">
+<div class="w-8 h-8 rounded-full bg-surface-container-high flex items-center justify-center font-serif text-xs">EB</div>
+<span class="text-sm font-medium">Eleanor Bennett</span>
+</td>
+<td class="py-6">
+<span class="text-sm text-on-surface-variant">La Cornue Grand Palais</span>
+</td>
+<td class="py-6">
+<span class="inline-flex items-center gap-1.5 py-1 px-3 rounded-full bg-secondary/10 text-secondary text-[10px] font-bold uppercase tracking-wider">Waitlist</span>
+</td>
+<td class="py-6 text-right font-serif">$124,000</td>
+</tr>
+<tr class="group hover:bg-surface-container-lowest transition-colors duration-300">
+<td class="py-6 flex items-center gap-4">
+<div class="w-8 h-8 rounded-full bg-surface-container-high flex items-center justify-center font-serif text-xs">MJ</div>
+<span class="text-sm font-medium">Marcus Jaye</span>
+</td>
+<td class="py-6">
+<span class="text-sm text-on-surface-variant">Wolf/Sub-Zero Suite</span>
+</td>
+<td class="py-6">
+<span class="inline-flex items-center gap-1.5 py-1 px-3 rounded-full bg-primary/10 text-primary text-[10px] font-bold uppercase tracking-wider">Active</span>
+</td>
+<td class="py-6 text-right font-serif">$82,500</td>
+</tr>
+<tr class="group hover:bg-surface-container-lowest transition-colors duration-300">
+<td class="py-6 flex items-center gap-4">
+<div class="w-8 h-8 rounded-full bg-surface-container-high flex items-center justify-center font-serif text-xs">SL</div>
+<span class="text-sm font-medium">Sophia Laurent</span>
+</td>
+<td class="py-6">
+<span class="text-sm text-on-surface-variant">Custom Cabinetry Integration</span>
+</td>
+<td class="py-6">
+<span class="inline-flex items-center gap-1.5 py-1 px-3 rounded-full bg-green-900/10 text-green-500 text-[10px] font-bold uppercase tracking-wider">Signed</span>
+</td>
+<td class="py-6 text-right font-serif">$210,000</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<!-- Consultation Calendar -->
+<div class="space-y-8">
+<h3 class="font-serif text-3xl">Atelier Agenda</h3>
+<div class="bg-surface-container-low p-8 rounded-lg space-y-6">
+<div class="flex items-center justify-between">
+<p class="text-[10px] uppercase tracking-widest text-on-surface-variant">Today, Oct 24</p>
+<span class="material-symbols-outlined text-on-surface-variant text-sm cursor-pointer">more_horiz</span>
+</div>
+<div class="space-y-4">
+<div class="relative pl-6 border-l border-primary/40 group cursor-pointer">
+<p class="text-xs font-semibold">Gaggenau Product Tour</p>
+<p class="text-[10px] text-on-surface-variant">10:00 AM — David Sterling</p>
+<div class="absolute left-0 top-0 w-1 h-0 bg-primary transition-all duration-300 group-hover:h-full"></div>
+</div>
+<div class="relative pl-6 border-l border-outline-variant/20 group cursor-pointer">
+<p class="text-xs font-semibold text-on-surface-variant group-hover:text-on-surface transition-colors">Material Selection</p>
+<p class="text-[10px] text-on-surface-variant">1:30 PM — Isabella Russo</p>
+<div class="absolute left-0 top-0 w-1 h-0 bg-primary transition-all duration-300 group-hover:h-full"></div>
+</div>
+<div class="relative pl-6 border-l border-outline-variant/20 group cursor-pointer">
+<p class="text-xs font-semibold text-on-surface-variant group-hover:text-on-surface transition-colors">BlueStar Color Customization</p>
+<p class="text-[10px] text-on-surface-variant">4:00 PM — The Miller Residence</p>
+<div class="absolute left-0 top-0 w-1 h-0 bg-primary transition-all duration-300 group-hover:h-full"></div>
+</div>
+</div>
+<div class="pt-6 mt-6 border-t border-outline-variant/10">
+<div class="relative aspect-[16/9] rounded-lg overflow-hidden group">
+<img class="w-full h-full object-cover grayscale transition-all duration-700 group-hover:scale-105 group-hover:grayscale-0" data-alt="ultra modern luxury kitchen with dark cabinetry, marble waterfall island, and gold pendant lighting at dusk" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCyfmhWmCFwXD-x5-R23GDM_mV59Hh-0395v_u1rbuTLPHIBs7UIRUI4mUZModv-D6VzT81y4GP7-xxCAinETkb8Em50iR4a0XCJA_lw9Sd8jAeRJ2G4Ve5XAjxKdo3NpIYGXZyJ13-JfrekuvT61qO71Y48ePwUq5IOfvbsFobjPnbmFwsM4OVfCoTL1b9iq35NIfVTWwQn8nO6sQY7youay8uhQ5O09haurVoTlb7f1YFglIaimBE5NMQ1Y9M5cKAKiyBcyOblDo"/>
+<div class="absolute inset-0 bg-gradient-to-t from-background/90 to-transparent flex items-end p-4">
+<p class="text-[10px] uppercase tracking-widest text-on-surface font-semibold">Featured Display: Obsidian Series</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+</div>
+<!-- Footer -->
+<footer class="w-full py-12 px-8 bg-[#1b1c19]">
+<div class="flex flex-col md:flex-row justify-between items-center w-full max-w-screen-2xl mx-auto gap-8">
+<p class="font-sans text-[10px] uppercase tracking-[0.2em] text-gray-500">© 2024 DealerReach Editorial Atelier. All Rights Reserved.</p>
+<div class="flex gap-8">
+<a class="font-sans text-[10px] uppercase tracking-[0.2em] text-gray-500 hover:text-white transition-colors" href="#">Privacy</a>
+<a class="font-sans text-[10px] uppercase tracking-[0.2em] text-gray-500 hover:text-white transition-colors" href="#">Terms</a>
+<a class="font-sans text-[10px] uppercase tracking-[0.2em] text-gray-500 hover:text-white transition-colors" href="#">Showroom Access</a>
+<a class="font-sans text-[10px] uppercase tracking-[0.2em] text-gray-500 hover:text-white transition-colors" href="#">Contact</a>
+</div>
+</div>
+</footer>
+</main>
+</div>
+</body></html>

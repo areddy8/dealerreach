@@ -37,6 +37,12 @@ export default function NavBar() {
               >
                 New Request
               </Link>
+              <Link
+                href="/profile"
+                className="text-sm text-slate-300 transition-colors hover:text-white"
+              >
+                Profile
+              </Link>
               <button
                 onClick={logout}
                 className="text-sm text-slate-400 transition-colors hover:text-white"
@@ -89,6 +95,9 @@ export default function NavBar() {
                 </Link>
                 <Link href="/new-request" className="text-sm text-slate-300" onClick={() => setMenuOpen(false)}>
                   New Request
+                </Link>
+                <Link href="/profile" className="text-sm text-slate-300" onClick={() => setMenuOpen(false)}>
+                  Profile
                 </Link>
                 <button onClick={logout} className="text-left text-sm text-slate-400">
                   Logout

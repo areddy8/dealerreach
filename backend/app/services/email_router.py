@@ -14,7 +14,7 @@ import imaplib
 import json
 import logging
 import re
-from datetime import datetime, timezone
+from datetime import datetime, timedelta, timezone
 from typing import Any, Dict, List, Optional, Tuple
 
 from app.config import settings
@@ -224,6 +224,7 @@ async def _process_reply_async(
             parsed_summary=parsed.get("summary"),
             received_at=datetime.now(timezone.utc),
         )
+        reply.expires_at = reply.received_at + timedelta(days=30)
         session.add(reply)
 
         # Update outreach record status

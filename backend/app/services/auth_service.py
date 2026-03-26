@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import secrets
 import uuid
 from datetime import datetime, timedelta, timezone
 
@@ -39,3 +40,13 @@ def decode_access_token(token: str) -> uuid.UUID | None:
         return uuid.UUID(user_id_str)
     except (JWTError, ValueError):
         return None
+
+
+def create_reset_token() -> str:
+    """Generate a secure random reset token."""
+    return secrets.token_urlsafe(32)
+
+
+def create_reset_token_expiry() -> datetime:
+    """Create expiry time 1 hour from now."""
+    return datetime.now(timezone.utc) + timedelta(hours=1)

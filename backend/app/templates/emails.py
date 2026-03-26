@@ -246,6 +246,67 @@ def render_reply_notification(
 # 3. Welcome email (sent after signup — branded)
 # ---------------------------------------------------------------------------
 
+def render_password_reset_email(user_name: str, reset_url: str) -> str:
+    """Render the password reset email sent when a user requests a reset."""
+    html = _wrapper_start(_DARK_BG)
+
+    # Branded header
+    html += (
+        '<tr><td style="background-color:{dark};padding:32px 32px 24px 32px;'
+        'border-radius:8px 8px 0 0;text-align:center;">'
+        '<span style="font-family:Arial,Helvetica,sans-serif;font-size:24px;'
+        'font-weight:bold;color:{primary};">DealerReach.io</span>'
+        '</td></tr>'
+    ).format(dark=_DARK_BG, primary=_PRIMARY)
+
+    # Body section
+    html += (
+        '<tr><td style="background-color:{card};padding:32px;'
+        'font-family:Arial,Helvetica,sans-serif;">'
+        '<h1 style="margin:0 0 8px 0;font-size:28px;color:{text};">'
+        'Password Reset Request</h1>'
+        '<p style="margin:0 0 24px 0;font-size:16px;color:{muted};line-height:1.5;">'
+        'Hi {name}, we received a request to reset your password.</p>'
+    ).format(card=_CARD_BG, text=_TEXT, muted=_MUTED, name=user_name)
+
+    # CTA button
+    html += (
+        '<div style="text-align:center;padding:8px 0 24px 0;">'
+        '<a href="{url}" style="display:inline-block;padding:14px 32px;'
+        'background-color:{primary};color:#ffffff;font-size:16px;'
+        'font-weight:bold;text-decoration:none;border-radius:8px;">'
+        'Reset Password</a></div>'
+    ).format(url=reset_url, primary=_PRIMARY)
+
+    # Note
+    html += (
+        '<p style="margin:0;font-size:14px;color:{muted};line-height:1.5;">'
+        'This link expires in 1 hour. If you didn\'t request this, you can '
+        'safely ignore this email.</p>'
+    ).format(muted=_MUTED)
+
+    html += '</td></tr>'
+
+    # Footer
+    html += (
+        '<tr><td style="background-color:{dark};padding:24px 32px;'
+        'border-radius:0 0 8px 8px;text-align:center;">'
+        '<p style="margin:0;font-family:Arial,Helvetica,sans-serif;font-size:12px;'
+        'color:{muted};line-height:1.5;">'
+        'DealerReach.io &mdash; Get dealer pricing on the products you want.<br>'
+        '<a href="https://www.dealerreach.io" style="color:{primary};'
+        'text-decoration:none;">www.dealerreach.io</a>'
+        '</p></td></tr>'
+    ).format(dark=_DARK_BG, muted=_MUTED, primary=_PRIMARY)
+
+    html += _wrapper_end()
+    return html
+
+
+# ---------------------------------------------------------------------------
+# 5. Welcome email (sent after signup — branded)
+# ---------------------------------------------------------------------------
+
 def render_welcome_email(user_name: str) -> str:
     """Render the welcome email sent after signup."""
     html = _wrapper_start(_DARK_BG)
@@ -312,6 +373,61 @@ def render_welcome_email(user_name: str) -> str:
         '<p style="margin:0;font-family:Arial,Helvetica,sans-serif;font-size:12px;'
         'color:{muted};line-height:1.5;">'
         'DealerReach.io &mdash; Get dealer pricing on the products you want.<br>'
+        '<a href="https://www.dealerreach.io" style="color:{primary};'
+        'text-decoration:none;">www.dealerreach.io</a>'
+        '</p></td></tr>'
+    ).format(dark=_DARK_BG, muted=_MUTED, primary=_PRIMARY)
+
+    html += _wrapper_end()
+    return html
+
+
+# ---------------------------------------------------------------------------
+# 6. Verification email (sent after signup — branded)
+# ---------------------------------------------------------------------------
+
+def render_verification_email(user_name: str, verify_url: str) -> str:
+    """Render the email verification email sent after signup."""
+    html = _wrapper_start(_DARK_BG)
+
+    # Branded header
+    html += (
+        '<tr><td style="background-color:{dark};padding:32px 32px 24px 32px;'
+        'border-radius:8px 8px 0 0;text-align:center;">'
+        '<span style="font-family:Arial,Helvetica,sans-serif;font-size:24px;'
+        'font-weight:bold;color:{primary};">DealerReach.io</span>'
+        '</td></tr>'
+    ).format(dark=_DARK_BG, primary=_PRIMARY)
+
+    # Verify section
+    html += (
+        '<tr><td style="background-color:{card};padding:32px;'
+        'font-family:Arial,Helvetica,sans-serif;">'
+        '<h1 style="margin:0 0 8px 0;font-size:28px;color:{text};">'
+        'Verify Your Email</h1>'
+        '<p style="margin:0 0 32px 0;font-size:16px;color:{muted};line-height:1.5;">'
+        'Hi {name}, please verify your email to start using DealerReach.</p>'
+    ).format(card=_CARD_BG, text=_TEXT, muted=_MUTED, name=user_name)
+
+    # CTA button
+    html += (
+        '<div style="text-align:center;padding:16px 0 0 0;">'
+        '<a href="{url}" '
+        'style="display:inline-block;padding:14px 32px;'
+        'background-color:{primary};color:#ffffff;font-size:16px;'
+        'font-weight:bold;text-decoration:none;border-radius:8px;">'
+        'Verify Email</a></div>'
+    ).format(url=verify_url, primary=_PRIMARY)
+
+    html += '</td></tr>'
+
+    # Footer
+    html += (
+        '<tr><td style="background-color:{dark};padding:24px 32px;'
+        'border-radius:0 0 8px 8px;text-align:center;">'
+        '<p style="margin:0;font-family:Arial,Helvetica,sans-serif;font-size:12px;'
+        'color:{muted};line-height:1.5;">'
+        'If you didn\'t create an account, ignore this email.<br>'
         '<a href="https://www.dealerreach.io" style="color:{primary};'
         'text-decoration:none;">www.dealerreach.io</a>'
         '</p></td></tr>'

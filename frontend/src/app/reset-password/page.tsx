@@ -1,27 +1,45 @@
 "use client";
 
-import { useState } from "react";
-import { useRouter } from "next/navigation";
+import { useState, Suspense } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
 import Link from "next/link";
-import { useAuth } from "@/context/AuthContext";
+import { resetPassword } from "@/lib/api";
 
-export default function LoginPage() {
+function ResetPasswordForm() {
   const router = useRouter();
-  const { login } = useAuth();
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const searchParams = useSearchParams();
+  const token = searchParams.get("token") || "";
+
+  const [newPassword, setNewPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
     setError("");
+
+    if (newPassword.length < 6) {
+      setError("Password must be at least 6 characters.");
+      return;
+    }
+
+    if (newPassword !== confirmPassword) {
+      setError("Passwords do not match.");
+      return;
+    }
+
+    if (!token) {
+      setError("Missing reset token. Please use the link from your email.");
+      return;
+    }
+
     setLoading(true);
     try {
-      await login(email, password);
+      await resetPassword(token, newPassword);
       router.push("/dashboard");
     } catch (err) {
-      setError(err instanceof Error ? err.message : "Login failed.");
+      setError(err instanceof Error ? err.message : "Failed to reset password.");
     } finally {
       setLoading(false);
     }
@@ -34,9 +52,9 @@ export default function LoginPage() {
     <div className="flex min-h-[calc(100vh-4rem)] items-center justify-center px-4">
       <div className="w-full max-w-md">
         <div className="rounded-xl border border-slate-800 bg-slate-900 p-8">
-          <h1 className="text-2xl font-bold text-white">Welcome back</h1>
+          <h1 className="text-2xl font-bold text-white">Set new password</h1>
           <p className="mt-2 text-sm text-slate-400">
-            Log in to your DealerReach account
+            Enter your new password below.
           </p>
 
           {error && (
@@ -48,47 +66,38 @@ export default function LoginPage() {
           <form onSubmit={handleSubmit} className="mt-6 space-y-4">
             <div>
               <label
-                htmlFor="email"
+                htmlFor="new-password"
                 className="block text-sm font-medium text-slate-300 mb-1.5"
               >
-                Email
+                New password
               </label>
               <input
-                id="email"
-                type="email"
+                id="new-password"
+                type="password"
                 required
                 className={inputClass}
-                placeholder="you@example.com"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
+                placeholder="At least 6 characters"
+                value={newPassword}
+                onChange={(e) => setNewPassword(e.target.value)}
               />
             </div>
 
             <div>
               <label
-                htmlFor="password"
+                htmlFor="confirm-password"
                 className="block text-sm font-medium text-slate-300 mb-1.5"
               >
-                Password
+                Confirm password
               </label>
               <input
-                id="password"
+                id="confirm-password"
                 type="password"
                 required
                 className={inputClass}
-                placeholder="Your password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
+                placeholder="Re-enter your password"
+                value={confirmPassword}
+                onChange={(e) => setConfirmPassword(e.target.value)}
               />
-            </div>
-
-            <div className="flex justify-end">
-              <Link
-                href="/forgot-password"
-                className="text-sm text-blue-400 hover:text-blue-300 transition-colors"
-              >
-                Forgot password?
-              </Link>
             </div>
 
             <button
@@ -96,21 +105,28 @@ export default function LoginPage() {
               disabled={loading}
               className="w-full rounded-lg bg-blue-600 px-6 py-2.5 font-medium text-white transition-colors hover:bg-blue-500 disabled:cursor-not-allowed disabled:opacity-50"
             >
-              {loading ? "Logging in..." : "Log in"}
+              {loading ? "Resetting..." : "Reset password"}
             </button>
           </form>
 
           <p className="mt-6 text-center text-sm text-slate-400">
-            Don&apos;t have an account?{" "}
             <Link
-              href="/signup"
+              href="/login"
               className="text-blue-400 hover:text-blue-300 transition-colors"
             >
-              Sign up
+              Back to login
             </Link>
           </p>
         </div>
       </div>
     </div>
+  );
+}
+
+export default function ResetPasswordPage() {
+  return (
+    <Suspense>
+      <ResetPasswordForm />
+    </Suspense>
   );
 }

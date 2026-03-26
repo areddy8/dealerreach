@@ -27,6 +27,7 @@ class Reply(Base, UUIDPrimaryKey):
     parsed_availability: Mapped[Optional[str]] = mapped_column(String(255), nullable=True)
     parsed_summary: Mapped[Optional[str]] = mapped_column(Text, nullable=True)
     received_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), nullable=False)
+    expires_at: Mapped[Optional[datetime]] = mapped_column(DateTime(timezone=True), nullable=True)
     created_at: Mapped[datetime] = mapped_column(
         DateTime(timezone=True), server_default=func.now(), nullable=False
     )

@@ -4,8 +4,18 @@ export interface User {
   id: string;
   email: string;
   name: string;
+  email_verified: boolean;
   created_at: string;
 }
+
+export type RenovationCategory =
+  | "kitchen_appliances"
+  | "fireplaces"
+  | "hot_tubs"
+  | "outdoor_kitchens"
+  | "countertops"
+  | "windows_doors"
+  | "other";
 
 export type QuoteRequestStatus =
   | "pending"
@@ -25,6 +35,7 @@ export interface QuoteRequest {
   zip_code: string;
   radius_miles: number;
   dealer_locator_url: string | null;
+  category: string | null;
   reference_code: string;
   status: QuoteRequestStatus;
   created_at: string;
@@ -41,6 +52,7 @@ export interface QuoteRequestDetail {
   zip_code: string;
   radius_miles: number;
   dealer_locator_url: string | null;
+  category: string | null;
   reference_code: string;
   status: QuoteRequestStatus;
   created_at: string;
@@ -86,6 +98,7 @@ export interface Reply {
   parsed_availability: string | null;
   parsed_summary: string | null;
   received_at: string;
+  expires_at: string | null;
   created_at: string;
 }
 
@@ -115,6 +128,7 @@ export interface CreateQuoteRequestPayload {
   zip_code: string;
   radius_miles?: number;
   dealer_locator_url?: string;
+  category?: string;
 }
 
 export interface AuthTokens {

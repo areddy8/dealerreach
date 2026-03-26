@@ -22,6 +22,17 @@ export default function ReplyCard({ reply, dealerName }: ReplyCardProps) {
     }
   );
 
+  const now = new Date();
+  const expiresAt = reply.expires_at ? new Date(reply.expires_at) : null;
+  const isExpired = expiresAt ? expiresAt < now : false;
+  const expiresDateStr = expiresAt
+    ? expiresAt.toLocaleDateString("en-US", {
+        month: "short",
+        day: "numeric",
+        year: "numeric",
+      })
+    : null;
+
   return (
     <div className="rounded-lg border border-slate-800 bg-slate-900 p-5 space-y-4">
       {/* Header */}
@@ -29,6 +40,17 @@ export default function ReplyCard({ reply, dealerName }: ReplyCardProps) {
         <div>
           <h4 className="font-semibold text-white">{dealerName || "Dealer"}</h4>
           <p className="text-xs text-slate-500">{receivedDate}</p>
+          {expiresAt && (
+            isExpired ? (
+              <span className="inline-block mt-1 rounded bg-red-900/50 border border-red-800 px-2 py-0.5 text-xs font-medium text-red-400">
+                Expired
+              </span>
+            ) : (
+              <p className="mt-1 text-xs text-slate-500">
+                Expires: {expiresDateStr}
+              </p>
+            )
+          )}
         </div>
         {reply.parsed_price != null && (
           <div className="rounded-lg bg-emerald-900/40 border border-emerald-800 px-3 py-1.5">

@@ -15,10 +15,8 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.orm import selectinload
 
 from app.database import get_session
-from app.models.dealer import Dealer
 from app.models.pipeline_job import PipelineJob, PipelineJobStatus
 from app.models.quote_request import QuoteRequest, QuoteRequestStatus
-from app.models.reply import Reply
 from app.models.user import User
 from app.schemas.quote_request import (
     CreateQuoteRequest,

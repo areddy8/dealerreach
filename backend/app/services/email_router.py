@@ -14,8 +14,8 @@ import imaplib
 import json
 import logging
 import re
-from datetime import datetime, timezone
-from typing import Any, Dict, List, Optional, Tuple
+from datetime import datetime, timedelta, timezone
+from typing import Any, Dict, Optional
 
 from app.config import settings
 
@@ -81,7 +81,7 @@ def _poll_replies_sync() -> int:
 
 def _process_single_message(mail: imaplib.IMAP4_SSL, msg_id: bytes) -> bool:
     """Fetch, parse, and process a single email message."""
-    status, msg_data = mail.fetch(msg_id, "(RFC822)")
+    status, msg_data = mail.fetch(msg_id, "(RFC822)")  # type: ignore[arg-type]
     if status != "OK" or not msg_data or not msg_data[0]:
         return False
 
@@ -89,7 +89,7 @@ def _process_single_message(mail: imaplib.IMAP4_SSL, msg_id: bytes) -> bool:
     if isinstance(raw_email, bytes):
         msg = email.message_from_bytes(raw_email, policy=email.policy.default)
     else:
-        msg = email.message_from_string(raw_email, policy=email.policy.default)
+        msg = email.message_from_string(raw_email, policy=email.policy.default)  # type: ignore[call-overload]
 
     from_addr = msg.get("From", "")
     subject = msg.get("Subject", "")
@@ -100,20 +100,19 @@ def _process_single_message(mail: imaplib.IMAP4_SSL, msg_id: bytes) -> bool:
     ref_code = _extract_reference_code(subject, to_addr, cc_addr, body)
     if ref_code is None:
         logger.debug("No reference code found in message from %s", from_addr)
-        mail.store(msg_id, "+FLAGS", "\\Seen")
+        mail.store(msg_id, "+FLAGS", "\\Seen")  # type: ignore[arg-type]
         return False
 
     sender_email = _extract_email_address(from_addr)
     if not sender_email:
         logger.warning("Could not extract sender email from: %s", from_addr)
-        mail.store(msg_id, "+FLAGS", "\\Seen")
+        mail.store(msg_id, "+FLAGS", "\\Seen")  # type: ignore[arg-type]
         return False
 
     # Schedule async DB work on the running event loop
     try:
         loop = asyncio.get_event_loop()
         if loop.is_running():
-            import concurrent.futures
             future = asyncio.run_coroutine_threadsafe(
                 _process_reply_async(ref_code, sender_email, subject, body),
                 loop,
@@ -129,7 +128,7 @@ def _process_single_message(mail: imaplib.IMAP4_SSL, msg_id: bytes) -> bool:
         )
         return False
     finally:
-        mail.store(msg_id, "+FLAGS", "\\Seen")
+        mail.store(msg_id, "+FLAGS", "\\Seen")  # type: ignore[arg-type]
 
 
 async def _process_reply_async(
@@ -147,7 +146,6 @@ async def _process_reply_async(
     from app.models.outreach_record import OutreachRecord, OutreachStatus
     from app.models.quote_request import QuoteRequest
     from app.models.reply import Reply
-    from app.models.user import User
     from app.services.pipeline import publish_event
 
     full_ref_code = f"DR-{ref_code}"
@@ -224,6 +222,7 @@ async def _process_reply_async(
             parsed_summary=parsed.get("summary"),
             received_at=datetime.now(timezone.utc),
         )
+        reply.expires_at = reply.received_at + timedelta(days=30)
         session.add(reply)
 
         # Update outreach record status
@@ -346,18 +345,18 @@ def _extract_body(msg: email.message.Message) -> str:
         for part in msg.walk():
             if part.get_content_type() == "text/plain":
                 payload = part.get_payload(decode=True)
-                if payload:
+                if isinstance(payload, bytes):
                     charset = part.get_content_charset() or "utf-8"
                     return payload.decode(charset, errors="replace")
         for part in msg.walk():
             if part.get_content_type() == "text/html":
                 payload = part.get_payload(decode=True)
-                if payload:
+                if isinstance(payload, bytes):
                     charset = part.get_content_charset() or "utf-8"
                     return payload.decode(charset, errors="replace")
     else:
         payload = msg.get_payload(decode=True)
-        if payload:
+        if isinstance(payload, bytes):
             charset = msg.get_content_charset() or "utf-8"
             return payload.decode(charset, errors="replace")
     return ""

@@ -16,6 +16,7 @@ class ReplyResponse(BaseModel):
     parsed_availability: Optional[str]
     parsed_summary: Optional[str]
     received_at: datetime
+    expires_at: Optional[datetime] = None
     created_at: datetime
 
     model_config = {"from_attributes": True}

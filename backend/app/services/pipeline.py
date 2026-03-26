@@ -20,7 +20,6 @@ from redis.asyncio import Redis
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from app.config import settings
 from app.models.dealer import Dealer
 from app.models.outreach_record import OutreachMethod, OutreachRecord, OutreachStatus
 from app.models.pipeline_job import PipelineJob
@@ -122,7 +121,7 @@ def _merge_dealers(all_results: List[List[Dict[str, Any]]]) -> List[Dict[str, An
     seen: Dict[str, Dict[str, Any]] = {}
     for result_set in all_results:
         for dealer in result_set:
-            key = (dealer.get("name", "").lower().strip(), dealer.get("zip_code", ""))
+            key = f"{dealer.get('name', '').lower().strip()}|{dealer.get('zip_code', '')}"
             if key not in seen:
                 seen[key] = dealer
             else:

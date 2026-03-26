@@ -9,6 +9,7 @@ export default function QuoteRequestForm() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
+  const [category, setCategory] = useState("");
   const [productName, setProductName] = useState("");
   const [brand, setBrand] = useState("");
   const [specs, setSpecs] = useState("");
@@ -40,6 +41,7 @@ export default function QuoteRequestForm() {
         zip_code: zipCode.trim(),
         radius_miles: radiusMiles,
         dealer_locator_url: dealerLocatorUrl.trim() || undefined,
+        category: category || undefined,
       });
       router.push(`/dashboard/${qr.id}`);
     } catch (err) {
@@ -60,6 +62,27 @@ export default function QuoteRequestForm() {
           {error}
         </div>
       )}
+
+      <div>
+        <label htmlFor="category" className={labelClass}>
+          Category
+        </label>
+        <select
+          id="category"
+          className={inputClass}
+          value={category}
+          onChange={(e) => setCategory(e.target.value)}
+        >
+          <option value="">Select a category...</option>
+          <option value="kitchen_appliances">Kitchen Appliances</option>
+          <option value="fireplaces">Fireplaces &amp; Inserts</option>
+          <option value="hot_tubs">Hot Tubs &amp; Spas</option>
+          <option value="outdoor_kitchens">Outdoor Kitchens &amp; Grills</option>
+          <option value="countertops">Countertops &amp; Cabinetry</option>
+          <option value="windows_doors">Windows &amp; Doors</option>
+          <option value="other">Other</option>
+        </select>
+      </div>
 
       <div>
         <label htmlFor="productName" className={labelClass}>
@@ -114,7 +137,7 @@ export default function QuoteRequestForm() {
             type="text"
             inputMode="numeric"
             maxLength={5}
-            placeholder="90210"
+            placeholder="94102"
             className={`${inputClass} ${
               zipCode && !zipValid ? "border-red-500" : ""
             }`}
@@ -122,6 +145,9 @@ export default function QuoteRequestForm() {
             onChange={(e) => setZipCode(e.target.value.replace(/\D/g, ""))}
             required
           />
+          <p className="mt-1 text-xs text-slate-500">
+            Currently serving the San Francisco Bay Area
+          </p>
           {zipCode && !zipValid && (
             <p className="mt-1 text-xs text-red-400">
               Must be a 5-digit ZIP code

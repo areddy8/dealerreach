@@ -119,11 +119,11 @@ async def extract_contacts(dealers: List[Dict[str, str]]) -> List[Dict[str, str]
 
     updated: List[Dict[str, str]] = []
     for i, result in enumerate(results):
-        if isinstance(result, Exception):
+        if isinstance(result, BaseException):
             logger.error("Contact extraction failed for dealer %d: %s", i, result)
             updated.append(dealers[i])
         else:
-            updated.append(result)
+            updated.append(result)  # type: ignore[arg-type]
 
     logger.info("Extracted contacts for %d dealers", len(updated))
     return updated

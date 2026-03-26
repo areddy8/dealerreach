@@ -3,6 +3,7 @@ from __future__ import annotations
 import asyncio
 import logging
 import time
+from typing import Optional
 
 from sendgrid import SendGridAPIClient
 from sendgrid.helpers.mail import Email, Mail, ReplyTo, To
@@ -35,7 +36,7 @@ def _send_sync(
     subject: str,
     body: str,
     reply_to: str,
-    html_body: str = None,
+    html_body: Optional[str] = None,
 ) -> bool:
     """Synchronous SendGrid send with retry logic (called via asyncio.to_thread)."""
     api_key = settings.SENDGRID_API_KEY
@@ -113,7 +114,7 @@ async def send_email(
     subject: str,
     body: str,
     reply_to: str,
-    html_body: str = None,
+    html_body: Optional[str] = None,
 ) -> bool:
     """Send an email via SendGrid.
 

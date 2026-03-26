@@ -1,5 +1,11 @@
 @import "tailwindcss";
 
+/* Font */
+body {
+  font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    "Helvetica Neue", Arial, sans-serif;
+}
+
 /* Custom scrollbar */
 ::-webkit-scrollbar {
   width: 8px;

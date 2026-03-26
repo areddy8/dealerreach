@@ -7,7 +7,7 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
 from app.config import settings
-from app.api import auth, quote_requests, dealers, replies, events
+from app.api import auth, email_verification, password_reset, quote_requests, dealers, replies, events, export
 
 logging.basicConfig(
     level=logging.INFO,
@@ -41,10 +41,13 @@ app.add_middleware(
 
 # Routers
 app.include_router(auth.router)
+app.include_router(password_reset.router)
+app.include_router(email_verification.router)
 app.include_router(quote_requests.router)
 app.include_router(dealers.router)
 app.include_router(replies.router)
 app.include_router(events.router)
+app.include_router(export.router)
 
 
 @app.get("/health", tags=["health"])

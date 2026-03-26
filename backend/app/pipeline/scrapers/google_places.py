@@ -47,8 +47,6 @@ async def search_google_places(
 
     Runs multiple search queries to maximize dealer coverage.
     """
-    from playwright.async_api import async_playwright
-    import asyncio
 
     # Build multiple search queries to improve coverage
     queries = []

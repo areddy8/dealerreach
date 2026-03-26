@@ -1,31 +1,25 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
 import "./globals.css";
 import NavBar from "@/components/NavBar";
 import ErrorBoundary from "@/components/ErrorBoundary";
 import { AuthProvider } from "@/context/AuthContext";
 
-const inter = Inter({
-  subsets: ["latin"],
-  display: "swap",
-});
-
 export const metadata: Metadata = {
-  title: "DealerReach.io - Get Real Dealer Prices",
+  title: "DealerReach.io - Compare Renovation Quotes from Bay Area Dealers",
   description:
-    "Stop playing phone tag. Get real dealer pricing on fireplaces, hot tubs, appliances, and more.",
+    "Get real dealer pricing on home renovation products in the San Francisco Bay Area. Compare quotes on appliances, fireplaces, hot tubs, outdoor kitchens, and more.",
   openGraph: {
-    title: "DealerReach.io - Get Real Dealer Prices",
+    title: "DealerReach.io - Compare Renovation Quotes from Bay Area Dealers",
     description:
-      "Stop playing phone tag. Get real dealer pricing on fireplaces, hot tubs, appliances, and more.",
+      "Get real dealer pricing on home renovation products in the San Francisco Bay Area. Compare quotes on appliances, fireplaces, hot tubs, outdoor kitchens, and more.",
     siteName: "DealerReach.io",
     type: "website",
   },
   twitter: {
     card: "summary",
-    title: "DealerReach.io - Get Real Dealer Prices",
+    title: "DealerReach.io - Compare Renovation Quotes from Bay Area Dealers",
     description:
-      "Stop playing phone tag. Get real dealer pricing on fireplaces, hot tubs, appliances, and more.",
+      "Get real dealer pricing on home renovation products in the San Francisco Bay Area. Compare quotes on appliances, fireplaces, hot tubs, outdoor kitchens, and more.",
   },
 };
 
@@ -35,7 +29,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className={`${inter.className} h-full antialiased`}>
+    <html lang="en" className="h-full antialiased">
       <body className="flex min-h-full flex-col bg-slate-950">
         <AuthProvider>
           <NavBar />

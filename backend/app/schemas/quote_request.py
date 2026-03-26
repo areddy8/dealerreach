@@ -15,6 +15,7 @@ class CreateQuoteRequest(BaseModel):
     zip_code: str = Field(..., max_length=10)
     radius_miles: int = Field(50, ge=1, le=500)
     dealer_locator_url: Optional[str] = Field(None, max_length=2048)
+    category: Optional[str] = None
 
 
 class QuoteRequestResponse(BaseModel):
@@ -25,6 +26,7 @@ class QuoteRequestResponse(BaseModel):
     zip_code: str
     radius_miles: int
     dealer_locator_url: Optional[str]
+    category: Optional[str] = None
     reference_code: str
     status: str
     created_at: datetime
@@ -43,6 +45,7 @@ class QuoteRequestDetail(BaseModel):
     zip_code: str
     radius_miles: int
     dealer_locator_url: Optional[str]
+    category: Optional[str] = None
     reference_code: str
     status: str
     created_at: datetime

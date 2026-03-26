@@ -9,6 +9,16 @@ from sqlalchemy.orm import Mapped, mapped_column, relationship
 from app.models.base import Base, TimestampMixin, UUIDPrimaryKey
 
 
+class RenovationCategory(str, enum.Enum):
+    kitchen_appliances = "kitchen_appliances"
+    fireplaces = "fireplaces"
+    hot_tubs = "hot_tubs"
+    outdoor_kitchens = "outdoor_kitchens"
+    countertops = "countertops"
+    windows_doors = "windows_doors"
+    other = "other"
+
+
 class QuoteRequestStatus(str, enum.Enum):
     pending = "pending"
     searching = "searching"
@@ -31,6 +41,7 @@ class QuoteRequest(Base, UUIDPrimaryKey, TimestampMixin):
     zip_code: Mapped[str] = mapped_column(String(10), nullable=False)
     radius_miles: Mapped[int] = mapped_column(Integer, default=50, nullable=False)
     dealer_locator_url: Mapped[Optional[str]] = mapped_column(String(2048), nullable=True)
+    category: Mapped[Optional[str]] = mapped_column(String(50), nullable=True)
     reference_code: Mapped[str] = mapped_column(String(10), unique=True, nullable=False, index=True)
     status: Mapped[QuoteRequestStatus] = mapped_column(
         Enum(QuoteRequestStatus), default=QuoteRequestStatus.pending, nullable=False

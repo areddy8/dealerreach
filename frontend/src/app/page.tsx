@@ -16,17 +16,21 @@ export default function LandingPage() {
         </div>
 
         <div className="mx-auto max-w-4xl text-center">
+          <span className="mb-4 inline-block rounded-full border border-blue-500/30 bg-blue-500/10 px-4 py-1.5 text-sm font-medium text-blue-400">
+            Serving the San Francisco Bay Area
+          </span>
           <h1 className="text-4xl font-bold tracking-tight text-white sm:text-5xl lg:text-6xl">
-            Get Real Dealer Prices.{" "}
+            Compare Renovation Quotes from Bay Area Dealers.{" "}
             <span className="bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">
               No Phone Tag.
             </span>
           </h1>
           <p className="mx-auto mt-6 max-w-2xl text-lg leading-relaxed text-slate-400">
-            Many premium products — fireplaces, hot tubs, grills, appliances —
-            are only sold through dealer networks with no public pricing.
-            DealerReach contacts local dealers for you and collects real quotes,
-            so you can compare prices without the runaround.
+            Shopping for appliances, fireplaces, hot tubs, outdoor kitchens,
+            grills, or countertops? These high-ticket renovation products are
+            sold through dealer networks with no public pricing. DealerReach
+            contacts Bay Area dealers for you and collects real quotes, so you
+            can compare prices without the runaround.
           </p>
           <div className="mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row">
             <Link
@@ -62,11 +66,11 @@ export default function LandingPage() {
                 <span className="text-xl font-bold">1</span>
               </div>
               <h3 className="text-lg font-semibold text-white">
-                Enter Your Product
+                Choose Your Project
               </h3>
               <p className="mt-2 text-sm leading-relaxed text-slate-400">
-                Tell us what you are looking for — product name, brand, model,
-                and your ZIP code. We will handle the rest.
+                Pick your renovation category and tell us what you need —
+                brand, model, and specs. We will handle the rest.
               </p>
             </div>
 
@@ -76,11 +80,11 @@ export default function LandingPage() {
                 <span className="text-xl font-bold">2</span>
               </div>
               <h3 className="text-lg font-semibold text-white">
-                We Contact Dealers
+                We Contact Bay Area Dealers
               </h3>
               <p className="mt-2 text-sm leading-relaxed text-slate-400">
-                Our system finds authorized dealers near you and reaches out
-                via email and contact forms requesting pricing on your behalf.
+                Our system finds authorized dealers across the Bay Area and
+                reaches out on your behalf.
               </p>
             </div>
 
@@ -90,11 +94,11 @@ export default function LandingPage() {
                 <span className="text-xl font-bold">3</span>
               </div>
               <h3 className="text-lg font-semibold text-white">
-                Compare Prices
+                Compare &amp; Save
               </h3>
               <p className="mt-2 text-sm leading-relaxed text-slate-400">
-                As dealer replies come in, we parse and display them in a
-                clean dashboard so you can compare pricing side by side.
+                As dealer quotes come in, compare prices, lead times, and
+                availability side by side.
               </p>
             </div>
           </div>
@@ -107,20 +111,20 @@ export default function LandingPage() {
           <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
             {[
               {
-                title: "Automated Outreach",
-                desc: "We find and contact dealers so you do not have to make dozens of phone calls.",
+                title: "Bay Area Coverage",
+                desc: "We search dealers across San Francisco, Oakland, San Jose, and the entire Bay Area.",
+              },
+              {
+                title: "High-Ticket Expertise",
+                desc: "Built for the products where pricing matters most: appliances, fireplaces, outdoor kitchens, and more.",
               },
               {
                 title: "Real-Time Tracking",
                 desc: "Watch your request progress through each stage with live status updates.",
               },
               {
-                title: "Parsed Replies",
+                title: "AI-Parsed Quotes",
                 desc: "Dealer responses are automatically parsed to extract price, lead time, and availability.",
-              },
-              {
-                title: "Multiple Sources",
-                desc: "We scrape dealer locators, Google Maps, and brand directories to find every dealer near you.",
               },
               {
                 title: "Side-by-Side Comparison",
@@ -143,6 +147,57 @@ export default function LandingPage() {
         </div>
       </section>
 
+      {/* Popular Categories */}
+      <section className="border-t border-slate-800 px-4 py-20 sm:px-6">
+        <div className="mx-auto max-w-5xl">
+          <h2 className="text-center text-3xl font-bold text-white sm:text-4xl">
+            Popular Renovation Categories
+          </h2>
+          <p className="mx-auto mt-4 max-w-2xl text-center text-slate-400">
+            Get competitive dealer quotes on the high-ticket items that make the biggest impact on your renovation.
+          </p>
+
+          <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+            {[
+              {
+                title: "Kitchen Appliances",
+                desc: "Ranges, refrigerators, dishwashers, and more from top brands.",
+              },
+              {
+                title: "Fireplaces & Inserts",
+                desc: "Gas, electric, and wood-burning fireplaces and inserts for every style.",
+              },
+              {
+                title: "Hot Tubs & Spas",
+                desc: "Find the best deals on hot tubs and swim spas from authorized dealers.",
+              },
+              {
+                title: "Outdoor Kitchens & Grills",
+                desc: "Built-in grills, outdoor kitchen islands, and premium BBQ setups.",
+              },
+              {
+                title: "Countertops & Cabinetry",
+                desc: "Quartz, granite, marble countertops and custom cabinetry.",
+              },
+              {
+                title: "Windows & Doors",
+                desc: "Energy-efficient windows, patio doors, and entry door systems.",
+              },
+            ].map((cat) => (
+              <div
+                key={cat.title}
+                className="rounded-xl border border-slate-800 bg-slate-900 p-6"
+              >
+                <h3 className="font-semibold text-white">{cat.title}</h3>
+                <p className="mt-2 text-sm leading-relaxed text-slate-400">
+                  {cat.desc}
+                </p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* FAQ */}
       <section className="border-t border-slate-800 px-4 py-20 sm:px-6">
         <div className="mx-auto max-w-3xl">
@@ -152,8 +207,8 @@ export default function LandingPage() {
           <div className="mt-12 space-y-6">
             {[
               {
-                q: "What types of products does this work for?",
-                a: "DealerReach works great for fireplaces, hot tubs, grills, outdoor kitchens, appliances, and any other products sold primarily through dealer networks without public pricing.",
+                q: "What types of renovation products does this work for?",
+                a: "DealerReach is built for high-ticket home renovation items sold through dealer networks: kitchen appliances, fireplaces, hot tubs, outdoor kitchens, grills, countertops, windows, doors, and more.",
               },
               {
                 q: "How long does it take to get quotes?",
@@ -166,6 +221,14 @@ export default function LandingPage() {
               {
                 q: "Is DealerReach free?",
                 a: "Yes! DealerReach is completely free to use during our beta period.",
+              },
+              {
+                q: "Do you only serve the Bay Area?",
+                a: "We're currently focused on the San Francisco Bay Area for our launch. We plan to expand to other markets soon.",
+              },
+              {
+                q: "Can I use DealerReach for my contractor's material sourcing?",
+                a: "Absolutely! Many of our users are homeowners working with contractors who need competitive pricing on materials and appliances.",
               },
             ].map((faq) => (
               <div
@@ -186,10 +249,11 @@ export default function LandingPage() {
       <section className="border-t border-slate-800 px-4 py-20 sm:px-6">
         <div className="mx-auto max-w-2xl text-center">
           <h2 className="text-3xl font-bold text-white">
-            Ready to get real prices?
+            Ready to save on your renovation?
           </h2>
           <p className="mt-4 text-slate-400">
-            Stop guessing. Start comparing dealer quotes today.
+            Join Bay Area homeowners who are getting the best dealer prices on
+            their renovation projects.
           </p>
           <Link
             href={user ? "/new-request" : "/signup"}
@@ -207,15 +271,15 @@ export default function LandingPage() {
             &copy; {new Date().getFullYear()} DealerReach.io. All rights reserved.
           </p>
           <nav className="flex gap-6 text-sm text-slate-500">
-            <a href="#" className="transition-colors hover:text-slate-300">
+            <Link href="/privacy" className="transition-colors hover:text-slate-300">
               Privacy Policy
-            </a>
-            <a href="#" className="transition-colors hover:text-slate-300">
+            </Link>
+            <Link href="/terms" className="transition-colors hover:text-slate-300">
               Terms of Service
-            </a>
-            <a href="#" className="transition-colors hover:text-slate-300">
+            </Link>
+            <Link href="/contact" className="transition-colors hover:text-slate-300">
               Contact
-            </a>
+            </Link>
           </nav>
         </div>
       </footer>

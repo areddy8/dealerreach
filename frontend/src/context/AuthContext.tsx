@@ -30,27 +30,38 @@ const AuthContext = createContext<AuthState>({
   logout: () => {},
 });
 
+function getStoredToken(): string | null {
+  if (typeof window === "undefined") return null;
+  return localStorage.getItem("dealerreach_token");
+}
+
 export function AuthProvider({ children }: { children: ReactNode }) {
   const [user, setUser] = useState<User | null>(null);
-  const [token, setToken] = useState<string | null>(null);
-  const [loading, setLoading] = useState(true);
+  const [token, setToken] = useState<string | null>(getStoredToken);
+  const [loading, setLoading] = useState(() => !!getStoredToken());
 
-  // On mount, check for existing token
+  // On mount, validate existing token
   useEffect(() => {
-    const stored = localStorage.getItem("dealerreach_token");
-    if (stored) {
-      setToken(stored);
-      api
-        .getMe()
-        .then((u) => setUser(u))
-        .catch(() => {
-          localStorage.removeItem("dealerreach_token");
-          setToken(null);
-        })
-        .finally(() => setLoading(false));
-    } else {
-      setLoading(false);
-    }
+    const stored = getStoredToken();
+    if (!stored) return;
+
+    let cancelled = false;
+    api
+      .getMe()
+      .then((u) => {
+        if (!cancelled) setUser(u);
+      })
+      .catch(() => {
+        localStorage.removeItem("dealerreach_token");
+        if (!cancelled) setToken(null);
+      })
+      .finally(() => {
+        if (!cancelled) setLoading(false);
+      });
+
+    return () => {
+      cancelled = true;
+    };
   }, []);
 
   const login = useCallback(async (email: string, password: string) => {

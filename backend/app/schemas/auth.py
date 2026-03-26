@@ -24,6 +24,16 @@ class UserResponse(BaseModel):
     id: uuid.UUID
     email: str
     name: str
+    email_verified: bool = False
     created_at: datetime
 
     model_config = {"from_attributes": True}
+
+
+class ForgotPasswordRequest(BaseModel):
+    email: EmailStr
+
+
+class ResetPasswordRequest(BaseModel):
+    token: str
+    new_password: str

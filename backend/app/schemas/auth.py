@@ -8,6 +8,7 @@ class SignupRequest(BaseModel):
     email: EmailStr
     password: str
     name: str
+    company_name: str | None = None
 
 
 class LoginRequest(BaseModel):
@@ -25,6 +26,11 @@ class UserResponse(BaseModel):
     email: str
     name: str
     email_verified: bool = False
+    company_name: str | None = None
+    company_slug: str | None = None
+    role: str = "dealer_admin"
+    subscription_tier: str = "free"
+    onboarded: bool = False
     created_at: datetime
 
     model_config = {"from_attributes": True}

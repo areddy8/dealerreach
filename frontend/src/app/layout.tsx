@@ -5,21 +5,21 @@ import ErrorBoundary from "@/components/ErrorBoundary";
 import { AuthProvider } from "@/context/AuthContext";
 
 export const metadata: Metadata = {
-  title: "DealerReach.io - Compare Renovation Quotes from Bay Area Dealers",
+  title: "DealerReach — The Digital Home for Exceptional Crafts",
   description:
-    "Get real dealer pricing on home renovation products in the San Francisco Bay Area. Compare quotes on appliances, fireplaces, hot tubs, outdoor kitchens, and more.",
+    "Elevate your luxury showroom operations with an editorial-grade platform designed for high-end appliance and kitchen dealers.",
   openGraph: {
-    title: "DealerReach.io - Compare Renovation Quotes from Bay Area Dealers",
+    title: "DealerReach — The Digital Home for Exceptional Crafts",
     description:
-      "Get real dealer pricing on home renovation products in the San Francisco Bay Area. Compare quotes on appliances, fireplaces, hot tubs, outdoor kitchens, and more.",
-    siteName: "DealerReach.io",
+      "Elevate your luxury showroom operations with an editorial-grade platform designed for high-end appliance and kitchen dealers.",
+    siteName: "DealerReach",
     type: "website",
   },
   twitter: {
     card: "summary",
-    title: "DealerReach.io - Compare Renovation Quotes from Bay Area Dealers",
+    title: "DealerReach — The Digital Home for Exceptional Crafts",
     description:
-      "Get real dealer pricing on home renovation products in the San Francisco Bay Area. Compare quotes on appliances, fireplaces, hot tubs, outdoor kitchens, and more.",
+      "Elevate your luxury showroom operations with an editorial-grade platform designed for high-end appliance and kitchen dealers.",
   },
 };
 
@@ -30,7 +30,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className="h-full antialiased">
-      <body className="flex min-h-full flex-col bg-slate-950">
+      <body className="flex min-h-full flex-col bg-[#FAF8F5] text-[#1A1A1A]">
         <AuthProvider>
           <NavBar />
           <main className="flex-1">

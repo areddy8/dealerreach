@@ -1,7 +1,7 @@
 "use client";
 
 import { useAuth } from "@/context/AuthContext";
-import { updateProfile, changePassword, listQuoteRequests } from "@/lib/api";
+import { updateProfile, changePassword, listProducts, listClients } from "@/lib/api";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
@@ -25,7 +25,8 @@ export default function ProfilePage() {
   const [passwordError, setPasswordError] = useState("");
 
   // Account stats
-  const [totalQuoteRequests, setTotalQuoteRequests] = useState<number | null>(null);
+  const [totalProducts, setTotalProducts] = useState<number | null>(null);
+  const [totalClients, setTotalClients] = useState<number | null>(null);
 
   useEffect(() => {
     if (!loading && !user) {
@@ -42,16 +43,19 @@ export default function ProfilePage() {
 
   useEffect(() => {
     if (user) {
-      listQuoteRequests(true)
-        .then((requests) => setTotalQuoteRequests(requests.length))
-        .catch(() => setTotalQuoteRequests(0));
+      listProducts()
+        .then((products) => setTotalProducts(products.length))
+        .catch(() => setTotalProducts(0));
+      listClients()
+        .then((clients) => setTotalClients(clients.length))
+        .catch(() => setTotalClients(0));
     }
   }, [user]);
 
   if (loading || !user) {
     return (
       <div className="flex min-h-[60vh] items-center justify-center">
-        <div className="h-8 w-8 animate-spin rounded-full border-2 border-blue-500 border-t-transparent" />
+        <div className="h-8 w-8 animate-spin rounded-full border-2 border-[#B8965A] border-t-transparent" />
       </div>
     );
   }
@@ -108,18 +112,18 @@ export default function ProfilePage() {
   }
 
   const inputClasses =
-    "w-full rounded-lg border border-slate-700 bg-slate-800 px-4 py-2.5 text-sm text-white placeholder-slate-400 focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500";
+    "w-full rounded-lg border border-[#E8E4DE] bg-[#FAF8F5] px-4 py-2.5 text-sm text-[#1A1A1A] placeholder-[#6B6560]/50 focus:border-[#B8965A] focus:outline-none focus:ring-1 focus:ring-[#B8965A]";
 
   return (
     <div className="mx-auto max-w-2xl px-4 py-10 sm:px-6">
-      <h1 className="mb-8 text-2xl font-bold text-white">Profile</h1>
+      <h1 className="mb-8 font-[family-name:var(--font-serif)] text-2xl text-[#1A1A1A]">Profile</h1>
 
       {/* Section 1: Profile Information */}
-      <div className="mb-6 rounded-xl border border-slate-800 bg-slate-900 p-6">
-        <h2 className="mb-4 text-lg font-semibold text-white">Profile Information</h2>
+      <div className="mb-6 rounded-xl border border-[#E8E4DE] bg-white p-6">
+        <h2 className="mb-4 font-[family-name:var(--font-serif)] text-lg text-[#1A1A1A]">Profile Information</h2>
         <form onSubmit={handleProfileSubmit} className="space-y-4">
           <div>
-            <label htmlFor="name" className="mb-1 block text-sm font-medium text-slate-300">
+            <label htmlFor="name" className="mb-1 block text-sm font-medium text-[#1A1A1A]">
               Name
             </label>
             <input
@@ -132,7 +136,7 @@ export default function ProfilePage() {
             />
           </div>
           <div>
-            <label htmlFor="email" className="mb-1 block text-sm font-medium text-slate-300">
+            <label htmlFor="email" className="mb-1 block text-sm font-medium text-[#1A1A1A]">
               Email
             </label>
             <input
@@ -144,17 +148,20 @@ export default function ProfilePage() {
               required
             />
           </div>
-          <p className="text-sm text-slate-400">Member since {memberSince}</p>
+          {user.company_name && (
+            <p className="text-sm text-[#6B6560]">Company: {user.company_name}</p>
+          )}
+          <p className="text-sm text-[#6B6560]">Member since {memberSince}</p>
           {profileSuccess && (
-            <p className="text-sm text-green-400">{profileSuccess}</p>
+            <p className="text-sm text-green-600">{profileSuccess}</p>
           )}
           {profileError && (
-            <p className="text-sm text-red-400">{profileError}</p>
+            <p className="text-sm text-red-600">{profileError}</p>
           )}
           <button
             type="submit"
             disabled={profileSaving}
-            className="rounded-lg bg-blue-600 px-5 py-2.5 text-sm font-medium text-white transition-colors hover:bg-blue-500 disabled:opacity-50"
+            className="rounded-lg bg-[#B8965A] px-5 py-2.5 text-sm font-medium text-white transition-colors hover:bg-[#A07D48] disabled:opacity-50"
           >
             {profileSaving ? "Saving..." : "Save Changes"}
           </button>
@@ -162,11 +169,11 @@ export default function ProfilePage() {
       </div>
 
       {/* Section 2: Change Password */}
-      <div className="mb-6 rounded-xl border border-slate-800 bg-slate-900 p-6">
-        <h2 className="mb-4 text-lg font-semibold text-white">Change Password</h2>
+      <div className="mb-6 rounded-xl border border-[#E8E4DE] bg-white p-6">
+        <h2 className="mb-4 font-[family-name:var(--font-serif)] text-lg text-[#1A1A1A]">Change Password</h2>
         <form onSubmit={handlePasswordSubmit} className="space-y-4">
           <div>
-            <label htmlFor="currentPassword" className="mb-1 block text-sm font-medium text-slate-300">
+            <label htmlFor="currentPassword" className="mb-1 block text-sm font-medium text-[#1A1A1A]">
               Current Password
             </label>
             <input
@@ -179,7 +186,7 @@ export default function ProfilePage() {
             />
           </div>
           <div>
-            <label htmlFor="newPassword" className="mb-1 block text-sm font-medium text-slate-300">
+            <label htmlFor="newPassword" className="mb-1 block text-sm font-medium text-[#1A1A1A]">
               New Password
             </label>
             <input
@@ -193,7 +200,7 @@ export default function ProfilePage() {
             />
           </div>
           <div>
-            <label htmlFor="confirmPassword" className="mb-1 block text-sm font-medium text-slate-300">
+            <label htmlFor="confirmPassword" className="mb-1 block text-sm font-medium text-[#1A1A1A]">
               Confirm New Password
             </label>
             <input
@@ -207,15 +214,15 @@ export default function ProfilePage() {
             />
           </div>
           {passwordSuccess && (
-            <p className="text-sm text-green-400">{passwordSuccess}</p>
+            <p className="text-sm text-green-600">{passwordSuccess}</p>
           )}
           {passwordError && (
-            <p className="text-sm text-red-400">{passwordError}</p>
+            <p className="text-sm text-red-600">{passwordError}</p>
           )}
           <button
             type="submit"
             disabled={passwordSaving}
-            className="rounded-lg bg-blue-600 px-5 py-2.5 text-sm font-medium text-white transition-colors hover:bg-blue-500 disabled:opacity-50"
+            className="rounded-lg bg-[#B8965A] px-5 py-2.5 text-sm font-medium text-white transition-colors hover:bg-[#A07D48] disabled:opacity-50"
           >
             {passwordSaving ? "Changing..." : "Change Password"}
           </button>
@@ -223,19 +230,31 @@ export default function ProfilePage() {
       </div>
 
       {/* Section 3: Account Stats */}
-      <div className="rounded-xl border border-slate-800 bg-slate-900 p-6">
-        <h2 className="mb-4 text-lg font-semibold text-white">Account Stats</h2>
+      <div className="rounded-xl border border-[#E8E4DE] bg-white p-6">
+        <h2 className="mb-4 font-[family-name:var(--font-serif)] text-lg text-[#1A1A1A]">Account Stats</h2>
         <div className="space-y-3">
           <div className="flex items-center justify-between">
-            <span className="text-sm text-slate-300">Total Quote Requests</span>
-            <span className="text-sm font-medium text-white">
-              {totalQuoteRequests !== null ? totalQuoteRequests : "..."}
+            <span className="text-sm text-[#6B6560]">Products</span>
+            <span className="text-sm font-medium text-[#1A1A1A]">
+              {totalProducts !== null ? totalProducts : "..."}
             </span>
           </div>
           <div className="flex items-center justify-between">
-            <span className="text-sm text-slate-300">Member Since</span>
-            <span className="text-sm font-medium text-white">{memberSince}</span>
+            <span className="text-sm text-[#6B6560]">Clients</span>
+            <span className="text-sm font-medium text-[#1A1A1A]">
+              {totalClients !== null ? totalClients : "..."}
+            </span>
           </div>
+          <div className="flex items-center justify-between">
+            <span className="text-sm text-[#6B6560]">Member Since</span>
+            <span className="text-sm font-medium text-[#1A1A1A]">{memberSince}</span>
+          </div>
+          {user.subscription_tier && (
+            <div className="flex items-center justify-between">
+              <span className="text-sm text-[#6B6560]">Plan</span>
+              <span className="text-sm font-medium capitalize text-[#B8965A]">{user.subscription_tier}</span>
+            </div>
+          )}
         </div>
       </div>
     </div>

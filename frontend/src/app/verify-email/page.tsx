@@ -62,7 +62,7 @@ function VerifyEmailContent() {
               {message}
             </div>
             <Link
-              href="/dashboard"
+              href="/inventory"
               className="mt-6 inline-block rounded-lg bg-blue-600 px-6 py-2.5 text-sm font-medium text-white transition-colors hover:bg-blue-500"
             >
               Go to Dashboard
@@ -76,7 +76,7 @@ function VerifyEmailContent() {
               {message}
             </div>
             <Link
-              href="/dashboard"
+              href="/inventory"
               className="mt-6 inline-block rounded-lg bg-blue-600 px-6 py-2.5 text-sm font-medium text-white transition-colors hover:bg-blue-500"
             >
               Go to Dashboard

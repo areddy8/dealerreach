@@ -37,7 +37,7 @@ function ResetPasswordForm() {
     setLoading(true);
     try {
       await resetPassword(token, newPassword);
-      router.push("/dashboard");
+      router.push("/inventory");
     } catch (err) {
       setError(err instanceof Error ? err.message : "Failed to reset password.");
     } finally {

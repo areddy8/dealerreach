@@ -5,6 +5,11 @@ from app.models.dealer import Dealer
 from app.models.outreach_record import OutreachRecord
 from app.models.reply import Reply
 from app.models.pipeline_job import PipelineJob
+from app.models.product import Product
+from app.models.client import Client
+from app.models.client_project import ClientProject
+from app.models.project_product import ProjectProduct
+from app.models.page_view import PageView
 
 __all__ = [
     "Base",
@@ -14,4 +19,9 @@ __all__ = [
     "OutreachRecord",
     "Reply",
     "PipelineJob",
+    "Product",
+    "Client",
+    "ClientProject",
+    "ProjectProduct",
+    "PageView",
 ]

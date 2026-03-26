@@ -1,4 +1,4 @@
-// ── DealerReach.io TypeScript Types ──
+// ── DealerReach B2B Dealer Platform TypeScript Types ──
 
 export interface User {
   id: string;
@@ -6,129 +6,109 @@ export interface User {
   name: string;
   email_verified: boolean;
   created_at: string;
+  company_name?: string;
+  company_slug?: string;
+  company_logo_url?: string;
+  role?: "owner" | "admin" | "member";
+  subscription_tier?: "free" | "pro" | "enterprise";
 }
 
-export type RenovationCategory =
-  | "kitchen_appliances"
-  | "fireplaces"
-  | "hot_tubs"
-  | "outdoor_kitchens"
-  | "countertops"
-  | "windows_doors"
-  | "other";
-
-export type QuoteRequestStatus =
-  | "pending"
-  | "searching"
-  | "enriching"
-  | "sending"
-  | "monitoring"
-  | "completed"
-  | "failed"
-  | "archived";
-
-export interface QuoteRequest {
+export interface Product {
   id: string;
-  product_name: string;
-  brand: string | null;
-  specs: string | null;
-  zip_code: string;
-  radius_miles: number;
-  dealer_locator_url: string | null;
-  category: string | null;
-  reference_code: string;
-  status: QuoteRequestStatus;
-  created_at: string;
-  updated_at: string;
-  dealer_count: number;
-  reply_count: number;
-}
-
-export interface QuoteRequestDetail {
-  id: string;
-  product_name: string;
-  brand: string | null;
-  specs: string | null;
-  zip_code: string;
-  radius_miles: number;
-  dealer_locator_url: string | null;
-  category: string | null;
-  reference_code: string;
-  status: QuoteRequestStatus;
-  created_at: string;
-  updated_at: string;
-  dealers: Dealer[];
-  replies: Reply[];
-}
-
-export interface Dealer {
-  id: string;
-  quote_request_id: string;
   name: string;
-  address: string;
-  city: string;
-  state: string;
-  zip_code: string;
-  phone: string | null;
-  email: string | null;
-  website: string | null;
-  source: string;
-  created_at: string;
-}
-
-export type OutreachMethod = "email" | "contact_form";
-export type OutreachStatus = "pending" | "sent" | "failed" | "replied";
-
-export interface OutreachRecord {
-  id: string;
-  dealer_id: string;
-  method: OutreachMethod;
-  status: OutreachStatus;
-  sent_at: string | null;
-}
-
-export interface Reply {
-  id: string;
-  outreach_record_id: string;
-  quote_request_id: string;
-  dealer_id: string;
-  raw_body: string;
-  parsed_price: number | null;
-  parsed_lead_time: string | null;
-  parsed_availability: string | null;
-  parsed_summary: string | null;
-  received_at: string;
-  expires_at: string | null;
-  created_at: string;
-}
-
-export interface PipelineProgress {
-  current_stage: string | null;
-  stages_completed: string[];
-  dealer_count: number;
-  emails_sent: number;
-  errors: string[];
-}
-
-export type PipelineJobStatus = "queued" | "running" | "completed" | "failed";
-
-export interface PipelineJob {
-  id: string;
-  quote_request_id: string;
-  status: PipelineJobStatus;
-  progress: PipelineProgress;
-  started_at: string | null;
-  completed_at: string | null;
-}
-
-export interface CreateQuoteRequestPayload {
-  product_name: string;
-  brand?: string;
-  specs?: string;
-  zip_code: string;
-  radius_miles?: number;
-  dealer_locator_url?: string;
+  brand: string;
+  model?: string;
   category?: string;
+  description?: string;
+  ai_description?: string;
+  price?: number;
+  msrp?: number;
+  sku?: string;
+  image_urls: string[];
+  finish?: string;
+  dimensions?: string;
+  specifications?: Record<string, string>;
+  in_stock: boolean;
+  showroom_location?: string;
+  tags: string[];
+  created_at: string;
+  updated_at: string;
+}
+
+export interface Client {
+  id: string;
+  name: string;
+  email: string;
+  phone?: string;
+  company?: string;
+  notes?: string;
+  portal_enabled: boolean;
+  portal_slug?: string;
+  created_at: string;
+  updated_at: string;
+}
+
+export interface ClientProject {
+  id: string;
+  client_id: string;
+  name: string;
+  description?: string;
+  status: "draft" | "active" | "review" | "approved" | "completed";
+  mood_board_urls: string[];
+  created_at: string;
+  updated_at: string;
+}
+
+export interface ProjectProduct {
+  id: string;
+  project_id: string;
+  product_id: string;
+  product?: Product;
+  notes?: string;
+  quantity: number;
+  approved: boolean;
+  added_at: string;
+}
+
+export interface CurationResult {
+  product_id: string;
+  product: Product;
+  relevance_score: number;
+  reasoning: string;
+}
+
+export interface CreateProductPayload {
+  name: string;
+  brand: string;
+  model?: string;
+  category?: string;
+  description?: string;
+  price?: number;
+  msrp?: number;
+  sku?: string;
+  image_urls?: string[];
+  finish?: string;
+  dimensions?: string;
+  specifications?: Record<string, string>;
+  in_stock?: boolean;
+  showroom_location?: string;
+  tags?: string[];
+}
+
+export interface CreateClientPayload {
+  name: string;
+  email: string;
+  phone?: string;
+  company?: string;
+  notes?: string;
+  portal_enabled?: boolean;
+}
+
+export interface CreateProjectPayload {
+  client_id: string;
+  name: string;
+  description?: string;
+  mood_board_urls?: string[];
 }
 
 export interface AuthTokens {

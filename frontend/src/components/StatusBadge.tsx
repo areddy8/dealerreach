@@ -1,24 +1,19 @@
 "use client";
 
-import type { QuoteRequestStatus, OutreachStatus } from "@/lib/types";
-
-type BadgeStatus = QuoteRequestStatus | OutreachStatus;
+type BadgeStatus = "draft" | "active" | "review" | "approved" | "completed" | "in_stock" | "out_of_stock";
 
 const config: Record<string, { bg: string; text: string; pulse?: boolean }> = {
-  pending: { bg: "bg-slate-700", text: "text-slate-300" },
-  searching: { bg: "bg-blue-900/60", text: "text-blue-400", pulse: true },
-  enriching: { bg: "bg-blue-900/60", text: "text-blue-400", pulse: true },
-  sending: { bg: "bg-blue-900/60", text: "text-blue-400", pulse: true },
-  monitoring: { bg: "bg-amber-900/60", text: "text-amber-400" },
-  completed: { bg: "bg-emerald-900/60", text: "text-emerald-400" },
-  archived: { bg: "bg-slate-700", text: "text-slate-400" },
-  failed: { bg: "bg-red-900/60", text: "text-red-400" },
-  sent: { bg: "bg-blue-900/60", text: "text-blue-400" },
-  replied: { bg: "bg-emerald-900/60", text: "text-emerald-400" },
+  draft: { bg: "bg-[#F0EDE8]", text: "text-[#6B6560]" },
+  active: { bg: "bg-emerald-50", text: "text-emerald-700" },
+  review: { bg: "bg-amber-50", text: "text-amber-700", pulse: true },
+  approved: { bg: "bg-emerald-50", text: "text-emerald-700" },
+  completed: { bg: "bg-[#F0EDE8]", text: "text-[#1A1A1A]" },
+  in_stock: { bg: "bg-emerald-50", text: "text-emerald-700" },
+  out_of_stock: { bg: "bg-red-50", text: "text-red-700" },
 };
 
 export default function StatusBadge({ status }: { status: BadgeStatus }) {
-  const c = config[status] || config.pending;
+  const c = config[status] || config.draft;
 
   return (
     <span
@@ -30,7 +25,7 @@ export default function StatusBadge({ status }: { status: BadgeStatus }) {
           <span className="relative inline-flex h-2 w-2 rounded-full bg-current" />
         </span>
       )}
-      {status}
+      {status.replace("_", " ")}
     </span>
   );
 }

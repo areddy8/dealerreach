@@ -8,279 +8,287 @@ export default function LandingPage() {
 
   return (
     <div className="flex flex-col">
-      {/* Hero */}
-      <section className="relative overflow-hidden px-4 pb-20 pt-24 sm:px-6 lg:pt-32">
-        {/* Gradient blob background */}
-        <div className="pointer-events-none absolute inset-0 -z-10">
-          <div className="absolute left-1/2 top-0 -translate-x-1/2 h-[600px] w-[900px] rounded-full bg-gradient-to-br from-blue-600/20 to-purple-600/20 blur-3xl" />
-        </div>
+      {/* ── Hero ── */}
+      <section className="relative flex min-h-[90vh] items-center justify-center overflow-hidden px-4 sm:px-6">
+        {/* Background gradient simulating a luxury showroom */}
+        <div className="pointer-events-none absolute inset-0 -z-10 bg-gradient-to-br from-[#1A1A1A] via-[#2C2620] to-[#1A1A1A]" />
+        <div className="pointer-events-none absolute inset-0 -z-10 opacity-30 bg-[radial-gradient(ellipse_at_60%_40%,rgba(184,150,90,0.3),transparent_70%)]" />
 
         <div className="mx-auto max-w-4xl text-center">
-          <span className="mb-4 inline-block rounded-full border border-blue-500/30 bg-blue-500/10 px-4 py-1.5 text-sm font-medium text-blue-400">
-            Serving the San Francisco Bay Area
-          </span>
-          <h1 className="text-4xl font-bold tracking-tight text-white sm:text-5xl lg:text-6xl">
-            Compare Renovation Quotes from Bay Area Dealers.{" "}
-            <span className="bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">
-              No Phone Tag.
-            </span>
+          <h1 className="font-[family-name:var(--font-serif)] text-4xl font-normal leading-tight tracking-tight text-[#FAF8F5] sm:text-5xl lg:text-6xl">
+            The Digital Home for{" "}
+            <em className="not-italic font-[family-name:var(--font-serif)] italic text-[#B8965A]">
+              Exceptional
+            </em>{" "}
+            Crafts.
           </h1>
-          <p className="mx-auto mt-6 max-w-2xl text-lg leading-relaxed text-slate-400">
-            Shopping for appliances, fireplaces, hot tubs, outdoor kitchens,
-            grills, or countertops? These high-ticket renovation products are
-            sold through dealer networks with no public pricing. DealerReach
-            contacts Bay Area dealers for you and collects real quotes, so you
-            can compare prices without the runaround.
+          <p className="mx-auto mt-6 max-w-2xl text-lg leading-relaxed text-[#FAF8F5]/70">
+            Elevate your luxury showroom operations with an editorial-grade
+            platform designed for high-end appliance and kitchen dealers.
           </p>
           <div className="mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row">
             <Link
-              href={user ? "/new-request" : "/signup"}
-              className="rounded-lg bg-gradient-to-r from-blue-600 to-blue-500 px-8 py-3.5 text-base font-semibold text-white shadow-lg shadow-blue-500/25 transition-all hover:from-blue-500 hover:to-blue-400 hover:shadow-blue-500/40"
+              href={user ? "/inventory" : "/signup"}
+              className="rounded bg-[#B8965A] px-8 py-3.5 text-xs font-semibold uppercase tracking-[0.15em] text-white transition-colors hover:bg-[#A07D48]"
             >
-              Get Started Free
+              Explore Solutions
             </Link>
             <Link
-              href="#how-it-works"
-              className="rounded-lg border border-slate-700 px-8 py-3.5 text-base font-medium text-slate-300 transition-colors hover:border-slate-600 hover:text-white"
+              href="#features"
+              className="rounded border border-[#FAF8F5]/30 px-8 py-3.5 text-xs font-semibold uppercase tracking-[0.15em] text-[#FAF8F5] transition-colors hover:border-[#FAF8F5]/60"
             >
-              See How It Works
+              View Showcase
             </Link>
           </div>
         </div>
       </section>
 
-      {/* How it Works */}
-      <section id="how-it-works" className="px-4 py-20 sm:px-6">
-        <div className="mx-auto max-w-5xl">
-          <h2 className="text-center text-3xl font-bold text-white sm:text-4xl">
-            How It Works
+      {/* ── Core Philosophy ── */}
+      <section id="philosophy" className="px-4 py-24 sm:px-6">
+        <div className="mx-auto max-w-3xl text-center">
+          <span className="text-xs font-semibold uppercase tracking-[0.2em] text-[#B8965A]">
+            Core Philosophy
+          </span>
+          <h2 className="mt-6 font-[family-name:var(--font-serif)] text-3xl leading-snug text-[#1A1A1A] sm:text-4xl">
+            Beyond Software. A Digital Showroom Experience.
           </h2>
-          <p className="mx-auto mt-4 max-w-2xl text-center text-slate-400">
-            Three simple steps to get competitive dealer pricing delivered to your inbox.
-          </p>
-
-          <div className="mt-16 grid gap-8 sm:grid-cols-3">
-            {/* Step 1 */}
-            <div className="relative rounded-xl border border-slate-800 bg-slate-900 p-6">
-              <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-lg bg-blue-600/20 text-blue-400">
-                <span className="text-xl font-bold">1</span>
-              </div>
-              <h3 className="text-lg font-semibold text-white">
-                Choose Your Project
-              </h3>
-              <p className="mt-2 text-sm leading-relaxed text-slate-400">
-                Pick your renovation category and tell us what you need —
-                brand, model, and specs. We will handle the rest.
-              </p>
-            </div>
-
-            {/* Step 2 */}
-            <div className="relative rounded-xl border border-slate-800 bg-slate-900 p-6">
-              <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-lg bg-purple-600/20 text-purple-400">
-                <span className="text-xl font-bold">2</span>
-              </div>
-              <h3 className="text-lg font-semibold text-white">
-                We Contact Bay Area Dealers
-              </h3>
-              <p className="mt-2 text-sm leading-relaxed text-slate-400">
-                Our system finds authorized dealers across the Bay Area and
-                reaches out on your behalf.
-              </p>
-            </div>
-
-            {/* Step 3 */}
-            <div className="relative rounded-xl border border-slate-800 bg-slate-900 p-6">
-              <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-lg bg-emerald-600/20 text-emerald-400">
-                <span className="text-xl font-bold">3</span>
-              </div>
-              <h3 className="text-lg font-semibold text-white">
-                Compare &amp; Save
-              </h3>
-              <p className="mt-2 text-sm leading-relaxed text-slate-400">
-                As dealer quotes come in, compare prices, lead times, and
-                availability side by side.
-              </p>
-            </div>
-          </div>
+          <blockquote className="mt-8 border-l-2 border-[#B8965A] pl-6 text-left">
+            <p className="font-[family-name:var(--font-serif)] text-lg italic leading-relaxed text-[#6B6560]">
+              &ldquo;Luxury is not a feature. It is a standard of service that
+              should be felt at every touchpoint.&rdquo;
+            </p>
+          </blockquote>
         </div>
       </section>
 
-      {/* Features / Value Props */}
-      <section className="border-t border-slate-800 px-4 py-20 sm:px-6">
-        <div className="mx-auto max-w-5xl">
-          <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
-            {[
-              {
-                title: "Bay Area Coverage",
-                desc: "We search dealers across San Francisco, Oakland, San Jose, and the entire Bay Area.",
-              },
-              {
-                title: "High-Ticket Expertise",
-                desc: "Built for the products where pricing matters most: appliances, fireplaces, outdoor kitchens, and more.",
-              },
-              {
-                title: "Real-Time Tracking",
-                desc: "Watch your request progress through each stage with live status updates.",
-              },
-              {
-                title: "AI-Parsed Quotes",
-                desc: "Dealer responses are automatically parsed to extract price, lead time, and availability.",
-              },
-              {
-                title: "Side-by-Side Comparison",
-                desc: "All quotes are organized in one place for easy comparison.",
-              },
-              {
-                title: "Privacy First",
-                desc: "Your contact info is never shared. Dealers reply through our system.",
-              },
-            ].map((f) => (
-              <div key={f.title} className="flex gap-3">
-                <div className="mt-1 h-2 w-2 flex-shrink-0 rounded-full bg-blue-500" />
-                <div>
-                  <h4 className="font-medium text-white">{f.title}</h4>
-                  <p className="mt-1 text-sm text-slate-400">{f.desc}</p>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Popular Categories */}
-      <section className="border-t border-slate-800 px-4 py-20 sm:px-6">
-        <div className="mx-auto max-w-5xl">
-          <h2 className="text-center text-3xl font-bold text-white sm:text-4xl">
-            Popular Renovation Categories
-          </h2>
-          <p className="mx-auto mt-4 max-w-2xl text-center text-slate-400">
-            Get competitive dealer quotes on the high-ticket items that make the biggest impact on your renovation.
-          </p>
-
-          <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-            {[
-              {
-                title: "Kitchen Appliances",
-                desc: "Ranges, refrigerators, dishwashers, and more from top brands.",
-              },
-              {
-                title: "Fireplaces & Inserts",
-                desc: "Gas, electric, and wood-burning fireplaces and inserts for every style.",
-              },
-              {
-                title: "Hot Tubs & Spas",
-                desc: "Find the best deals on hot tubs and swim spas from authorized dealers.",
-              },
-              {
-                title: "Outdoor Kitchens & Grills",
-                desc: "Built-in grills, outdoor kitchen islands, and premium BBQ setups.",
-              },
-              {
-                title: "Countertops & Cabinetry",
-                desc: "Quartz, granite, marble countertops and custom cabinetry.",
-              },
-              {
-                title: "Windows & Doors",
-                desc: "Energy-efficient windows, patio doors, and entry door systems.",
-              },
-            ].map((cat) => (
-              <div
-                key={cat.title}
-                className="rounded-xl border border-slate-800 bg-slate-900 p-6"
-              >
-                <h3 className="font-semibold text-white">{cat.title}</h3>
-                <p className="mt-2 text-sm leading-relaxed text-slate-400">
-                  {cat.desc}
+      {/* ── Feature Cards ── */}
+      <section id="features" className="bg-[#F0EDE8] px-4 py-24 sm:px-6">
+        <div className="mx-auto max-w-6xl">
+          <div className="grid gap-8 sm:grid-cols-2">
+            {/* Editorial Presentation */}
+            <div className="overflow-hidden rounded-lg border border-[#E8E4DE] bg-[#FAF8F5]">
+              <div className="h-48 bg-gradient-to-br from-[#E8E4DE] to-[#D4CFC7]" />
+              <div className="p-8">
+                <h3 className="font-[family-name:var(--font-serif)] text-xl text-[#1A1A1A]">
+                  Editorial Presentation
+                </h3>
+                <p className="mt-3 text-sm leading-relaxed text-[#6B6560]">
+                  Showcase your inventory with the same reverence as a high-end
+                  design magazine. Our layouts adapt to the texture of your
+                  materials.
                 </p>
               </div>
-            ))}
-          </div>
-        </div>
-      </section>
+            </div>
 
-      {/* FAQ */}
-      <section className="border-t border-slate-800 px-4 py-20 sm:px-6">
-        <div className="mx-auto max-w-3xl">
-          <h2 className="text-center text-3xl font-bold text-white sm:text-4xl">
-            Frequently Asked Questions
-          </h2>
-          <div className="mt-12 space-y-6">
-            {[
-              {
-                q: "What types of renovation products does this work for?",
-                a: "DealerReach is built for high-ticket home renovation items sold through dealer networks: kitchen appliances, fireplaces, hot tubs, outdoor kitchens, grills, countertops, windows, doors, and more.",
-              },
-              {
-                q: "How long does it take to get quotes?",
-                a: "Most users start receiving dealer quotes within 1-3 business days, depending on the product and how quickly dealers respond.",
-              },
-              {
-                q: "Is my information shared with dealers?",
-                a: "Only your product inquiry is shared with dealers. Your personal contact information is never disclosed -- dealers reply through our system.",
-              },
-              {
-                q: "Is DealerReach free?",
-                a: "Yes! DealerReach is completely free to use during our beta period.",
-              },
-              {
-                q: "Do you only serve the Bay Area?",
-                a: "We're currently focused on the San Francisco Bay Area for our launch. We plan to expand to other markets soon.",
-              },
-              {
-                q: "Can I use DealerReach for my contractor's material sourcing?",
-                a: "Absolutely! Many of our users are homeowners working with contractors who need competitive pricing on materials and appliances.",
-              },
-            ].map((faq) => (
-              <div
-                key={faq.q}
-                className="rounded-xl border border-slate-800 bg-slate-900 p-6"
-              >
-                <h3 className="font-semibold text-white">{faq.q}</h3>
-                <p className="mt-2 text-sm leading-relaxed text-slate-400">
-                  {faq.a}
-                </p>
+            {/* AI Curator */}
+            <div className="overflow-hidden rounded-lg border border-[#E8E4DE] bg-[#FAF8F5] p-8">
+              <div className="mb-6 flex h-12 w-12 items-center justify-center rounded-full bg-[#B8965A]/10">
+                <svg
+                  className="h-6 w-6 text-[#B8965A]"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={1.5}
+                    d="M9.813 15.904L9 18.75l-.813-2.846a4.5 4.5 0 00-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 003.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 003.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 00-3.09 3.09zM18.259 8.715L18 9.75l-.259-1.035a3.375 3.375 0 00-2.455-2.456L14.25 6l1.036-.259a3.375 3.375 0 002.455-2.456L18 2.25l.259 1.035a3.375 3.375 0 002.455 2.456L21.75 6l-1.036.259a3.375 3.375 0 00-2.455 2.456z"
+                  />
+                </svg>
               </div>
+              <h3 className="font-[family-name:var(--font-serif)] text-xl text-[#1A1A1A]">
+                AI Curator
+              </h3>
+              <p className="mt-3 text-sm leading-relaxed text-[#6B6560]">
+                Intelligent material matching that suggests finishes based on
+                client mood boards. Let AI handle the curation while you focus
+                on relationships.
+              </p>
+            </div>
+
+            {/* Inventory Flow */}
+            <div className="overflow-hidden rounded-lg border-2 border-[#B8965A]/30 bg-[#FAF8F5] p-8">
+              <div className="mb-6 h-1 w-12 bg-[#B8965A]" />
+              <h3 className="font-[family-name:var(--font-serif)] text-xl text-[#1A1A1A]">
+                Inventory Flow
+              </h3>
+              <p className="mt-3 text-sm leading-relaxed text-[#6B6560]">
+                Seamless real-time updates across showrooms and digital
+                storefronts. Your inventory stays synchronized, always.
+              </p>
+            </div>
+
+            {/* Client Portal */}
+            <div className="overflow-hidden rounded-lg border border-[#E8E4DE] bg-[#FAF8F5] p-8">
+              <h3 className="font-[family-name:var(--font-serif)] text-xl text-[#1A1A1A]">
+                Client Portal
+              </h3>
+              <p className="mt-3 text-sm leading-relaxed text-[#6B6560]">
+                A private, white-labeled space for your VIP clients to review
+                specifications, view renders, and approve finishes.
+              </p>
+              <Link
+                href="/contact"
+                className="mt-6 inline-block text-xs font-semibold uppercase tracking-[0.15em] text-[#B8965A] transition-colors hover:text-[#A07D48]"
+              >
+                Request Demo &rarr;
+              </Link>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ── Brand Partners ── */}
+      <section id="brands" className="px-4 py-24 sm:px-6">
+        <div className="mx-auto max-w-5xl text-center">
+          <h2 className="font-[family-name:var(--font-serif)] text-2xl text-[#1A1A1A] sm:text-3xl">
+            Trusted by the Finest Artisans
+          </h2>
+          <div className="mx-auto mt-2 h-0.5 w-16 bg-[#B8965A]" />
+
+          <div className="mt-16 flex flex-wrap items-center justify-center gap-x-12 gap-y-8">
+            {[
+              "LA CORNUE",
+              "SUB-ZERO",
+              "GAGGENAU",
+              "WOLF",
+              "MIELE",
+              "THERMADOR",
+            ].map((brand) => (
+              <span
+                key={brand}
+                className="font-[family-name:var(--font-serif)] text-lg tracking-[0.15em] text-[#6B6560] sm:text-xl"
+              >
+                {brand}
+              </span>
             ))}
           </div>
         </div>
       </section>
 
-      {/* Bottom CTA */}
-      <section className="border-t border-slate-800 px-4 py-20 sm:px-6">
-        <div className="mx-auto max-w-2xl text-center">
-          <h2 className="text-3xl font-bold text-white">
-            Ready to save on your renovation?
-          </h2>
-          <p className="mt-4 text-slate-400">
-            Join Bay Area homeowners who are getting the best dealer prices on
-            their renovation projects.
-          </p>
-          <Link
-            href={user ? "/new-request" : "/signup"}
-            className="mt-8 inline-block rounded-lg bg-gradient-to-r from-blue-600 to-purple-600 px-8 py-3.5 text-base font-semibold text-white shadow-lg transition-all hover:from-blue-500 hover:to-purple-500"
-          >
-            Create Your First Request
-          </Link>
+      {/* ── Testimonial ── */}
+      <section className="bg-[#F0EDE8] px-4 py-24 sm:px-6">
+        <div className="mx-auto max-w-3xl text-center">
+          <span className="font-[family-name:var(--font-serif)] text-5xl leading-none text-[#B8965A]">
+            &ldquo;
+          </span>
+          <blockquote className="mt-2 font-[family-name:var(--font-serif)] text-xl italic leading-relaxed text-[#1A1A1A] sm:text-2xl">
+            DealerReach transformed our digital presence from a standard catalog
+            to a curated gallery. Our conversion rate for walk-in consultations
+            has tripled since launch.
+          </blockquote>
+          <div className="mt-8">
+            <p className="text-xs font-semibold uppercase tracking-[0.2em] text-[#1A1A1A]">
+              Julian Sterling
+            </p>
+            <p className="mt-1 text-xs uppercase tracking-[0.15em] text-[#6B6560]">
+              Creative Director, Sterling &amp; Stone
+            </p>
+          </div>
         </div>
       </section>
 
-      {/* Footer */}
-      <footer className="border-t border-slate-800 px-4 py-8 sm:px-6">
-        <div className="mx-auto max-w-6xl flex flex-col items-center gap-4 sm:flex-row sm:justify-between">
-          <p className="text-sm text-slate-500">
-            &copy; {new Date().getFullYear()} DealerReach.io. All rights reserved.
+      {/* ── CTA ── */}
+      <section className="bg-[#1A1A1A] px-4 py-24 sm:px-6">
+        <div className="mx-auto max-w-3xl text-center">
+          <h2 className="font-[family-name:var(--font-serif)] text-3xl text-[#FAF8F5] sm:text-4xl">
+            Ready to redefine your reach?
+          </h2>
+          <p className="mx-auto mt-4 max-w-xl text-[#FAF8F5]/60">
+            Join the exclusive network of dealers who prioritize craftsmanship
+            in their digital operations.
           </p>
-          <nav className="flex gap-6 text-sm text-slate-500">
-            <Link href="/privacy" className="transition-colors hover:text-slate-300">
-              Privacy Policy
+          <div className="mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row">
+            <Link
+              href={user ? "/inventory" : "/signup"}
+              className="rounded bg-[#B8965A] px-8 py-3.5 text-xs font-semibold uppercase tracking-[0.15em] text-white transition-colors hover:bg-[#A07D48]"
+            >
+              Begin Your Journey
             </Link>
-            <Link href="/terms" className="transition-colors hover:text-slate-300">
-              Terms of Service
+            <Link
+              href="/contact"
+              className="rounded border border-[#FAF8F5]/30 px-8 py-3.5 text-xs font-semibold uppercase tracking-[0.15em] text-[#FAF8F5] transition-colors hover:border-[#FAF8F5]/60"
+            >
+              Request a Private Walkthrough
             </Link>
-            <Link href="/contact" className="transition-colors hover:text-slate-300">
-              Contact
-            </Link>
-          </nav>
+          </div>
+        </div>
+      </section>
+
+      {/* ── Footer ── */}
+      <footer id="about" className="bg-[#1A1A1A] border-t border-[#FAF8F5]/10 px-4 py-16 sm:px-6">
+        <div className="mx-auto max-w-6xl">
+          <div className="flex flex-col gap-12 md:flex-row md:justify-between">
+            {/* Left */}
+            <div className="max-w-sm">
+              <span className="font-[family-name:var(--font-serif)] text-xl tracking-wide text-[#FAF8F5]">
+                DealerReach
+              </span>
+              <p className="mt-4 text-sm leading-relaxed text-[#FAF8F5]/50">
+                Crafting digital excellence for the world&apos;s most
+                distinguished appliance and kitchen dealers.
+              </p>
+            </div>
+
+            {/* Right */}
+            <div className="flex gap-12">
+              <nav className="flex flex-col gap-3">
+                <Link
+                  href="/contact"
+                  className="text-sm uppercase tracking-wider text-[#FAF8F5]/50 transition-colors hover:text-[#FAF8F5]"
+                >
+                  Contact
+                </Link>
+                <Link
+                  href="/privacy"
+                  className="text-sm uppercase tracking-wider text-[#FAF8F5]/50 transition-colors hover:text-[#FAF8F5]"
+                >
+                  Privacy
+                </Link>
+                <Link
+                  href="/terms"
+                  className="text-sm uppercase tracking-wider text-[#FAF8F5]/50 transition-colors hover:text-[#FAF8F5]"
+                >
+                  Terms
+                </Link>
+              </nav>
+            </div>
+          </div>
+
+          {/* Bottom bar */}
+          <div className="mt-12 flex flex-col items-center justify-between gap-4 border-t border-[#FAF8F5]/10 pt-8 sm:flex-row">
+            {/* Social links */}
+            <div className="flex gap-6">
+              <a
+                href="https://instagram.com"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-[#FAF8F5]/40 transition-colors hover:text-[#FAF8F5]"
+                aria-label="Instagram"
+              >
+                <svg className="h-5 w-5" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z" />
+                </svg>
+              </a>
+              <a
+                href="https://linkedin.com"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-[#FAF8F5]/40 transition-colors hover:text-[#FAF8F5]"
+                aria-label="LinkedIn"
+              >
+                <svg className="h-5 w-5" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" />
+                </svg>
+              </a>
+            </div>
+
+            <p className="text-sm text-[#FAF8F5]/40">
+              &copy; {new Date().getFullYear()} DealerReach. All rights
+              reserved.
+            </p>
+          </div>
         </div>
       </footer>
     </div>

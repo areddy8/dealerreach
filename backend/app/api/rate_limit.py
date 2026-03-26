@@ -1,9 +1,8 @@
 """Rate limiting using Redis sliding window."""
 import logging
-import time
 from typing import Optional
 
-from fastapi import Depends, HTTPException, Request, status
+from fastapi import HTTPException, Request, status
 from redis.asyncio import Redis
 
 from app.config import settings

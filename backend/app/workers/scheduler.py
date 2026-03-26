@@ -9,7 +9,6 @@ Usage:
 from __future__ import annotations
 
 import logging
-from typing import Optional, Set
 
 from arq.connections import RedisSettings
 from arq.cron import cron

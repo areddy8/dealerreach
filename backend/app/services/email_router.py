@@ -15,7 +15,7 @@ import json
 import logging
 import re
 from datetime import datetime, timedelta, timezone
-from typing import Any, Dict, List, Optional, Tuple
+from typing import Any, Dict, Optional
 
 from app.config import settings
 
@@ -113,7 +113,6 @@ def _process_single_message(mail: imaplib.IMAP4_SSL, msg_id: bytes) -> bool:
     try:
         loop = asyncio.get_event_loop()
         if loop.is_running():
-            import concurrent.futures
             future = asyncio.run_coroutine_threadsafe(
                 _process_reply_async(ref_code, sender_email, subject, body),
                 loop,
@@ -147,7 +146,6 @@ async def _process_reply_async(
     from app.models.outreach_record import OutreachRecord, OutreachStatus
     from app.models.quote_request import QuoteRequest
     from app.models.reply import Reply
-    from app.models.user import User
     from app.services.pipeline import publish_event
 
     full_ref_code = f"DR-{ref_code}"

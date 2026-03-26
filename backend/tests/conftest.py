@@ -1,5 +1,4 @@
 import asyncio
-import uuid
 from typing import AsyncGenerator
 
 import pytest

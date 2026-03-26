@@ -20,7 +20,6 @@ from redis.asyncio import Redis
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from app.config import settings
 from app.models.dealer import Dealer
 from app.models.outreach_record import OutreachMethod, OutreachRecord, OutreachStatus
 from app.models.pipeline_job import PipelineJob

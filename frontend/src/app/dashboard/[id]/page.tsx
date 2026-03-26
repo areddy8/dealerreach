@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState, useCallback, useRef, useMemo } from "react";
+import { useEffect, useState, useCallback, useMemo } from "react";
 import { useRouter, useParams } from "next/navigation";
 import Link from "next/link";
 import { useAuth } from "@/context/AuthContext";
@@ -103,8 +103,6 @@ export default function QuoteRequestDetailPage() {
   const [replies, setReplies] = useState<Reply[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
-  const prevStatus = useRef<string>("");
-
   const [viewMode, setViewMode] = useState<ViewMode>("cards");
   const [sortBy, setSortBy] = useState<SortBy>("newest");
   const [filterBy, setFilterBy] = useState<FilterBy>("all");

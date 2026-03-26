@@ -13,8 +13,6 @@ from sqlalchemy.orm import selectinload
 
 from app.database import get_session
 from app.models.quote_request import QuoteRequest
-from app.models.dealer import Dealer
-from app.models.reply import Reply
 from app.models.user import User
 from app.services.auth_service import decode_access_token
 

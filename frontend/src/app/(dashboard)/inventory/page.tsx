@@ -57,19 +57,19 @@ export default function InventoryPage() {
   }, [products, category, search]);
 
   const selectClass =
-    "bg-surface/5 border-0 border-b border-surface/20 py-3 px-4 text-sm text-surface focus:border-primary focus:outline-none transition-colors";
+    "bg-[#252622] border-0 border-b border-[#fbf9f4]/20 py-3 px-4 text-sm text-[#fbf9f4] focus:border-primary focus:outline-none transition-colors";
   const inputClass =
-    "bg-transparent border-0 border-b border-surface/20 py-3 px-4 text-sm text-surface placeholder-surface/30 focus:border-primary focus:outline-none transition-colors";
+    "bg-transparent border-0 border-b border-[#fbf9f4]/20 py-3 px-4 text-sm text-[#fbf9f4] placeholder-[#fbf9f4]/30 focus:border-primary focus:outline-none transition-colors";
 
   return (
     <div className="max-w-[1200px] mx-auto py-8">
       {/* Header */}
       <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between mb-8">
         <div>
-          <span className="font-label text-[10px] uppercase tracking-[0.2em] text-surface/40">
+          <span className="font-label text-[10px] uppercase tracking-[0.2em] text-[#fbf9f4]/40">
             Showroom Flow
           </span>
-          <h1 className="font-headline text-3xl font-light text-surface mt-1">
+          <h1 className="font-headline text-3xl font-light text-[#fbf9f4] mt-1">
             Your Collection
           </h1>
         </div>
@@ -90,7 +90,7 @@ export default function InventoryPage() {
           className={selectClass}
         >
           {CATEGORIES.map((c) => (
-            <option key={c} value={c} className="bg-on-surface text-surface">
+            <option key={c} value={c} className="bg-[#1b1c19] text-[#fbf9f4]">
               {c === "All Categories" ? c : c.charAt(0).toUpperCase() + c.slice(1)}
             </option>
           ))}
@@ -106,7 +106,7 @@ export default function InventoryPage() {
 
       {/* Error */}
       {error && (
-        <div className="rounded bg-error-container/20 px-4 py-3 text-sm text-error mb-6">
+        <div className="rounded bg-red-900/20 px-4 py-3 text-sm text-red-400 mb-6">
           {error}
         </div>
       )}
@@ -121,9 +121,9 @@ export default function InventoryPage() {
       {/* Empty state */}
       {!loading && !error && filtered.length === 0 && products.length === 0 && (
         <div className="py-16 text-center">
-          <span className="material-symbols-outlined text-5xl text-surface/20 mb-4 block">inventory_2</span>
-          <h2 className="font-headline text-2xl text-surface">Your showroom awaits</h2>
-          <p className="mt-2 text-surface/50">
+          <span className="material-symbols-outlined text-5xl text-[#fbf9f4]/20 mb-4 block">inventory_2</span>
+          <h2 className="font-headline text-2xl text-[#fbf9f4]">Your showroom awaits</h2>
+          <p className="mt-2 text-[#fbf9f4]/50">
             Add your first product to start building your collection.
           </p>
           <Link
@@ -138,7 +138,7 @@ export default function InventoryPage() {
       {/* No filter results */}
       {!loading && !error && filtered.length === 0 && products.length > 0 && (
         <div className="py-16 text-center">
-          <p className="text-surface/50">No products match your filters.</p>
+          <p className="text-[#fbf9f4]/50">No products match your filters.</p>
         </div>
       )}
 
@@ -149,7 +149,7 @@ export default function InventoryPage() {
             <Link
               key={product.id}
               href={`/inventory/${product.id}`}
-              className="group relative overflow-hidden rounded-lg bg-surface/5 transition-all hover:bg-surface/8"
+              className="group relative bg-[#252622] rounded-lg overflow-hidden hover:bg-[#2c2d29] transition-colors"
             >
               {/* Image */}
               <div className="relative aspect-[4/3] overflow-hidden">
@@ -160,8 +160,8 @@ export default function InventoryPage() {
                     className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
                   />
                 ) : (
-                  <div className="flex h-full w-full items-center justify-center bg-surface/5">
-                    <span className="font-headline text-4xl text-surface/10">
+                  <div className="flex h-full w-full items-center justify-center bg-[#363733]">
+                    <span className="font-headline text-4xl text-[#fbf9f4]/10">
                       {product.brand.charAt(0)}
                     </span>
                   </div>
@@ -178,11 +178,11 @@ export default function InventoryPage() {
                 <p className="font-label text-[10px] uppercase tracking-[0.2em] text-primary">
                   {product.brand}
                 </p>
-                <h3 className="mt-1 font-headline text-lg text-surface">
+                <h3 className="mt-1 font-headline text-lg text-[#fbf9f4]">
                   {product.name}
                 </h3>
                 <div className="mt-3 flex items-center justify-between">
-                  <span className="text-sm text-surface/70">
+                  <span className="text-sm text-[#fbf9f4]/70">
                     {product.price
                       ? `$${product.price.toLocaleString()}`
                       : "Contact for Pricing"}

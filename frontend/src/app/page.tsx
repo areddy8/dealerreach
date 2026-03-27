@@ -58,7 +58,7 @@ export default function LandingPage() {
 
         <div className="grid grid-cols-12 gap-6 md:gap-8">
           {/* Editorial Presentation - Large card */}
-          <div className="col-span-12 md:col-span-7 bg-surface-container-low rounded-lg p-8 md:p-12 editorial-shadow group hover:-translate-y-1 transition-transform duration-300">
+          <div className="col-span-12 md:col-span-8 bg-surface-container-low rounded-lg p-8 md:p-12 editorial-shadow group hover:-translate-y-1 transition-transform duration-300">
             <div className="h-48 md:h-64 bg-gradient-to-br from-surface-container to-surface-container-high rounded mb-8" />
             <div className="flex items-center gap-3 mb-4">
               <span className="material-symbols-outlined text-4xl text-primary">photo_library</span>
@@ -73,7 +73,7 @@ export default function LandingPage() {
           </div>
 
           {/* AI Curator */}
-          <div className="col-span-12 md:col-span-5 bg-surface-container rounded-lg p-8 md:p-12 editorial-shadow group hover:-translate-y-1 transition-transform duration-300">
+          <div className="col-span-12 md:col-span-4 bg-surface-container rounded-lg p-8 md:p-12 editorial-shadow group hover:-translate-y-1 transition-transform duration-300">
             <div className="flex items-center gap-3 mb-6">
               <span className="material-symbols-outlined text-4xl text-primary">auto_awesome</span>
             </div>
@@ -86,22 +86,22 @@ export default function LandingPage() {
             </p>
           </div>
 
-          {/* Inventory Flow */}
-          <div className="col-span-12 md:col-span-5 bg-surface-container-high rounded-lg p-8 md:p-12 editorial-shadow group hover:-translate-y-1 transition-transform duration-300">
+          {/* Inventory Flow - Gold card */}
+          <div className="col-span-12 md:col-span-4 bg-primary text-on-primary rounded-lg p-8 md:p-12 editorial-shadow group hover:-translate-y-1 transition-transform duration-300">
             <div className="flex items-center gap-3 mb-6">
-              <span className="material-symbols-outlined text-4xl text-primary">inventory_2</span>
+              <span className="material-symbols-outlined text-4xl text-on-primary">inventory_2</span>
             </div>
-            <h3 className="font-headline text-2xl font-light text-on-surface">
+            <h3 className="font-headline text-2xl font-light text-on-primary">
               Inventory Flow
             </h3>
-            <p className="mt-3 text-on-surface-variant text-sm leading-relaxed">
+            <p className="mt-3 text-on-primary/80 text-sm leading-relaxed">
               Seamless real-time updates across showrooms and digital storefronts.
               Your inventory stays synchronized, always.
             </p>
           </div>
 
           {/* Client Portal */}
-          <div className="col-span-12 md:col-span-7 bg-surface-container-low rounded-lg p-8 md:p-12 editorial-shadow group hover:-translate-y-1 transition-transform duration-300">
+          <div className="col-span-12 md:col-span-8 bg-surface-container-low rounded-lg p-8 md:p-12 editorial-shadow group hover:-translate-y-1 transition-transform duration-300">
             <div className="flex items-center gap-3 mb-6">
               <span className="material-symbols-outlined text-4xl text-primary">hub</span>
             </div>
@@ -112,19 +112,20 @@ export default function LandingPage() {
               A private, white-labeled space for your VIP clients to review specifications,
               view renders, and approve finishes — all branded to your showroom.
             </p>
-            <Link
-              href="/contact"
-              className="inline-flex items-center gap-2 mt-6 font-label text-xs uppercase tracking-widest text-primary hover:text-primary-container transition-colors"
-            >
-              Request Demo
-              <span className="material-symbols-outlined text-base">arrow_forward</span>
-            </Link>
+            <div className="mt-8 flex items-center gap-6">
+              <div className="flex items-center justify-center w-16 h-16 rounded-full bg-surface-container">
+                <span className="material-symbols-outlined text-3xl text-on-surface-variant">handshake</span>
+              </div>
+              <p className="text-on-surface-variant/60 text-xs font-label uppercase tracking-widest">
+                White-labeled client experience
+              </p>
+            </div>
           </div>
         </div>
       </section>
 
       {/* ── Brand Partners ── */}
-      <section id="brands" className="py-20 bg-surface-container-low">
+      <section id="brands" className="bg-surface-container-low py-20">
         <div className="max-w-[1440px] mx-auto px-6 md:px-12 text-center">
           <span className="font-label text-[10px] uppercase tracking-[0.2em] text-on-surface-variant/60">
             Trusted by the Finest Artisans

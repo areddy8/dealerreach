@@ -13,6 +13,8 @@ const mobileNavItems = [
   { href: "/profile", label: "Profile", icon: "person" },
 ];
 
+const secondaryTabs = ["Overview", "Analytics", "Reports"];
+
 function getBreadcrumb(pathname: string): string {
   const segments = pathname.split("/").filter(Boolean);
   if (segments.length === 0) return "Dashboard";
@@ -34,47 +36,62 @@ export default function DashboardHeader() {
 
   return (
     <>
-      <header className="fixed top-0 right-0 left-0 lg:left-72 z-50 glass-header-dark">
+      <header className="fixed top-0 right-0 left-0 lg:left-72 z-50 bg-[rgba(27,28,25,0.8)] backdrop-blur-[20px]">
         <div className="flex items-center justify-between px-6 md:px-8 py-4">
-          {/* Mobile menu button */}
-          <button
-            className="lg:hidden text-surface/70 hover:text-surface"
-            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            aria-label="Toggle menu"
-          >
-            <span className="material-symbols-outlined">menu</span>
-          </button>
+          {/* Left side */}
+          <div className="flex items-center">
+            {/* Mobile menu button */}
+            <button
+              className="lg:hidden text-[#fbf9f4]/70 hover:text-[#fbf9f4]"
+              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+              aria-label="Toggle menu"
+            >
+              <span className="material-symbols-outlined">menu</span>
+            </button>
 
-          {/* Breadcrumb */}
-          <div className="hidden lg:block">
-            <span className="font-label text-[10px] uppercase tracking-[0.2em] text-surface/40">
-              {getBreadcrumb(pathname)}
-            </span>
+            {/* Desktop breadcrumb */}
+            <div className="hidden lg:block">
+              <span className="font-label text-[10px] uppercase tracking-[0.2em] text-[#fbf9f4]/40">
+                {getBreadcrumb(pathname)}
+              </span>
+            </div>
+
+            {/* Secondary nav tabs */}
+            <div className="hidden lg:flex items-center gap-8 ml-8">
+              {secondaryTabs.map((tab) => (
+                <button
+                  key={tab}
+                  className="text-[10px] uppercase tracking-[0.15em] text-[#fbf9f4]/30 hover:text-[#fbf9f4]/60 transition-colors"
+                >
+                  {tab}
+                </button>
+              ))}
+            </div>
           </div>
 
           {/* Center brand (mobile) */}
-          <span className="lg:hidden font-headline text-xl italic text-primary">
+          <span className="lg:hidden font-headline text-xl italic text-[#775a19]">
             DealerReach
           </span>
 
           {/* Right side */}
           <div className="flex items-center gap-4">
-            <button className="text-surface/50 hover:text-surface transition-colors">
+            <button className="text-[#fbf9f4]/50 hover:text-[#fbf9f4] transition-colors">
               <span className="material-symbols-outlined text-xl">notifications</span>
             </button>
-            <button className="text-surface/50 hover:text-surface transition-colors">
+            <button className="text-[#fbf9f4]/50 hover:text-[#fbf9f4] transition-colors">
               <span className="material-symbols-outlined text-xl">settings</span>
             </button>
             {user && (
               <div className="hidden md:flex items-center gap-3 ml-2">
-                <div className="h-8 w-8 rounded-full bg-primary-container flex items-center justify-center">
-                  <span className="text-on-primary-container text-xs font-medium">
+                <div className="h-8 w-8 rounded-full bg-[#c5a059] flex items-center justify-center">
+                  <span className="text-white text-xs font-medium">
                     {user.name?.charAt(0).toUpperCase() || "U"}
                   </span>
                 </div>
                 <div className="hidden lg:block">
-                  <p className="text-xs font-medium text-surface">{user.name}</p>
-                  <p className="text-[10px] text-surface/40">{user.company_name || "Atelier Member"}</p>
+                  <p className="text-xs font-medium text-[#fbf9f4]">{user.name}</p>
+                  <p className="text-[10px] text-[#fbf9f4]/40">{user.company_name || "Atelier Member"}</p>
                 </div>
               </div>
             )}
@@ -86,15 +103,15 @@ export default function DashboardHeader() {
       {mobileMenuOpen && (
         <div className="fixed inset-0 z-[60] lg:hidden">
           <div
-            className="absolute inset-0 bg-on-surface/60"
+            className="absolute inset-0 bg-[#1b1c19]/60"
             onClick={() => setMobileMenuOpen(false)}
           />
-          <div className="absolute left-0 top-0 h-full w-72 bg-on-surface p-6 flex flex-col">
+          <div className="absolute left-0 top-0 h-full w-72 bg-[#1b1c19] p-6 flex flex-col">
             <div className="flex items-center justify-between mb-8">
-              <span className="font-headline text-xl font-light text-surface">The Atelier</span>
+              <span className="font-headline text-xl font-light text-[#fbf9f4]">The Atelier</span>
               <button
                 onClick={() => setMobileMenuOpen(false)}
-                className="text-surface/50"
+                className="text-[#fbf9f4]/50"
               >
                 <span className="material-symbols-outlined">close</span>
               </button>
@@ -107,8 +124,8 @@ export default function DashboardHeader() {
                   onClick={() => setMobileMenuOpen(false)}
                   className={`flex items-center gap-3 px-4 py-3 rounded transition-colors ${
                     pathname.startsWith(item.href)
-                      ? "bg-primary/10 text-primary"
-                      : "text-surface/60 hover:text-surface"
+                      ? "bg-[#775a19]/10 text-[#775a19]"
+                      : "text-[#fbf9f4]/60 hover:text-[#fbf9f4]"
                   }`}
                 >
                   <span className="material-symbols-outlined text-xl">{item.icon}</span>
@@ -118,7 +135,7 @@ export default function DashboardHeader() {
             </nav>
             <button
               onClick={logout}
-              className="flex items-center gap-2 text-surface/40 hover:text-surface/70 font-label text-xs uppercase tracking-widest mt-auto pt-6 border-t border-surface/10"
+              className="flex items-center gap-2 text-[#fbf9f4]/40 hover:text-[#fbf9f4]/70 font-label text-xs uppercase tracking-widest mt-auto pt-6 border-t border-[#fbf9f4]/10"
             >
               <span className="material-symbols-outlined text-base">logout</span>
               Sign Out

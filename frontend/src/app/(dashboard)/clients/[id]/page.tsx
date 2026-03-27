@@ -7,11 +7,11 @@ import { getClient, listProjects, createProject } from "@/lib/api";
 import type { Client, ClientProject } from "@/lib/types";
 
 const STATUS_COLORS: Record<string, string> = {
-  draft: "bg-surface/10 text-surface/50",
+  draft: "bg-[#2c2d29] text-[#fbf9f4]/50",
   active: "bg-primary/10 text-primary",
-  review: "bg-primary-fixed/20 text-primary-fixed-dim",
+  review: "bg-[#ffdea5]/20 text-[#e9c176]",
   approved: "bg-green-900/30 text-green-300",
-  completed: "bg-secondary/20 text-secondary-fixed-dim",
+  completed: "bg-[#565e74]/20 text-[#bec6e0]",
 };
 
 export default function ClientDetailPage() {
@@ -77,7 +77,7 @@ export default function ClientDetailPage() {
   if (!client) {
     return (
       <div className="max-w-2xl mx-auto py-8 text-center">
-        <h2 className="font-headline text-2xl text-surface">Client not found</h2>
+        <h2 className="font-headline text-2xl text-[#fbf9f4]">Client not found</h2>
         <Link href="/clients" className="mt-4 inline-flex items-center gap-1 text-sm text-primary">
           <span className="material-symbols-outlined text-base">arrow_back</span>
           Back to Clients
@@ -86,7 +86,7 @@ export default function ClientDetailPage() {
     );
   }
 
-  const inputClass = "w-full bg-transparent border-0 border-b border-surface/20 py-3 text-sm text-surface placeholder-surface/30 focus:border-primary focus:outline-none transition-colors";
+  const inputClass = "w-full bg-transparent border-0 border-b border-[#fbf9f4]/20 py-3 text-sm text-[#fbf9f4] placeholder-[#fbf9f4]/30 focus:border-primary focus:outline-none transition-colors";
 
   return (
     <div className="max-w-4xl mx-auto py-8">
@@ -96,19 +96,19 @@ export default function ClientDetailPage() {
       </Link>
 
       {error && (
-        <div className="mt-4 rounded bg-error-container/20 px-4 py-3 text-sm text-error">{error}</div>
+        <div className="mt-4 rounded bg-red-900/20 px-4 py-3 text-sm text-red-400">{error}</div>
       )}
 
       {/* Client Info */}
-      <div className="mt-6 bg-surface/5 rounded-lg p-6 md:p-8">
+      <div className="mt-6 bg-[#252622] rounded-lg p-6 md:p-8">
         <div className="flex items-start justify-between">
           <div className="flex items-start gap-4">
-            <div className="h-14 w-14 rounded-full bg-primary-container/20 flex items-center justify-center flex-shrink-0">
+            <div className="h-14 w-14 rounded-full bg-[#775a19]/20 flex items-center justify-center flex-shrink-0">
               <span className="text-primary font-medium text-xl">{client.name.charAt(0).toUpperCase()}</span>
             </div>
             <div>
-              <h1 className="font-headline text-3xl font-light text-surface">{client.name}</h1>
-              {client.company && <p className="mt-1 text-surface/50">{client.company}</p>}
+              <h1 className="font-headline text-3xl font-light text-[#fbf9f4]">{client.name}</h1>
+              {client.company && <p className="mt-1 text-[#fbf9f4]/50">{client.company}</p>}
             </div>
           </div>
           <button
@@ -122,33 +122,33 @@ export default function ClientDetailPage() {
 
         {!editing ? (
           <div className="mt-6 space-y-2">
-            <p className="text-sm text-surface/70">{client.email}</p>
-            {client.phone && <p className="text-sm text-surface/50">{client.phone}</p>}
-            {client.notes && <p className="mt-3 text-sm text-surface/40 whitespace-pre-wrap">{client.notes}</p>}
+            <p className="text-sm text-[#fbf9f4]/70">{client.email}</p>
+            {client.phone && <p className="text-sm text-[#fbf9f4]/50">{client.phone}</p>}
+            {client.notes && <p className="mt-3 text-sm text-[#fbf9f4]/40 whitespace-pre-wrap">{client.notes}</p>}
           </div>
         ) : (
           <div className="mt-6 space-y-5">
             <div>
-              <label className="block font-label text-[10px] uppercase tracking-[0.2em] text-surface/50 mb-2">Name</label>
+              <label className="block font-label text-[10px] uppercase tracking-[0.2em] text-[#fbf9f4]/50 mb-2">Name</label>
               <input type="text" className={inputClass} value={editName} onChange={(e) => setEditName(e.target.value)} />
             </div>
             <div>
-              <label className="block font-label text-[10px] uppercase tracking-[0.2em] text-surface/50 mb-2">Email</label>
+              <label className="block font-label text-[10px] uppercase tracking-[0.2em] text-[#fbf9f4]/50 mb-2">Email</label>
               <input type="email" className={inputClass} value={editEmail} onChange={(e) => setEditEmail(e.target.value)} />
             </div>
             <div>
-              <label className="block font-label text-[10px] uppercase tracking-[0.2em] text-surface/50 mb-2">Phone</label>
+              <label className="block font-label text-[10px] uppercase tracking-[0.2em] text-[#fbf9f4]/50 mb-2">Phone</label>
               <input type="tel" className={inputClass} value={editPhone} onChange={(e) => setEditPhone(e.target.value)} />
             </div>
             <div>
-              <label className="block font-label text-[10px] uppercase tracking-[0.2em] text-surface/50 mb-2">Company</label>
+              <label className="block font-label text-[10px] uppercase tracking-[0.2em] text-[#fbf9f4]/50 mb-2">Company</label>
               <input type="text" className={inputClass} value={editCompany} onChange={(e) => setEditCompany(e.target.value)} />
             </div>
             <div>
-              <label className="block font-label text-[10px] uppercase tracking-[0.2em] text-surface/50 mb-2">Notes</label>
+              <label className="block font-label text-[10px] uppercase tracking-[0.2em] text-[#fbf9f4]/50 mb-2">Notes</label>
               <textarea rows={3} className={inputClass} value={editNotes} onChange={(e) => setEditNotes(e.target.value)} />
             </div>
-            <p className="text-xs text-surface/30">Client editing via API coming soon.</p>
+            <p className="text-xs text-[#fbf9f4]/30">Client editing via API coming soon.</p>
           </div>
         )}
       </div>
@@ -156,7 +156,7 @@ export default function ClientDetailPage() {
       {/* Projects */}
       <div className="mt-10">
         <div className="flex items-center justify-between mb-6">
-          <h2 className="font-headline text-2xl font-light text-surface">Projects</h2>
+          <h2 className="font-headline text-2xl font-light text-[#fbf9f4]">Projects</h2>
           <button
             type="button"
             onClick={() => setShowNewProject(true)}
@@ -169,12 +169,12 @@ export default function ClientDetailPage() {
 
         {/* New Project Modal */}
         {showNewProject && (
-          <div className="fixed inset-0 z-50 flex items-center justify-center bg-on-surface/60">
-            <div className="w-full max-w-md bg-on-surface border border-surface/10 rounded-lg p-8 shadow-2xl">
-              <h3 className="font-headline text-xl text-surface">New Project</h3>
+          <div className="fixed inset-0 z-50 flex items-center justify-center bg-[#1b1c19]/60">
+            <div className="w-full max-w-md bg-[#1b1c19] border border-[#fbf9f4]/10 rounded-lg p-8 shadow-2xl">
+              <h3 className="font-headline text-xl text-[#fbf9f4]">New Project</h3>
               <form onSubmit={handleCreateProject} className="mt-6 space-y-6">
                 <div>
-                  <label htmlFor="projectName" className="block font-label text-[10px] uppercase tracking-[0.2em] text-surface/50 mb-2">
+                  <label htmlFor="projectName" className="block font-label text-[10px] uppercase tracking-[0.2em] text-[#fbf9f4]/50 mb-2">
                     Project Name
                   </label>
                   <input
@@ -191,7 +191,7 @@ export default function ClientDetailPage() {
                   <button
                     type="button"
                     onClick={() => { setShowNewProject(false); setProjectName(""); }}
-                    className="rounded border border-surface/20 px-4 py-2.5 font-label text-xs uppercase tracking-widest text-surface/50 hover:bg-surface/5 transition-colors"
+                    className="rounded border border-[#fbf9f4]/20 px-4 py-2.5 font-label text-xs uppercase tracking-widest text-[#fbf9f4]/50 hover:bg-[#252622] transition-colors"
                   >
                     Cancel
                   </button>
@@ -209,20 +209,20 @@ export default function ClientDetailPage() {
         )}
 
         {projects.length === 0 && !loading && (
-          <p className="text-sm text-surface/40">No projects yet. Create one to start curating products for this client.</p>
+          <p className="text-sm text-[#fbf9f4]/40">No projects yet. Create one to start curating products for this client.</p>
         )}
 
         {projects.length > 0 && (
           <div className="space-y-3">
             {projects.map((project) => (
-              <div key={project.id} className="flex items-center justify-between bg-surface/5 rounded-lg p-5 hover:bg-surface/8 transition-colors">
+              <div key={project.id} className="flex items-center justify-between bg-[#252622] rounded-lg p-5 hover:bg-[#2c2d29] transition-colors">
                 <div>
-                  <h4 className="font-headline text-lg text-surface">{project.name}</h4>
+                  <h4 className="font-headline text-lg text-[#fbf9f4]">{project.name}</h4>
                   <div className="mt-1 flex items-center gap-3">
-                    <span className={`rounded-full px-2.5 py-0.5 text-xs font-medium ${STATUS_COLORS[project.status] || "bg-surface/10 text-surface/50"}`}>
+                    <span className={`rounded-full px-2.5 py-0.5 text-xs font-medium ${STATUS_COLORS[project.status] || "bg-[#2c2d29] text-[#fbf9f4]/50"}`}>
                       {project.status.charAt(0).toUpperCase() + project.status.slice(1)}
                     </span>
-                    <span className="text-xs text-surface/30">
+                    <span className="text-xs text-[#fbf9f4]/30">
                       Created {new Date(project.created_at).toLocaleDateString()}
                     </span>
                   </div>

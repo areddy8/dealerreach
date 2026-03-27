@@ -32,10 +32,10 @@ export default function CuratorPage() {
       {/* Header */}
       <div className="text-center mb-10">
         <span className="material-symbols-outlined text-primary text-4xl mb-4 block">auto_awesome</span>
-        <h1 className="font-headline text-3xl font-light text-surface">
+        <h1 className="font-headline text-3xl font-light text-[#fbf9f4]">
           AI Curator
         </h1>
-        <p className="mt-3 text-surface/50 max-w-xl mx-auto">
+        <p className="mt-3 text-[#fbf9f4]/50 max-w-xl mx-auto">
           Describe what your client is looking for, and our AI will recommend
           the perfect products from your collection.
         </p>
@@ -44,13 +44,13 @@ export default function CuratorPage() {
       {/* Results area */}
       <div className="min-h-[200px] mb-8">
         {error && (
-          <div className="rounded bg-error-container/20 px-4 py-3 text-sm text-error">{error}</div>
+          <div className="rounded bg-red-900/20 px-4 py-3 text-sm text-red-400">{error}</div>
         )}
 
         {loading && (
           <div className="flex flex-col items-center justify-center py-16">
             <div className="h-10 w-10 animate-spin rounded-full border-2 border-primary border-t-transparent" />
-            <p className="mt-4 font-label text-xs uppercase tracking-widest text-surface/40">
+            <p className="mt-4 font-label text-xs uppercase tracking-widest text-[#fbf9f4]/40">
               Curating the perfect selection...
             </p>
           </div>
@@ -58,7 +58,7 @@ export default function CuratorPage() {
 
         {!loading && hasSearched && results.length === 0 && !error && (
           <div className="py-16 text-center">
-            <p className="text-surface/50">
+            <p className="text-[#fbf9f4]/50">
               No matching products found. Try a different description or add more products to your collection.
             </p>
           </div>
@@ -69,7 +69,7 @@ export default function CuratorPage() {
             {results.map((result) => (
               <div
                 key={result.product_id}
-                className="flex gap-4 bg-surface/5 rounded-lg p-5 hover:bg-surface/8 transition-colors"
+                className="flex gap-4 bg-[#252622] rounded-lg p-5 hover:bg-[#2c2d29] transition-colors"
               >
                 <div className="h-24 w-24 flex-shrink-0 overflow-hidden rounded-lg">
                   {result.product.image_urls.length > 0 ? (
@@ -79,8 +79,8 @@ export default function CuratorPage() {
                       className="h-full w-full object-cover"
                     />
                   ) : (
-                    <div className="flex h-full w-full items-center justify-center bg-surface/5">
-                      <span className="font-headline text-2xl text-surface/10">
+                    <div className="flex h-full w-full items-center justify-center bg-[#363733]">
+                      <span className="font-headline text-2xl text-[#fbf9f4]/10">
                         {result.product.brand.charAt(0)}
                       </span>
                     </div>
@@ -90,15 +90,15 @@ export default function CuratorPage() {
                   <p className="font-label text-[10px] uppercase tracking-[0.2em] text-primary">
                     {result.product.brand}
                   </p>
-                  <h3 className="font-headline text-lg text-surface">
+                  <h3 className="font-headline text-lg text-[#fbf9f4]">
                     {result.product.name}
                   </h3>
-                  <p className="text-sm text-surface/70">
+                  <p className="text-sm text-[#fbf9f4]/70">
                     {result.product.price
                       ? `$${result.product.price.toLocaleString()}`
                       : "Contact for Pricing"}
                   </p>
-                  <p className="mt-2 text-sm text-surface/40 italic">
+                  <p className="mt-2 text-sm text-[#fbf9f4]/40 italic">
                     {result.reasoning}
                   </p>
                 </div>
@@ -110,10 +110,10 @@ export default function CuratorPage() {
 
       {/* Input area */}
       <form onSubmit={handleCurate}>
-        <div className="bg-surface/5 rounded-lg p-5">
+        <div className="bg-[#252622] rounded-lg p-5">
           <textarea
             rows={3}
-            className="w-full resize-none bg-transparent text-surface placeholder-surface/30 focus:outline-none text-sm"
+            className="w-full resize-none bg-transparent text-[#fbf9f4] placeholder-[#fbf9f4]/30 focus:outline-none text-sm"
             placeholder="Describe your client's vision..."
             value={query}
             onChange={(e) => setQuery(e.target.value)}

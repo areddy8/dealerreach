@@ -85,7 +85,7 @@ export default function SignupPage() {
             </div>
           )}
 
-          <form onSubmit={handleSubmit} className="space-y-6">
+          <form onSubmit={handleSubmit} className="space-y-8">
             <div className="space-y-2">
               <label
                 htmlFor="name"
@@ -126,7 +126,7 @@ export default function SignupPage() {
                 htmlFor="email"
                 className="block font-label text-[10px] uppercase tracking-[0.2em] text-on-surface-variant/70"
               >
-                Email Address
+                Professional Email
               </label>
               <input
                 id="email"
@@ -144,7 +144,7 @@ export default function SignupPage() {
                 htmlFor="password"
                 className="block font-label text-[10px] uppercase tracking-[0.2em] text-on-surface-variant/70"
               >
-                Password
+                Security Key
               </label>
               <input
                 id="password"
@@ -166,6 +166,31 @@ export default function SignupPage() {
               {loading ? "Creating Account..." : "Begin Your Journey"}
             </button>
           </form>
+
+          {/* Divider */}
+          <div className="flex items-center gap-4 my-8">
+            <div className="flex-1 h-px bg-outline-variant/20" />
+            <span className="text-xs text-on-surface-variant/50 uppercase tracking-widest">Or continue with</span>
+            <div className="flex-1 h-px bg-outline-variant/20" />
+          </div>
+
+          {/* SSO / Biometric */}
+          <div className="flex gap-4">
+            <button
+              type="button"
+              className="flex-1 bg-surface-container rounded py-3 px-6 flex items-center justify-center gap-2 font-label text-xs uppercase tracking-widest text-on-surface-variant hover:bg-surface-container-high transition-colors"
+            >
+              <span className="material-symbols-outlined text-lg">fingerprint</span>
+              Biometric
+            </button>
+            <button
+              type="button"
+              className="flex-1 bg-surface-container rounded py-3 px-6 flex items-center justify-center gap-2 font-label text-xs uppercase tracking-widest text-on-surface-variant hover:bg-surface-container-high transition-colors"
+            >
+              <span className="material-symbols-outlined text-lg">passkey</span>
+              SSO
+            </button>
+          </div>
 
           <p className="mt-10 text-center text-sm text-on-surface-variant">
             Already have an account?{" "}

@@ -84,7 +84,7 @@ export default function LoginPage() {
                 htmlFor="email"
                 className="block font-label text-[10px] uppercase tracking-[0.2em] text-on-surface-variant/70"
               >
-                Email Address
+                Professional Email
               </label>
               <input
                 id="email"
@@ -102,7 +102,7 @@ export default function LoginPage() {
                 htmlFor="password"
                 className="block font-label text-[10px] uppercase tracking-[0.2em] text-on-surface-variant/70"
               >
-                Password
+                Security Key
               </label>
               <input
                 id="password"
@@ -118,7 +118,7 @@ export default function LoginPage() {
             <div className="flex items-center justify-between">
               <label className="flex items-center gap-2 cursor-pointer">
                 <input type="checkbox" className="w-4 h-4 rounded-none border-outline-variant/30 text-primary focus:ring-primary/20" />
-                <span className="text-xs text-on-surface-variant">Remember session</span>
+                <span className="text-xs text-on-surface-variant">Remember this station for 30 days</span>
               </label>
               <Link
                 href="/forgot-password"
@@ -136,6 +136,31 @@ export default function LoginPage() {
               {loading ? "Signing In..." : "Sign In to Atelier"}
             </button>
           </form>
+
+          {/* Divider */}
+          <div className="flex items-center gap-4 my-8">
+            <div className="flex-1 h-px bg-outline-variant/20" />
+            <span className="text-xs text-on-surface-variant/50 uppercase tracking-widest">Or continue with</span>
+            <div className="flex-1 h-px bg-outline-variant/20" />
+          </div>
+
+          {/* SSO / Biometric */}
+          <div className="flex gap-4">
+            <button
+              type="button"
+              className="flex-1 bg-surface-container rounded py-3 px-6 flex items-center justify-center gap-2 font-label text-xs uppercase tracking-widest text-on-surface-variant hover:bg-surface-container-high transition-colors"
+            >
+              <span className="material-symbols-outlined text-lg">fingerprint</span>
+              Biometric
+            </button>
+            <button
+              type="button"
+              className="flex-1 bg-surface-container rounded py-3 px-6 flex items-center justify-center gap-2 font-label text-xs uppercase tracking-widest text-on-surface-variant hover:bg-surface-container-high transition-colors"
+            >
+              <span className="material-symbols-outlined text-lg">passkey</span>
+              SSO
+            </button>
+          </div>
 
           <p className="mt-10 text-center text-sm text-on-surface-variant">
             Don&apos;t have an account?{" "}

@@ -78,16 +78,16 @@ export default function ProfilePage() {
     }
   }
 
-  const inputClass = "w-full bg-transparent border-0 border-b border-surface/20 py-3 text-sm text-surface placeholder-surface/30 focus:border-primary focus:outline-none transition-colors";
-  const labelClass = "block font-label text-[10px] uppercase tracking-[0.2em] text-surface/50 mb-2";
+  const inputClass = "w-full bg-transparent border-0 border-b border-[#fbf9f4]/20 py-3 text-sm text-[#fbf9f4] placeholder-[#fbf9f4]/30 focus:border-primary focus:outline-none transition-colors";
+  const labelClass = "block font-label text-[10px] uppercase tracking-[0.2em] text-[#fbf9f4]/50 mb-2";
 
   return (
     <div className="max-w-2xl mx-auto py-8">
-      <h1 className="font-headline text-3xl font-light text-surface mb-8">Profile</h1>
+      <h1 className="font-headline text-3xl font-light text-[#fbf9f4] mb-8">Profile</h1>
 
       {/* Profile Information */}
-      <div className="bg-surface/5 rounded-lg p-6 md:p-8 mb-6">
-        <h2 className="font-headline text-xl text-surface mb-6">Profile Information</h2>
+      <div className="bg-[#252622] rounded-lg p-6 md:p-8 mb-6">
+        <h2 className="font-headline text-xl text-[#fbf9f4] mb-6">Profile Information</h2>
         <form onSubmit={handleProfileSubmit} className="space-y-5">
           <div>
             <label htmlFor="name" className={labelClass}>Name</label>
@@ -97,10 +97,10 @@ export default function ProfilePage() {
             <label htmlFor="email" className={labelClass}>Email</label>
             <input id="email" type="email" value={email} onChange={(e) => setEmail(e.target.value)} className={inputClass} required />
           </div>
-          {user.company_name && <p className="text-sm text-surface/50">Company: {user.company_name}</p>}
-          <p className="text-sm text-surface/40">Member since {memberSince}</p>
+          {user.company_name && <p className="text-sm text-[#fbf9f4]/50">Company: {user.company_name}</p>}
+          <p className="text-sm text-[#fbf9f4]/40">Member since {memberSince}</p>
           {profileSuccess && <p className="text-sm text-green-400">{profileSuccess}</p>}
-          {profileError && <p className="text-sm text-error">{profileError}</p>}
+          {profileError && <p className="text-sm text-red-400">{profileError}</p>}
           <button type="submit" disabled={profileSaving} className="bg-primary text-on-primary px-6 py-2.5 rounded font-label text-xs uppercase tracking-widest hover:scale-[0.98] transition-all disabled:opacity-50">
             {profileSaving ? "Saving..." : "Save Changes"}
           </button>
@@ -108,8 +108,8 @@ export default function ProfilePage() {
       </div>
 
       {/* Change Password */}
-      <div className="bg-surface/5 rounded-lg p-6 md:p-8 mb-6">
-        <h2 className="font-headline text-xl text-surface mb-6">Change Password</h2>
+      <div className="bg-[#252622] rounded-lg p-6 md:p-8 mb-6">
+        <h2 className="font-headline text-xl text-[#fbf9f4] mb-6">Change Password</h2>
         <form onSubmit={handlePasswordSubmit} className="space-y-5">
           <div>
             <label htmlFor="currentPassword" className={labelClass}>Current Password</label>
@@ -124,7 +124,7 @@ export default function ProfilePage() {
             <input id="confirmPassword" type="password" value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} className={inputClass} required minLength={6} />
           </div>
           {passwordSuccess && <p className="text-sm text-green-400">{passwordSuccess}</p>}
-          {passwordError && <p className="text-sm text-error">{passwordError}</p>}
+          {passwordError && <p className="text-sm text-red-400">{passwordError}</p>}
           <button type="submit" disabled={passwordSaving} className="bg-primary text-on-primary px-6 py-2.5 rounded font-label text-xs uppercase tracking-widest hover:scale-[0.98] transition-all disabled:opacity-50">
             {passwordSaving ? "Changing..." : "Change Password"}
           </button>
@@ -132,24 +132,24 @@ export default function ProfilePage() {
       </div>
 
       {/* Account Stats */}
-      <div className="bg-surface/5 rounded-lg p-6 md:p-8">
-        <h2 className="font-headline text-xl text-surface mb-6">Account Stats</h2>
+      <div className="bg-[#252622] rounded-lg p-6 md:p-8">
+        <h2 className="font-headline text-xl text-[#fbf9f4] mb-6">Account Stats</h2>
         <div className="space-y-4">
           <div className="flex items-center justify-between">
-            <span className="text-sm text-surface/50">Products</span>
-            <span className="text-sm font-medium text-surface">{totalProducts !== null ? totalProducts : "..."}</span>
+            <span className="text-sm text-[#fbf9f4]/50">Products</span>
+            <span className="text-sm font-medium text-[#fbf9f4]">{totalProducts !== null ? totalProducts : "..."}</span>
           </div>
           <div className="flex items-center justify-between">
-            <span className="text-sm text-surface/50">Clients</span>
-            <span className="text-sm font-medium text-surface">{totalClients !== null ? totalClients : "..."}</span>
+            <span className="text-sm text-[#fbf9f4]/50">Clients</span>
+            <span className="text-sm font-medium text-[#fbf9f4]">{totalClients !== null ? totalClients : "..."}</span>
           </div>
           <div className="flex items-center justify-between">
-            <span className="text-sm text-surface/50">Member Since</span>
-            <span className="text-sm font-medium text-surface">{memberSince}</span>
+            <span className="text-sm text-[#fbf9f4]/50">Member Since</span>
+            <span className="text-sm font-medium text-[#fbf9f4]">{memberSince}</span>
           </div>
           {user.subscription_tier && (
             <div className="flex items-center justify-between">
-              <span className="text-sm text-surface/50">Plan</span>
+              <span className="text-sm text-[#fbf9f4]/50">Plan</span>
               <span className="text-sm font-medium text-primary capitalize">{user.subscription_tier}</span>
             </div>
           )}

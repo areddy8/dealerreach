@@ -1,7 +1,7 @@
 @import "tailwindcss";
 
 @theme {
-  /* ── Material Design 3 Color Tokens ── */
+  /* ── Material Design 3 Color Tokens (Light) ── */
   --color-primary: #775a19;
   --color-primary-container: #c5a059;
   --color-primary-fixed: #ffdea5;
@@ -55,6 +55,18 @@
   --color-error-container: #ffdad6;
   --color-on-error: #ffffff;
   --color-on-error-container: #93000a;
+
+  /* ── Dark Mode Dashboard Tokens ── */
+  --color-dark-surface: #1b1c19;
+  --color-dark-surface-container-lowest: #000000;
+  --color-dark-surface-container-low: #252622;
+  --color-dark-surface-container: #2c2d29;
+  --color-dark-surface-container-high: #363733;
+  --color-dark-surface-container-highest: #41423d;
+  --color-dark-on-surface: #fbf9f4;
+  --color-dark-on-surface-variant: #cec6b4;
+  --color-dark-outline: #989080;
+  --color-dark-outline-variant: #4e4639;
 
   /* ── Font Families ── */
   --font-headline: "Noto Serif", "Georgia", "Times New Roman", serif;

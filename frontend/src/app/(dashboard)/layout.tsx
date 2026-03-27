@@ -22,10 +22,10 @@ export default function DashboardLayout({
 
   if (loading) {
     return (
-      <div className="flex h-screen items-center justify-center bg-on-surface">
+      <div className="flex h-screen items-center justify-center bg-[#1b1c19]">
         <div className="text-center">
-          <div className="h-8 w-8 animate-spin rounded-full border-2 border-primary border-t-transparent mx-auto" />
-          <p className="mt-4 font-label text-xs uppercase tracking-widest text-surface/40">
+          <div className="h-8 w-8 animate-spin rounded-full border-2 border-[#775a19] border-t-transparent mx-auto" />
+          <p className="mt-4 font-label text-xs uppercase tracking-widest text-[#fbf9f4]/40">
             Loading Atelier...
           </p>
         </div>
@@ -36,7 +36,7 @@ export default function DashboardLayout({
   if (!user) return null;
 
   return (
-    <div className="flex min-h-screen bg-on-surface text-surface">
+    <div className="flex min-h-screen bg-[#1b1c19] text-[#fbf9f4]">
       <DashboardSidebar />
       <div className="flex-1 flex flex-col min-h-screen">
         <DashboardHeader />

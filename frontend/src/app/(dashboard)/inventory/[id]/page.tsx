@@ -128,7 +128,7 @@ export default function EditProductPage() {
   if (!product) {
     return (
       <div className="max-w-2xl mx-auto py-8 text-center">
-        <h2 className="font-headline text-2xl text-surface">Product not found</h2>
+        <h2 className="font-headline text-2xl text-[#fbf9f4]">Product not found</h2>
         <Link href="/inventory" className="mt-4 inline-flex items-center gap-1 text-sm text-primary hover:text-primary-fixed transition-colors">
           <span className="material-symbols-outlined text-base">arrow_back</span>
           Back to Collection
@@ -137,9 +137,9 @@ export default function EditProductPage() {
     );
   }
 
-  const inputClass = "w-full bg-transparent border-0 border-b border-surface/20 py-3 text-sm text-surface placeholder-surface/30 focus:border-primary focus:outline-none transition-colors";
-  const labelClass = "block font-label text-[10px] uppercase tracking-[0.2em] text-surface/50 mb-2";
-  const selectClass = "w-full bg-surface/5 border-0 border-b border-surface/20 py-3 text-sm text-surface focus:border-primary focus:outline-none transition-colors";
+  const inputClass = "w-full bg-transparent border-0 border-b border-[#fbf9f4]/20 py-3 text-sm text-[#fbf9f4] placeholder-[#fbf9f4]/30 focus:border-primary focus:outline-none transition-colors";
+  const labelClass = "block font-label text-[10px] uppercase tracking-[0.2em] text-[#fbf9f4]/50 mb-2";
+  const selectClass = "w-full bg-[#252622] border-0 border-b border-[#fbf9f4]/20 py-3 text-sm text-[#fbf9f4] focus:border-primary focus:outline-none transition-colors";
 
   return (
     <div className="max-w-2xl mx-auto py-8">
@@ -148,14 +148,14 @@ export default function EditProductPage() {
         Back to Collection
       </Link>
 
-      <h1 className="mt-4 font-headline text-3xl font-light text-surface">Edit Product</h1>
+      <h1 className="mt-4 font-headline text-3xl font-light text-[#fbf9f4]">Edit Product</h1>
 
       {error && (
-        <div className="mt-4 rounded bg-error-container/20 px-4 py-3 text-sm text-error">{error}</div>
+        <div className="mt-4 rounded bg-red-900/20 px-4 py-3 text-sm text-red-400">{error}</div>
       )}
 
       <form onSubmit={handleSubmit} className="mt-8">
-        <div className="bg-surface/5 rounded-lg p-6 md:p-8 space-y-6">
+        <div className="bg-[#252622] rounded-lg p-6 md:p-8 space-y-6">
           <div>
             <label htmlFor="brand" className={labelClass}>Brand</label>
             <input id="brand" type="text" required className={inputClass} placeholder="e.g. Sub-Zero" value={brand} onChange={(e) => setBrand(e.target.value)} />
@@ -165,24 +165,24 @@ export default function EditProductPage() {
             <input id="name" type="text" required className={inputClass} placeholder='e.g. 48" Built-In Refrigerator' value={name} onChange={(e) => setName(e.target.value)} />
           </div>
           <div>
-            <label htmlFor="model" className={labelClass}>Model Number <span className="text-surface/30">(optional)</span></label>
+            <label htmlFor="model" className={labelClass}>Model Number <span className="text-[#fbf9f4]/30">(optional)</span></label>
             <input id="model" type="text" className={inputClass} placeholder="e.g. BI-48S/S" value={model} onChange={(e) => setModel(e.target.value)} />
           </div>
           <div>
             <label htmlFor="category" className={labelClass}>Category</label>
             <select id="category" className={selectClass} value={category} onChange={(e) => setCategory(e.target.value)}>
               {CATEGORIES.map((c) => (
-                <option key={c} value={c} className="bg-on-surface text-surface">{c.charAt(0).toUpperCase() + c.slice(1)}</option>
+                <option key={c} value={c} className="bg-[#1b1c19] text-[#fbf9f4]">{c.charAt(0).toUpperCase() + c.slice(1)}</option>
               ))}
             </select>
           </div>
           <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
             <div>
-              <label htmlFor="price" className={labelClass}>Price <span className="text-surface/30">(optional)</span></label>
+              <label htmlFor="price" className={labelClass}>Price <span className="text-[#fbf9f4]/30">(optional)</span></label>
               <input id="price" type="number" step="0.01" min="0" className={inputClass} placeholder="Leave blank for 'Contact'" value={price} onChange={(e) => setPrice(e.target.value)} />
             </div>
             <div>
-              <label htmlFor="msrp" className={labelClass}>MSRP <span className="text-surface/30">(optional)</span></label>
+              <label htmlFor="msrp" className={labelClass}>MSRP <span className="text-[#fbf9f4]/30">(optional)</span></label>
               <input id="msrp" type="number" step="0.01" min="0" className={inputClass} placeholder="Manufacturer price" value={msrp} onChange={(e) => setMsrp(e.target.value)} />
             </div>
           </div>
@@ -199,8 +199,8 @@ export default function EditProductPage() {
               )}
             </button>
             {aiDescription && (
-              <div className="mt-3 rounded bg-surface/5 p-4 text-sm text-surface/70">
-                <p className="text-[10px] font-label uppercase tracking-widest text-surface/40 mb-1">AI Description:</p>
+              <div className="mt-3 rounded bg-[#252622] p-4 text-sm text-[#fbf9f4]/70">
+                <p className="text-[10px] font-label uppercase tracking-widest text-[#fbf9f4]/40 mb-1">AI Description:</p>
                 {aiDescription}
               </div>
             )}
@@ -208,19 +208,19 @@ export default function EditProductPage() {
           <div>
             <label htmlFor="availability" className={labelClass}>Availability</label>
             <select id="availability" className={selectClass} value={inStock ? "in_stock" : "out_of_stock"} onChange={(e) => setInStock(e.target.value === "in_stock")}>
-              <option value="in_stock" className="bg-on-surface text-surface">In Stock</option>
-              <option value="out_of_stock" className="bg-on-surface text-surface">Out of Stock</option>
+              <option value="in_stock" className="bg-[#1b1c19] text-[#fbf9f4]">In Stock</option>
+              <option value="out_of_stock" className="bg-[#1b1c19] text-[#fbf9f4]">Out of Stock</option>
             </select>
           </div>
           <div>
-            <label htmlFor="heroImage" className={labelClass}>Hero Image URL <span className="text-surface/30">(optional)</span></label>
+            <label htmlFor="heroImage" className={labelClass}>Hero Image URL <span className="text-[#fbf9f4]/30">(optional)</span></label>
             <input id="heroImage" type="url" className={inputClass} placeholder="https://example.com/image.jpg" value={heroImageUrl} onChange={(e) => setHeroImageUrl(e.target.value)} />
           </div>
           <div className="flex items-center gap-3">
-            <button type="button" onClick={() => setFeatured(!featured)} className={`relative h-6 w-11 rounded-full transition-colors ${featured ? "bg-primary" : "bg-surface/20"}`}>
-              <span className={`absolute top-0.5 left-0.5 h-5 w-5 rounded-full bg-surface transition-transform shadow ${featured ? "translate-x-5" : ""}`} />
+            <button type="button" onClick={() => setFeatured(!featured)} className={`relative h-6 w-11 rounded-full transition-colors ${featured ? "bg-primary" : "bg-[#363733]"}`}>
+              <span className={`absolute top-0.5 left-0.5 h-5 w-5 rounded-full bg-[#fbf9f4] transition-transform shadow ${featured ? "translate-x-5" : ""}`} />
             </button>
-            <span className="text-sm text-surface/70">Featured Product</span>
+            <span className="text-sm text-[#fbf9f4]/70">Featured Product</span>
           </div>
           <div>
             <label className={labelClass}>Specifications</label>
@@ -228,7 +228,7 @@ export default function EditProductPage() {
               <div key={i} className="mb-2 flex gap-2">
                 <input type="text" className={`${inputClass} flex-1`} placeholder="Key" value={spec.key} onChange={(e) => { const next = [...specs]; next[i] = { ...next[i], key: e.target.value }; setSpecs(next); }} />
                 <input type="text" className={`${inputClass} flex-1`} placeholder="Value" value={spec.value} onChange={(e) => { const next = [...specs]; next[i] = { ...next[i], value: e.target.value }; setSpecs(next); }} />
-                <button type="button" onClick={() => setSpecs(specs.filter((_, j) => j !== i))} className="text-sm text-error/70 hover:text-error transition-colors px-2">
+                <button type="button" onClick={() => setSpecs(specs.filter((_, j) => j !== i))} className="text-sm text-red-400/70 hover:text-red-400 transition-colors px-2">
                   <span className="material-symbols-outlined text-base">close</span>
                 </button>
               </div>
@@ -238,13 +238,13 @@ export default function EditProductPage() {
             </button>
           </div>
           <div>
-            <label htmlFor="tags" className={labelClass}>Tags <span className="text-surface/30">(comma-separated)</span></label>
+            <label htmlFor="tags" className={labelClass}>Tags <span className="text-[#fbf9f4]/30">(comma-separated)</span></label>
             <input id="tags" type="text" className={inputClass} placeholder="luxury, modern, stainless" value={tagsInput} onChange={(e) => setTagsInput(e.target.value)} />
           </div>
         </div>
 
         <div className="mt-6 flex items-center justify-between">
-          <button type="button" onClick={handleDelete} disabled={deleting} className={`rounded px-6 py-2.5 text-sm font-label uppercase tracking-widest transition-all disabled:opacity-50 ${confirmDelete ? "bg-error text-on-error" : "border border-error/30 text-error hover:bg-error/10"}`}>
+          <button type="button" onClick={handleDelete} disabled={deleting} className={`rounded px-6 py-2.5 text-sm font-label uppercase tracking-widest transition-all disabled:opacity-50 ${confirmDelete ? "bg-red-600 text-white" : "border border-red-600/30 text-red-400 hover:bg-red-900/20"}`}>
             {deleting ? "Deleting..." : confirmDelete ? "Confirm Delete" : "Delete Product"}
           </button>
           <button type="submit" disabled={submitting} className="bg-gradient-to-br from-primary to-primary-container text-white px-8 py-3 rounded font-label text-xs uppercase tracking-widest shadow-[0_4px_20px_-4px_rgba(119,90,25,0.4)] hover:scale-[0.98] transition-all disabled:opacity-50 disabled:cursor-not-allowed">

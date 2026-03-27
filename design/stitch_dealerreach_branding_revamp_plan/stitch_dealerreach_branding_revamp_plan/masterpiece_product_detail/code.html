@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>The Château G4 | The Editorial Atelier</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,400;0,700;1,400&amp;family=Inter:wght@300;400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "error-container": "#ffdad6",
+              "surface-container-low": "#f5f3ee",
+              "secondary-fixed-dim": "#bec6e0",
+              "secondary-container": "#dae2fd",
+              "surface-container": "#f0eee9",
+              "on-secondary-fixed-variant": "#3f465c",
+              "tertiary-fixed-dim": "#b9c7e0",
+              "secondary-fixed": "#dae2fd",
+              "on-primary": "#ffffff",
+              "surface-container-lowest": "#ffffff",
+              "surface": "#fbf9f4",
+              "surface-dim": "#dbdad5",
+              "on-error-container": "#93000a",
+              "surface-container-highest": "#e4e2dd",
+              "on-error": "#ffffff",
+              "on-secondary": "#ffffff",
+              "primary-fixed-dim": "#e9c176",
+              "on-tertiary": "#ffffff",
+              "on-primary-container": "#4e3700",
+              "on-tertiary-fixed": "#0d1c2f",
+              "on-primary-fixed-variant": "#5d4201",
+              "background": "#fbf9f4",
+              "surface-variant": "#e4e2dd",
+              "primary": "#775a19",
+              "on-secondary-fixed": "#131b2e",
+              "error": "#ba1a1a",
+              "surface-bright": "#fbf9f4",
+              "outline": "#7f7667",
+              "on-background": "#1b1c19",
+              "on-tertiary-fixed-variant": "#3a485c",
+              "primary-container": "#c5a059",
+              "on-surface-variant": "#4e4639",
+              "primary-fixed": "#ffdea5",
+              "tertiary-container": "#98a6be",
+              "on-surface": "#1b1c19",
+              "secondary": "#565e74",
+              "outline-variant": "#d1c5b4",
+              "inverse-surface": "#30312e",
+              "inverse-primary": "#e9c176",
+              "surface-container-high": "#eae8e3",
+              "tertiary-fixed": "#d5e3fd",
+              "tertiary": "#515f74",
+              "on-secondary-container": "#5c647a",
+              "surface-tint": "#775a19",
+              "inverse-on-surface": "#f2f1ec",
+              "on-primary-fixed": "#261900",
+              "on-tertiary-container": "#2e3c50"
+            },
+            fontFamily: {
+              "headline": ["Noto Serif"],
+              "body": ["Inter"],
+              "label": ["Inter"]
+            },
+            borderRadius: {"DEFAULT": "0.125rem", "lg": "0.25rem", "xl": "0.5rem", "full": "0.75rem"},
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 300, 'GRAD' 0, 'opsz' 24;
+            vertical-align: middle;
+        }
+        body { font-family: 'Inter', sans-serif; }
+        h1, h2, h3, .font-serif { font-family: 'Noto Serif', serif; }
+        .glass-header { backdrop-filter: blur(20px); }
+    </style>
+</head>
+<body class="bg-surface text-on-surface selection:bg-primary-container selection:text-on-primary-container">
+<!-- TopNavBar -->
+<header class="fixed top-0 w-full z-50 bg-[#fbf9f4]/80 dark:bg-[#1b1c19]/80 backdrop-blur-xl">
+<nav class="flex justify-between items-center px-12 py-6 w-full max-w-[1920px] mx-auto">
+<div class="text-2xl font-serif tracking-tight text-[#1b1c19] dark:text-[#fbf9f4]">
+                The Editorial Atelier
+            </div>
+<div class="hidden md:flex space-x-12 items-center">
+<a class="text-[#565e74] dark:text-[#fbf9f4]/70 hover:text-[#775a19] transition-colors duration-300 font-label text-sm tracking-widest uppercase" href="#">Showrooms</a>
+<a class="text-[#775a19] border-b border-[#775a19] pb-1 font-label text-sm tracking-widest uppercase" href="#">Kitchen</a>
+<a class="text-[#565e74] dark:text-[#fbf9f4]/70 hover:text-[#775a19] transition-colors duration-300 font-label text-sm tracking-widest uppercase" href="#">Fireplaces</a>
+<a class="text-[#565e74] dark:text-[#fbf9f4]/70 hover:text-[#775a19] transition-colors duration-300 font-label text-sm tracking-widest uppercase" href="#">Materials</a>
+<a class="text-[#565e74] dark:text-[#fbf9f4]/70 hover:text-[#775a19] transition-colors duration-300 font-label text-sm tracking-widest uppercase" href="#">Journal</a>
+</div>
+<div class="flex items-center space-x-6 text-[#775a19] dark:text-[#C5A059]">
+<span class="material-symbols-outlined cursor-pointer scale-95 duration-200 ease-in-out">calendar_today</span>
+<span class="material-symbols-outlined cursor-pointer scale-95 duration-200 ease-in-out">search</span>
+</div>
+</nav>
+</header>
+<main class="pt-24">
+<!-- Hero Section: Asymmetric Layout -->
+<section class="relative min-h-[921px] flex flex-col md:flex-row items-center px-6 md:px-12 py-20 gap-12 overflow-hidden">
+<div class="w-full md:w-3/5 relative z-10 order-2 md:order-1">
+<div class="aspect-[4/5] md:aspect-[16/10] overflow-hidden rounded-sm shadow-2xl">
+<img class="w-full h-full object-cover" data-alt="Luxurious vintage-style gas range in a dark forest green with polished brass knobs sitting in a bright sunlit high-end kitchen with marble backsplashes" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAfvSq04bh6siEgt_Jyl-9IJhh1Clr0dSnbTF70jk7SlTjbUk79Fm5x0Du3HCXd-4p_QuuWzDRULtyL7zGgFM6oaUD4sGGyOlFaWFD9yZlHLm6jmN-APwqqZYguQILz53mHGzdbNXu73XEKrxe540Ds8VlWF9YfBwQCgEo19vqI-6c8uYt6KqCtkV6XUCF3V53B2TVIXH8bFpz5A1FqK2Rqore27asNtdgGvXhU2oLhLI_Dg0LVxtwfxmW_woMR0zsx4dWqfOu2Vi4"/>
+</div>
+</div>
+<div class="w-full md:w-2/5 z-20 order-1 md:order-2 md:-ml-32">
+<div class="bg-surface-container-lowest p-8 md:p-16 shadow-[40px_0_60px_-15px_rgba(27,28,25,0.06)] max-w-xl">
+<span class="text-primary font-label tracking-[0.3em] uppercase text-xs mb-6 block">The Masterpiece Series</span>
+<h1 class="text-5xl md:text-7xl font-serif text-on-surface leading-tight mb-8">The Château G4</h1>
+<p class="text-on-surface-variant font-body leading-relaxed mb-10 text-lg">
+                        A culmination of 110 years of French culinary heritage. Handcrafted to order in our Parisian atelier, the G4 represents the ultimate expression of gastronomic performance and bespoke artistry.
+                    </p>
+<div class="flex flex-col space-y-4">
+<button class="bg-primary hover:bg-primary-fixed-variant text-on-primary py-5 px-10 rounded-md transition-all duration-300 font-label tracking-widest uppercase text-sm flex items-center justify-center group">
+                            Price on Request
+                            <span class="material-symbols-outlined ml-2 group-hover:translate-x-1 transition-transform">arrow_forward</span>
+</button>
+<button class="border border-outline-variant/30 hover:border-primary text-on-surface py-5 px-10 rounded-md transition-all duration-300 font-label tracking-widest uppercase text-sm">
+                            Download Brochure
+                        </button>
+</div>
+</div>
+</div>
+</section>
+<!-- Curated Finishes: Material Swatch Chips -->
+<section class="py-32 px-6 md:px-12 bg-surface-container-low">
+<div class="max-w-7xl mx-auto">
+<div class="flex flex-col md:flex-row justify-between items-end mb-20 gap-8">
+<div class="max-w-2xl">
+<h2 class="text-4xl md:text-5xl font-serif mb-6">Curated Finishes</h2>
+<p class="text-on-surface-variant text-lg">Select from over 50 deep-pigment enamels and legendary metal trims. Each finish is applied by hand using centuries-old techniques.</p>
+</div>
+<a class="text-primary font-label tracking-widest uppercase text-sm border-b border-primary pb-1" href="#">View All Materials</a>
+</div>
+<div class="grid grid-cols-2 md:grid-cols-5 gap-12">
+<div class="group cursor-pointer">
+<div class="aspect-square rounded-full mb-6 overflow-hidden border-4 border-surface shadow-lg transition-transform group-hover:scale-105">
+<div class="w-full h-full bg-[#1b1c19]" data-alt="Deep charcoal matte enamel finish texture with subtle metallic sheen"></div>
+</div>
+<p class="text-center font-label text-xs uppercase tracking-widest text-on-surface">Noir Mat</p>
+</div>
+<div class="group cursor-pointer">
+<div class="aspect-square rounded-full mb-6 overflow-hidden border-4 border-surface shadow-lg transition-transform group-hover:scale-105">
+<div class="w-full h-full bg-[#c5a059]" data-alt="Polished brushed brass metal texture with warm golden reflections"></div>
+</div>
+<p class="text-center font-label text-xs uppercase tracking-widest text-on-surface">Laiton Poli</p>
+</div>
+<div class="group cursor-pointer">
+<div class="aspect-square rounded-full mb-6 overflow-hidden border-4 border-surface shadow-lg transition-transform group-hover:scale-105">
+<div class="w-full h-full bg-[#2d4037]" data-alt="British racing green glossy enamel texture"></div>
+</div>
+<p class="text-center font-label text-xs uppercase tracking-widest text-on-surface">Vert Forêt</p>
+</div>
+<div class="group cursor-pointer">
+<div class="aspect-square rounded-full mb-6 overflow-hidden border-4 border-surface shadow-lg transition-transform group-hover:scale-105">
+<div class="w-full h-full bg-[#fbf9f4] border border-outline-variant/20" data-alt="Warm cream antique white enamel texture"></div>
+</div>
+<p class="text-center font-label text-xs uppercase tracking-widest text-on-surface">Blanc Antique</p>
+</div>
+<div class="group cursor-pointer">
+<div class="aspect-square rounded-full mb-6 overflow-hidden border-4 border-surface shadow-lg transition-transform group-hover:scale-105">
+<div class="w-full h-full bg-[#565e74]" data-alt="Muted slate blue satin finish enamel texture"></div>
+</div>
+<p class="text-center font-label text-xs uppercase tracking-widest text-on-surface">Bleu de France</p>
+</div>
+</div>
+</div>
+</section>
+<!-- Product Specifications: Tonal Layering -->
+<section class="py-32 px-6 md:px-12 bg-surface">
+<div class="max-w-7xl mx-auto flex flex-col lg:flex-row gap-20">
+<div class="lg:w-1/2">
+<h2 class="text-4xl font-serif mb-12">The Specification of Excellence</h2>
+<div class="space-y-12">
+<div class="bg-surface-container-highest p-10 rounded-sm">
+<h3 class="font-label text-xs uppercase tracking-[0.2em] mb-8 text-primary">Technical Performance</h3>
+<div class="space-y-6">
+<div class="flex justify-between items-baseline border-b border-on-surface/5 pb-4">
+<span class="font-body text-on-surface-variant">Main Oven Capacity</span>
+<span class="font-body font-medium">85 Litres / 3.0 cu. ft.</span>
+</div>
+<div class="flex justify-between items-baseline border-b border-on-surface/5 pb-4">
+<span class="font-body text-on-surface-variant">Burner Output</span>
+<span class="font-body font-medium">Up to 22,000 BTU</span>
+</div>
+<div class="flex justify-between items-baseline border-b border-on-surface/5 pb-4">
+<span class="font-body text-on-surface-variant">Weight</span>
+<span class="font-body font-medium">280 kg / 617 lbs</span>
+</div>
+<div class="flex justify-between items-baseline pb-4">
+<span class="font-body text-on-surface-variant">Material</span>
+<span class="font-body font-medium">Cast Iron &amp; Solid Brass</span>
+</div>
+</div>
+</div>
+<div class="p-4">
+<p class="font-serif italic text-lg text-on-surface-variant">
+                                "The G4 is not merely an appliance; it is a musical instrument for the chef, tuned to produce the most exquisite culinary symphonies."
+                            </p>
+</div>
+</div>
+</div>
+<div class="lg:w-1/2">
+<div class="relative">
+<img class="w-full h-auto rounded-sm" data-alt="Detailed close-up of heavy cast iron burner and brass control knobs on a luxury range, soft focus background" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCUedaBwBzxtlEznXX45wInmxDFBBwmt7ACk6_MR1FlokHI-HVmjeJUJgHmEFRWDKIR7oJ27fArHjbKCe59VEtfua5AkJDHHBQckbsW7KHP-lWFfmTqnVIS-t-umEbmKZz1_19SBsW4EC6-07vOBJEOQlGLtirjPeQL0sYgsLFQnO3ikfXGFWjxNeVyNAMEUm8cVzOaIS-C9rW9y6VngRdvXeqe8SzHKv_BQjDAjqiSUQBZ05-rRJbN11IQukGlrLyE_ly4iD3JUcQ"/>
+<div class="absolute -bottom-10 -left-10 bg-primary p-12 hidden md:block">
+<span class="material-symbols-outlined text-on-primary text-5xl mb-4">star_rate</span>
+<p class="text-on-primary font-label tracking-widest text-xs uppercase">Precision Built</p>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Brand Story: Editorial Layout -->
+<section class="py-40 px-6 md:px-12 bg-[#1b1c19] text-[#fbf9f4]">
+<div class="max-w-5xl mx-auto text-center">
+<span class="text-[#775a19] font-label tracking-[0.4em] uppercase text-xs mb-12 block">The Legacy</span>
+<h2 class="text-5xl md:text-7xl font-serif mb-16 leading-tight">Forged in Paris,<br/>Destined for History</h2>
+<div class="grid md:grid-cols-2 gap-16 text-left">
+<p class="text-[#fbf9f4]/70 leading-relaxed text-lg font-light">
+                        Founded in 1908 by Albert Dupuy, the atelier was born from a singular passion: to perfect the art of the vaulted oven. For over a century, we have remained a family-owned Maison, rejecting mass production in favor of meticulous hand-assembly.
+                    </p>
+<p class="text-[#fbf9f4]/70 leading-relaxed text-lg font-light">
+                        Every Château range is built from start to finish by a single craftsman in our workshop outside Paris. This intimate connection between maker and machine ensures that every knob, every hinge, and every seal meets our uncompromising standards of permanence.
+                    </p>
+</div>
+<div class="mt-24 aspect-[21/9] overflow-hidden rounded-sm">
+<img class="w-full h-full object-cover opacity-60 grayscale" data-alt="Black and white artistic photograph of a skilled craftsman hands working on a metal machine part with sparks and dramatic lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBwO7yo8pDAl2zIbF1B2yiFbo7NkNYgMkTARWJ3wuw_ireUlX27SlFnvTVojjI1HOueXbprMOlJkcndeGVn6hpRnaRZu-i7k5UQQw6pDFwnoNBidHbPwc-Ehl7nfWj5CPTFiWVac0V_-tLeLHySRR0lNJ8teGmutXGUuJIKUZcNMQFo20CMsxaojtL-Rct0bai-f8j20RBN51NEwdytUwkl18ClsdbRI6A_hQCEHUTvptyV9DiPHCaxV1ehz8tJYXdy07waf6-rlZA"/>
+</div>
+</div>
+</section>
+<!-- Related Masterpieces: Bento Grid -->
+<section class="py-32 px-6 md:px-12 bg-surface">
+<div class="max-w-7xl mx-auto">
+<h2 class="text-4xl font-serif mb-16 text-center">Related Masterpieces</h2>
+<div class="grid grid-cols-1 md:grid-cols-12 gap-8 h-auto md:h-[800px]">
+<!-- Large Feature -->
+<div class="md:col-span-7 bg-surface-container-low relative group overflow-hidden rounded-sm">
+<img class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" data-alt="Professional grade stainless steel refrigeration unit integrated into luxury wood cabinetry" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBUcdq5JYd1dhlDmDl3DOLrNi5dQgGaexfd_AZ1HOgINcwNz5M10vRFGHsEdaCCOzp212uvlXsrJMWqjgdTub-cJlg9fJBIVQKOFj6i22k--yLx9auRBvASA-SeoBEVtKIVJ4sM5_VoCNkStV62PQks5MfNfKEdEPgE-2d8oxZ10laGqVXPd-TJz65VcIzhrFSkgqHwxyrSOA_fkG9H_QyHAiCNUDh1SpMVA5oIzlaRk_g5CQ7pSZoNfcTa_HXWt3odUOELWnvmY3E"/>
+<div class="absolute inset-0 bg-gradient-to-t from-on-surface/60 to-transparent"></div>
+<div class="absolute bottom-10 left-10 text-surface">
+<span class="font-label text-[10px] uppercase tracking-widest mb-2 block">Cooling</span>
+<h3 class="text-3xl font-serif mb-4">The Grand Palais Fridge</h3>
+<button class="text-surface font-label text-xs uppercase tracking-widest border-b border-surface/50 pb-1 hover:border-surface transition-colors">Explore Collection</button>
+</div>
+</div>
+<!-- Two Vertical Items -->
+<div class="md:col-span-5 flex flex-col gap-8">
+<div class="flex-1 bg-surface-container-high relative group overflow-hidden rounded-sm">
+<img class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" data-alt="Modern high-end kitchen with dark marble island and gold pendant lights" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD9qLGfAK6xFahzIednxfneJ3XJNk1lh_fsYi-zG6OLGKuj-5AVtfQ0uT1_ET5U9Mws4u9UirLjOKskOPY44jLyamZvQlmNpQCuzxLB6CIXCpmn9hlO5DNOMgvFvvLzVk74NiIRHWItL3dkSKrsL1DMBkLGzmTue_v5gW3anficLVISZjIuIx6_fAToF6nay_jvA5zXQfKzKpwH9pJ64WxPU4_CitmN2sU2pG0IDJhfuWyekNTma-sDKH8OVk119i4baIVEZFE6XyI"/>
+<div class="absolute bottom-6 left-6">
+<h3 class="text-xl font-serif text-on-surface">Bespoke Cabinetry</h3>
+</div>
+</div>
+<div class="flex-1 bg-surface-container-lowest relative group overflow-hidden rounded-sm">
+<img class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" data-alt="Artisanal copper cookware hanging in a rustic luxury kitchen" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAo_t2f0C8n860CHeqW8imft2vWqt81jXiYhJ3_Uu5XMcSvXGr1KCQnB8w1pyS5w28gFptIOdOvzLCpqG-ZpHw_Ad7V_fwHbazn-KUXiZ-J3WxMhT2s4jGwxM4rqjTfDOvdmQ0kzE2RV4_tMAtgpwwjf7YqUoOTG_Zc-jH9Y_kjzX5ZTlAGWF-yxrQYHC-N4QPCYG-m3cLUrNHmGM6GYsDXKjYAG_-mzpTp5tdnCghZ5AROp4pq2U_zL7jhGgh-rH2mwH8jNijwcxE"/>
+<div class="absolute bottom-6 left-6">
+<h3 class="text-xl font-serif text-on-surface">The Culinaire Accents</h3>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+</main>
+<!-- Footer -->
+<footer class="bg-[#fbf9f4] dark:bg-[#1b1c19] w-full py-20 px-12 border-t border-[#1b1c19]/5">
+<div class="flex flex-col md:flex-row justify-between items-center max-w-7xl mx-auto space-y-8 md:space-y-0">
+<div class="font-serif text-lg text-[#1b1c19] dark:text-[#fbf9f4]">
+                The Editorial Atelier
+            </div>
+<div class="flex space-x-12">
+<a class="text-[#565e74] dark:text-[#fbf9f4]/50 hover:text-[#1b1c19] dark:hover:text-[#fbf9f4] underline decoration-[#775a19] font-body text-sm tracking-wide" href="#">Showrooms</a>
+<a class="text-[#565e74] dark:text-[#fbf9f4]/50 hover:text-[#1b1c19] dark:hover:text-[#fbf9f4] underline decoration-[#775a19] font-body text-sm tracking-wide" href="#">Sustainability</a>
+<a class="text-[#565e74] dark:text-[#fbf9f4]/50 hover:text-[#1b1c19] dark:hover:text-[#fbf9f4] underline decoration-[#775a19] font-body text-sm tracking-wide" href="#">Press</a>
+<a class="text-[#565e74] dark:text-[#fbf9f4]/50 hover:text-[#1b1c19] dark:hover:text-[#fbf9f4] underline decoration-[#775a19] font-body text-sm tracking-wide" href="#">Careers</a>
+</div>
+<p class="text-[#565e74] dark:text-[#fbf9f4]/50 font-body text-sm tracking-wide text-center">
+                © 2024 The Editorial Atelier. All Rights Reserved.
+            </p>
+</div>
+</footer>
+</body></html>

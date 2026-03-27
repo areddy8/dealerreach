@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,400;0,700;1,400&amp;family=Inter:wght@300;400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "surface-dim": "#dbdad5",
+              "surface-container-high": "#eae8e3",
+              "secondary-fixed-dim": "#bec6e0",
+              "surface-container": "#f0eee9",
+              "on-error": "#ffffff",
+              "tertiary-fixed-dim": "#b9c7e0",
+              "primary-fixed-dim": "#e9c176",
+              "on-secondary-fixed": "#131b2e",
+              "primary": "#775a19",
+              "secondary": "#565e74",
+              "surface-container-low": "#f5f3ee",
+              "on-primary-fixed": "#261900",
+              "on-surface-variant": "#4e4639",
+              "secondary-fixed": "#dae2fd",
+              "outline-variant": "#d1c5b4",
+              "error": "#ba1a1a",
+              "secondary-container": "#dae2fd",
+              "outline": "#7f7667",
+              "on-tertiary-fixed-variant": "#3a485c",
+              "on-surface": "#1b1c19",
+              "error-container": "#ffdad6",
+              "tertiary-container": "#98a6be",
+              "on-secondary-fixed-variant": "#3f465c",
+              "on-primary-fixed-variant": "#5d4201",
+              "on-primary-container": "#4e3700",
+              "surface-bright": "#fbf9f4",
+              "background": "#fbf9f4",
+              "on-background": "#1b1c19",
+              "tertiary": "#515f74",
+              "on-error-container": "#93000a",
+              "inverse-primary": "#e9c176",
+              "on-surface": "#1b1c19",
+              "error-container": "#ffdad6",
+              "tertiary-container": "#98a6be",
+              "on-secondary-fixed-variant": "#3f465c",
+              "on-primary-fixed-variant": "#5d4201",
+              "on-primary-container": "#4e3700",
+              "surface-bright": "#fbf9f4",
+              "background": "#fbf9f4",
+              "on-background": "#1b1c19",
+              "tertiary": "#515f74",
+              "on-error-container": "#93000a",
+              "inverse-primary": "#e9c176",
+              "on-secondary-container": "#5c647a",
+              "inverse-surface": "#30312e",
+              "on-tertiary-fixed": "#0d1c2f",
+              "surface-variant": "#e4e2dd",
+              "tertiary-fixed": "#d5e3fd",
+              "on-primary": "#ffffff",
+              "surface-container-highest": "#e4e2dd",
+              "surface": "#fbf9f4",
+              "surface-container-lowest": "#ffffff",
+              "inverse-on-surface": "#f2f1ec",
+              "primary-fixed": "#ffdea5",
+              "on-secondary": "#ffffff",
+              "primary-container": "#c5a059",
+              "on-tertiary": "#ffffff",
+              "surface-tint": "#775a19",
+              "on-tertiary-container": "#2e3c50"
+            },
+            fontFamily: {
+              "headline": ["Noto Serif"],
+              "body": ["Inter"],
+              "label": ["Inter"]
+            },
+            borderRadius: {"DEFAULT": "0.125rem", "lg": "0.25rem", "xl": "0.5rem", "full": "0.75rem"},
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 300, 'GRAD' 0, 'opsz' 24;
+            vertical-align: middle;
+        }
+        .tonal-transition {
+            transition: background-color 0.3s ease;
+        }
+    </style>
+</head>
+<body class="bg-background text-on-surface font-body selection:bg-primary-fixed selection:text-on-primary-fixed">
+<!-- Top Navigation Bar -->
+<nav class="fixed top-0 w-full z-50 bg-[#fbf9f4]/80 dark:bg-stone-950/80 backdrop-blur-xl no-border tonal-transition bg-surface-container-low/10">
+<div class="flex justify-between items-center px-12 py-6 w-full max-w-[1920px] mx-auto">
+<div class="text-2xl font-serif italic text-[#1b1c19] dark:text-stone-50">
+                The Editorial Atelier
+            </div>
+<div class="hidden md:flex items-center space-x-10">
+<a class="text-[#1b1c19]/70 dark:text-stone-400 hover:text-[#775a19] transition-colors font-['Noto_Serif'] tracking-tight" href="#">Showrooms</a>
+<a class="text-[#775a19] border-b border-[#775a19] pb-1 font-semibold font-['Noto_Serif'] tracking-tight" href="#">Kitchen</a>
+<a class="text-[#1b1c19]/70 dark:text-stone-400 hover:text-[#775a19] transition-colors font-['Noto_Serif'] tracking-tight" href="#">Fireplaces</a>
+<a class="text-[#1b1c19]/70 dark:text-stone-400 hover:text-[#775a19] transition-colors font-['Noto_Serif'] tracking-tight" href="#">Materials</a>
+<a class="text-[#1b1c19]/70 dark:text-stone-400 hover:text-[#775a19] transition-colors font-['Noto_Serif'] tracking-tight" href="#">Journal</a>
+</div>
+<div class="flex items-center space-x-6">
+<button class="hover:opacity-80 transition-opacity duration-300 text-[#775a19]">
+<span class="material-symbols-outlined" data-icon="shopping_bag">shopping_bag</span>
+</button>
+<button class="hover:opacity-80 transition-opacity duration-300 text-[#775a19]">
+<span class="material-symbols-outlined" data-icon="person">person</span>
+</button>
+</div>
+</div>
+</nav>
+<main class="pt-32">
+<!-- Hero Section: Editorial Intro -->
+<section class="px-12 mb-20">
+<div class="max-w-[1920px] mx-auto grid grid-cols-12 gap-8 items-end">
+<div class="col-span-12 lg:col-span-5 pb-12">
+<span class="font-label uppercase tracking-widest text-xs text-secondary font-medium block mb-6">Curated Collections</span>
+<h1 class="font-headline text-6xl md:text-8xl text-on-surface leading-tight tracking-tighter mb-8">
+                        The Heart of <br/><span class="italic">Culinaria</span>
+</h1>
+<p class="text-on-surface-variant text-lg max-w-md leading-relaxed">
+                        Where precision engineering meets timeless aesthetic. Explore our hand-selected ensemble of professional-grade appliances from the world's most prestigious marques.
+                    </p>
+</div>
+<div class="col-span-12 lg:col-span-7">
+<div class="relative overflow-hidden aspect-[16/9]">
+<img alt="Luxury kitchen" class="w-full h-full object-cover" data-alt="luxury kitchen interior with high-end brass finished ranges and marble countertops bathed in soft natural morning light" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC9Kcp-WuOs-CDjjW37HqcTDNKbZds3F5FEQh-FWkfCtFu0ToeYwyeKqNtEZ80a7al4ynqqxTF--1gbr_9snjBYGFY42FUkmOEK_yYFQur8yOdp3Qp777GDbljjjIxidP3B166Jc7GFOfjqVuaT6GlgqKa27Cxx73U47VPjwGzS-Ccf3rZIl1wZi8vJZxlo79hSAOMDe9meM91mO8GoWf3zz5xZ87ZFtY_r_1YmTcJR662CBuTsK4Cw68z4_4vgGniv00-7NziGCm8"/>
+<div class="absolute inset-0 bg-gradient-to-t from-background/20 to-transparent"></div>
+</div>
+</div>
+</div>
+</section>
+<!-- Brand Filter Section -->
+<section class="px-12 py-12 bg-surface-container-low">
+<div class="max-w-[1920px] mx-auto flex flex-col md:flex-row items-center justify-between">
+<div class="flex items-center space-x-12 mb-8 md:mb-0">
+<span class="font-label text-[11px] uppercase tracking-widest text-secondary font-bold">Refine by Brand</span>
+<div class="flex space-x-8">
+<button class="text-on-surface font-headline italic text-lg hover:text-primary transition-colors border-b border-primary/20 pb-1">All Ateliers</button>
+<button class="text-on-surface/50 font-headline italic text-lg hover:text-primary transition-colors pb-1">La Cornue</button>
+<button class="text-on-surface/50 font-headline italic text-lg hover:text-primary transition-colors pb-1">Sub-Zero</button>
+<button class="text-on-surface/50 font-headline italic text-lg hover:text-primary transition-colors pb-1">Wolf</button>
+</div>
+</div>
+<div class="flex items-center space-x-4">
+<span class="text-xs text-secondary italic">6 Masterpieces Displayed</span>
+</div>
+</div>
+</section>
+<!-- Gallery Grid -->
+<section class="px-12 py-20">
+<div class="max-w-[1920px] mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-12 gap-y-24">
+<!-- Item 1: La Cornue -->
+<div class="group">
+<div class="relative mb-8 bg-surface-container overflow-hidden">
+<img alt="La Cornue Château" class="w-full aspect-[4/5] object-cover transition-transform duration-700 group-hover:scale-105" data-alt="detail shot of a La Cornue professional range in sapphire blue with polished brass knobs and detailing in a classic kitchen" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBW4b6O3KYiBVpeoF0IAELWA_zWtrfbS6DdXDsYhJgbodUUzdxELfZLqaSzRGw-2Qo-2gIhAaSleBDgVWORYj2xWxikx2BnXazz3v9kKH0F-CrBBgqg5XEAXLYXMzbT9yBsEokOJTxKGcdM0KDNLbpbLonr5dyFPTWAQqWSVcZYF3yM1KrwpdEg9jwml7hTe34NAAbkx1evUkGcj5mHIzL7LxdhtwTGx7yQLGbJMbrWkl4JB0_LIp6cTn8UJj2Oh8oopnpIumVf9OY"/>
+<div class="absolute bottom-6 left-6 right-6 p-8 bg-surface-container-lowest shadow-xl shadow-on-surface/5 translate-y-4 group-hover:translate-y-0 transition-transform duration-500">
+<span class="font-label text-[10px] uppercase tracking-[0.2em] text-primary mb-2 block">Iconic Range</span>
+<h3 class="font-headline text-2xl mb-2">Château Series 150</h3>
+<p class="text-on-surface-variant text-sm leading-relaxed mb-6">Hand-crafted in France since 1908. A bespoke centerpiece for the ultimate gastronomic experience.</p>
+<button class="w-full py-4 bg-primary text-on-primary font-label text-[11px] uppercase tracking-widest hover:bg-primary-container transition-colors">
+                                Request Specification
+                            </button>
+</div>
+</div>
+</div>
+<!-- Item 2: Sub-Zero -->
+<div class="group lg:mt-24">
+<div class="relative mb-8 bg-surface-container overflow-hidden">
+<img alt="Sub-Zero Refrigerator" class="w-full aspect-[4/5] object-cover transition-transform duration-700 group-hover:scale-105" data-alt="built-in luxury refrigerator with custom wood paneling and stainless steel interior shelving inside a modern minimalist kitchen" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAU8QBRUP0DKniMYoelqVCr33tPnj_YVVolf_oKGtuDWVLw58eYunFmIcpycaJDUUWex49MvjT1KFfKfxftvqHm49DPrxN_1PWRIG0XO50uFDrzYpTNUEbUqCiuBzjyMt6nav93o1HrzsA9CCaieadsGRBYDlRHhmP9YP-8BPyUAUCRM1QUCM1Cu5dwogPSnV02l7OgPmsa_HBZum_1uRhPmZf-aMgSVt3rzy1AWl4ID4eT9WmHnIoITV-fGuEJDL63fQEcyBtaWqM"/>
+<div class="absolute bottom-6 left-6 right-6 p-8 bg-surface-container-lowest shadow-xl shadow-on-surface/5 translate-y-4 group-hover:translate-y-0 transition-transform duration-500">
+<span class="font-label text-[10px] uppercase tracking-[0.2em] text-primary mb-2 block">Preservation</span>
+<h3 class="font-headline text-2xl mb-2">Classic Over-and-Under</h3>
+<p class="text-on-surface-variant text-sm leading-relaxed mb-6">Dual refrigeration technology preserves the soul of your ingredients through archival-grade climate control.</p>
+<button class="w-full py-4 bg-primary text-on-primary font-label text-[11px] uppercase tracking-widest hover:bg-primary-container transition-colors">
+                                Request Specification
+                            </button>
+</div>
+</div>
+</div>
+<!-- Item 3: Wolf -->
+<div class="group">
+<div class="relative mb-8 bg-surface-container overflow-hidden">
+<img alt="Wolf M Series Oven" class="w-full aspect-[4/5] object-cover transition-transform duration-700 group-hover:scale-105" data-alt="modern built-in double wall oven with red control knobs and black glass finish integrated into dark sleek cabinetry" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCzb_5yr4MMG6NB-g2IqhC0eF85TypLkkXzCgobXPsuRvczwqwqJqTTN0ZS21HMpWz5k6TatYav_0Fm3KKDAPtv5vWg__rlLXm5Y_bRocmi5ZKbNdujxWeCi9vDGuxTeqcQYbDqSawHNsNvIqFeC6w4oovRqN3MJX8lkPirpOkPvJ3FmsiNNRY8M7tdHSu4jJIx8Ca52f2I_6S-VyDIqP40h55Ws_jThBH_Qgyp3e6N9SyNDszclZ2-BnhmUMa72ZgstWAgWMqZapI"/>
+<div class="absolute bottom-6 left-6 right-6 p-8 bg-surface-container-lowest shadow-xl shadow-on-surface/5 translate-y-4 group-hover:translate-y-0 transition-transform duration-500">
+<span class="font-label text-[10px] uppercase tracking-[0.2em] text-primary mb-2 block">Oven Technology</span>
+<h3 class="font-headline text-2xl mb-2">M Series Transitional</h3>
+<p class="text-on-surface-variant text-sm leading-relaxed mb-6">Uncompromising convection systems ensure consistent heat for the perfect bake, every single time.</p>
+<button class="w-full py-4 bg-primary text-on-primary font-label text-[11px] uppercase tracking-widest hover:bg-primary-container transition-colors">
+                                Request Specification
+                            </button>
+</div>
+</div>
+</div>
+<!-- Item 4: Asymmetric Block -->
+<div class="group col-span-1 md:col-span-2 lg:col-span-2">
+<div class="relative bg-surface-container-high overflow-hidden flex flex-col md:flex-row items-center">
+<div class="w-full md:w-3/5 overflow-hidden">
+<img alt="Professional Range" class="w-full aspect-square md:aspect-video object-cover transition-transform duration-1000 group-hover:scale-105" data-alt="panoramic shot of a high-end chef's kitchen featuring a wide stainless steel range with gas burners and custom hood" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAm9krMTDiCGveAwxVJryIVjXbH78unTfxlsmeAGw-m3T7AKuCDPVouSKjPuRWUROJBbN8lOk9BVD0HTebdoM3gKnfatOY3w1lYEpn-9E3WDsS1qb2NWizr8NprJAAh7Ot7itUe17m4QtFhTI04ljTyJvNW3xGpTCToni_ShBxNoVfI1lumwzIqS6CVDwRaTHq8MTBZELlIcjkys3QmirHDUGfPYb3UIMn96fd_PRqv8SAr8oCjySWVTqXveFMdyWs66v-Uccefc-E"/>
+</div>
+<div class="w-full md:w-2/5 p-12 lg:p-20">
+<span class="font-label text-[10px] uppercase tracking-[0.2em] text-primary mb-4 block">The Master's Suite</span>
+<h3 class="font-headline text-4xl mb-6">Wolf Dual Fuel</h3>
+<p class="text-on-surface-variant text-base leading-loose mb-8 italic font-serif">
+                                "The range is the altar of the kitchen. It is where raw elements are transformed into memory."
+                            </p>
+<p class="text-on-surface-variant text-sm leading-relaxed mb-10">
+                                Combining the precision of electric convection with the raw power of gas burners.
+                            </p>
+<button class="border border-outline-variant px-8 py-4 font-label text-[11px] uppercase tracking-widest hover:border-primary transition-colors">
+                                Full Brochure
+                            </button>
+</div>
+</div>
+</div>
+<!-- Item 5: Detail Focus -->
+<div class="group">
+<div class="relative mb-8 bg-surface-container-low overflow-hidden">
+<img alt="Luxury Tap Detail" class="w-full aspect-[4/5] object-cover transition-transform duration-700 group-hover:scale-105" data-alt="extreme close up of polished unlacquered brass knobs on a luxury appliance with tactile texture and warm light reflections" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDccqXtrqmDKaoEmecXTTbp-qAApvHKyl4XnJL5lp08gN3xrGQ9_0sG6orcQz1_Uoq5Or9WtVxflajyw3ehjV8p3z5y-7l83h5gxK5Z_Ed4Ol1OPKWteIRcTvTJkiSp7hNrb7hhUT3u1ktPjHpskrT6t3sn0vIhwf1a8Tk2SyJD0AfRjs1qs3iSRCzwy4V7HWkTINjigQvNdamulS2ny0E4uIp8Cxi55G8DVYUUF5VjGggL7gqcMHPitfd8Amy892teaRivPlI4rhM"/>
+<div class="absolute bottom-6 left-6 right-6 p-8 bg-surface-container-lowest shadow-xl shadow-on-surface/5 translate-y-4 group-hover:translate-y-0 transition-transform duration-500">
+<span class="font-label text-[10px] uppercase tracking-[0.2em] text-primary mb-2 block">Detailing</span>
+<h3 class="font-headline text-2xl mb-2">Unlacquered Brass Knobs</h3>
+<p class="text-on-surface-variant text-sm leading-relaxed mb-6">A living finish that develops a unique patina over decades of culinary mastery.</p>
+<button class="w-full py-4 bg-primary text-on-primary font-label text-[11px] uppercase tracking-widest hover:bg-primary-container transition-colors">
+                                Request Specification
+                            </button>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- CTA Section -->
+<section class="mt-20 px-12 py-32 bg-surface-container">
+<div class="max-w-[1920px] mx-auto text-center">
+<div class="max-w-2xl mx-auto">
+<h2 class="font-headline text-5xl mb-8 leading-tight">Begin Your <span class="italic">Private Consultation</span></h2>
+<p class="text-on-surface-variant mb-12 text-lg">Our curators are available for personalized walkthroughs of the collection, either virtually or in our flagship showrooms.</p>
+<div class="flex flex-col md:flex-row justify-center space-y-4 md:space-y-0 md:space-x-6">
+<button class="px-12 py-5 bg-primary text-on-primary font-label text-[12px] uppercase tracking-[0.2em]">Book Private Tour</button>
+<button class="px-12 py-5 border border-outline-variant text-on-surface font-label text-[12px] uppercase tracking-[0.2em] hover:border-primary transition-colors">Download Archive</button>
+</div>
+</div>
+</div>
+</section>
+</main>
+<!-- Footer -->
+<footer class="w-full border-t-0 mt-20 bg-[#fbf9f4] dark:bg-stone-950">
+<div class="flex flex-col md:flex-row justify-between items-center px-20 py-12 w-full">
+<div class="mb-8 md:mb-0">
+<span class="font-serif text-[#1b1c19] dark:text-stone-100 text-xl italic">The Editorial Atelier</span>
+<p class="font-['Inter'] text-xs text-[#565e74] dark:text-stone-500 mt-2">© 2024 The Editorial Atelier. All Rights Reserved.</p>
+</div>
+<div class="flex flex-wrap justify-center gap-x-12 gap-y-4">
+<a class="font-['Inter'] text-xs text-[#565e74] hover:text-[#775a19] transition-all hover:underline" href="#">Privacy Policy</a>
+<a class="font-['Inter'] text-xs text-[#565e74] hover:text-[#775a19] transition-all hover:underline" href="#">Shipping &amp; Logistics</a>
+<a class="font-['Inter'] text-xs text-[#565e74] hover:text-[#775a19] transition-all hover:underline" href="#">Sustainability</a>
+<a class="font-['Inter'] text-xs text-[#565e74] hover:text-[#775a19] transition-all hover:underline" href="#">Contact Atelier</a>
+</div>
+<div class="mt-8 md:mt-0 flex space-x-6">
+<span class="material-symbols-outlined text-secondary hover:text-primary cursor-pointer transition-colors" data-icon="facebook">social_leaderboard</span>
+<span class="material-symbols-outlined text-secondary hover:text-primary cursor-pointer transition-colors" data-icon="instagram">camera</span>
+</div>
+</div>
+</footer>
+</body></html>

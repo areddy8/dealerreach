@@ -38,12 +38,33 @@ async def signup(body: SignupRequest, session: AsyncSession = Depends(get_sessio
             detail="A user with this email already exists",
         )
 
+    # Generate slug from company_name
+    company_slug = None
+    if body.company_name:
+        import re
+        slug = body.company_name.lower().strip()
+        slug = re.sub(r"[^a-z0-9\s-]", "", slug)
+        slug = re.sub(r"[\s]+", "-", slug)
+        slug = re.sub(r"-+", "-", slug).strip("-")
+        company_slug = slug
+
+        # Ensure slug uniqueness
+        existing_slug = await session.execute(
+            select(User).where(User.company_slug == company_slug)
+        )
+        if existing_slug.scalar_one_or_none() is not None:
+            company_slug = f"{company_slug}-{secrets.token_hex(4)}"
+
+
     verification_token = secrets.token_urlsafe(32)
     user = User(
         email=body.email,
         password_hash=hash_password(body.password),
         name=body.name,
         verification_token=verification_token,
+        company_name=body.company_name,
+        company_slug=company_slug,
+        role="dealer_admin",
     )
     session.add(user)
     await session.flush()

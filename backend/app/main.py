@@ -11,8 +11,7 @@ from app.api import (
     auth,
     email_verification,
     password_reset,
-    # Old consumer routers (no longer used in dealer SaaS pivot):
-    # quote_requests, dealers, replies, events, export,
+    quote_requests, dealers, replies, events, export,
     products,
     clients,
     projects,
@@ -55,12 +54,11 @@ app.add_middleware(
 app.include_router(auth.router)
 app.include_router(password_reset.router)
 app.include_router(email_verification.router)
-# Old consumer routers removed in dealer SaaS pivot:
-# app.include_router(quote_requests.router)
-# app.include_router(dealers.router)
-# app.include_router(replies.router)
-# app.include_router(events.router)
-# app.include_router(export.router)
+app.include_router(quote_requests.router)
+app.include_router(dealers.router)
+app.include_router(replies.router)
+app.include_router(events.router)
+app.include_router(export.router)
 app.include_router(products.router)
 app.include_router(clients.router)
 app.include_router(projects.router)

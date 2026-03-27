@@ -55,6 +55,7 @@ async def signup(body: SignupRequest, session: AsyncSession = Depends(get_sessio
         if existing_slug.scalar_one_or_none() is not None:
             company_slug = f"{company_slug}-{secrets.token_hex(4)}"
 
+
     verification_token = secrets.token_urlsafe(32)
     user = User(
         email=body.email,

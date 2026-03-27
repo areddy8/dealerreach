@@ -1,10 +1,13 @@
 import type {
   AuthTokens,
-  CreateQuoteRequestPayload,
-  Dealer,
-  QuoteRequest,
-  QuoteRequestDetail,
-  Reply,
+  Client,
+  ClientProject,
+  CreateClientPayload,
+  CreateProductPayload,
+  CreateProjectPayload,
+  CurationResult,
+  Product,
+  ProjectProduct,
   User,
 } from "./types";
 
@@ -66,11 +69,12 @@ async function fetchApi<T>(
 export async function signup(
   name: string,
   email: string,
-  password: string
+  password: string,
+  company_name?: string
 ): Promise<AuthTokens> {
   const tokens = await fetchApi<AuthTokens>("/auth/signup", {
     method: "POST",
-    body: JSON.stringify({ name, email, password }),
+    body: JSON.stringify({ name, email, password, company_name }),
   });
   localStorage.setItem("dealerreach_token", tokens.access_token);
   return tokens;
@@ -92,7 +96,7 @@ export async function getMe(): Promise<User> {
   return fetchApi<User>("/auth/me");
 }
 
-export async function updateProfile(data: { name?: string; email?: string }): Promise<User> {
+export async function updateProfile(data: { name?: string; email?: string; company_name?: string }): Promise<User> {
   return fetchApi<User>("/auth/me", {
     method: "PATCH",
     body: JSON.stringify(data),
@@ -106,48 +110,94 @@ export async function changePassword(currentPassword: string, newPassword: strin
   });
 }
 
-// ── Quote Requests ──
+// ── Products ──
 
-export async function createQuoteRequest(
-  payload: CreateQuoteRequestPayload
-): Promise<QuoteRequest> {
-  return fetchApi<QuoteRequest>("/quote-requests", {
+export async function listProducts(): Promise<Product[]> {
+  return fetchApi<Product[]>("/products");
+}
+
+export async function getProduct(id: string): Promise<Product> {
+  return fetchApi<Product>(`/products/${id}`);
+}
+
+export async function createProduct(payload: CreateProductPayload): Promise<Product> {
+  return fetchApi<Product>("/products", {
     method: "POST",
     body: JSON.stringify(payload),
   });
 }
 
-export async function listQuoteRequests(
-  includeArchived?: boolean
-): Promise<QuoteRequest[]> {
-  const path = includeArchived
-    ? "/quote-requests?include_archived=true"
-    : "/quote-requests";
-  return fetchApi<QuoteRequest[]>(path);
+export async function updateProduct(id: string, payload: Partial<CreateProductPayload>): Promise<Product> {
+  return fetchApi<Product>(`/products/${id}`, {
+    method: "PATCH",
+    body: JSON.stringify(payload),
+  });
 }
 
-export async function getQuoteRequest(id: string): Promise<QuoteRequestDetail> {
-  return fetchApi<QuoteRequestDetail>(`/quote-requests/${id}`);
+export async function deleteProduct(id: string): Promise<void> {
+  return fetchApi<void>(`/products/${id}`, { method: "DELETE" });
 }
 
-export async function archiveQuoteRequest(id: string): Promise<QuoteRequest> {
-  return fetchApi<QuoteRequest>(`/quote-requests/${id}/archive`, { method: "PATCH" });
+// ── AI ──
+
+export async function generateAIDescription(productId: string): Promise<{ description: string }> {
+  return fetchApi<{ description: string }>(`/ai/describe/${productId}`, {
+    method: "POST",
+  });
 }
 
-export async function deleteQuoteRequest(id: string): Promise<void> {
-  return fetchApi<void>(`/quote-requests/${id}`, { method: "DELETE" });
+export async function curateProducts(query: string, projectId?: string): Promise<CurationResult[]> {
+  return fetchApi<CurationResult[]>("/ai/curate", {
+    method: "POST",
+    body: JSON.stringify({ query, project_id: projectId }),
+  });
 }
 
-// ── Dealers ──
+// ── Clients ──
 
-export async function getDealers(quoteRequestId: string): Promise<Dealer[]> {
-  return fetchApi<Dealer[]>(`/quote-requests/${quoteRequestId}/dealers`);
+export async function listClients(): Promise<Client[]> {
+  return fetchApi<Client[]>("/clients");
 }
 
-// ── Replies ──
+export async function getClient(id: string): Promise<Client> {
+  return fetchApi<Client>(`/clients/${id}`);
+}
 
-export async function getReplies(quoteRequestId: string): Promise<Reply[]> {
-  return fetchApi<Reply[]>(`/quote-requests/${quoteRequestId}/replies`);
+export async function createClient(payload: CreateClientPayload): Promise<Client> {
+  return fetchApi<Client>("/clients", {
+    method: "POST",
+    body: JSON.stringify(payload),
+  });
+}
+
+// ── Projects ──
+
+export async function listProjects(clientId?: string): Promise<ClientProject[]> {
+  const path = clientId ? `/projects?client_id=${clientId}` : "/projects";
+  return fetchApi<ClientProject[]>(path);
+}
+
+export async function getProject(id: string): Promise<ClientProject> {
+  return fetchApi<ClientProject>(`/projects/${id}`);
+}
+
+export async function createProject(payload: CreateProjectPayload): Promise<ClientProject> {
+  return fetchApi<ClientProject>("/projects", {
+    method: "POST",
+    body: JSON.stringify(payload),
+  });
+}
+
+export async function addProductToProject(
+  projectId: string,
+  productId: string,
+  quantity?: number,
+  notes?: string
+): Promise<ProjectProduct> {
+  return fetchApi<ProjectProduct>(`/projects/${projectId}/products`, {
+    method: "POST",
+    body: JSON.stringify({ product_id: productId, quantity: quantity ?? 1, notes }),
+  });
 }
 
 // ── Password Reset ──
@@ -166,11 +216,6 @@ export async function resetPassword(token: string, new_password: string): Promis
   });
   localStorage.setItem("dealerreach_token", tokens.access_token);
   return tokens;
-}
-
-export function getExportPdfUrl(quoteRequestId: string): string {
-  const token = getToken();
-  return `${API_URL}/quote-requests/${quoteRequestId}/export/pdf${token ? `?token=${token}` : ''}`;
 }
 
 // ── Email Verification ──
